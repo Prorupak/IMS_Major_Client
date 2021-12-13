@@ -5,6 +5,8 @@ export const theme = {
     navBack: ' #F4F5F5',
     logo: '#4ECCA3',
     textColor: '#292929',
+    QuickAction: '#727272',
+    QuickActionHeader: '#A3A3A3',
     logoBack: '#DBDBDB'
   },
   emSizes: {
@@ -36,7 +38,10 @@ export const theme = {
     p100x: '6.25em',
     p200x: '12.5em',
     p255x: '18.75em',
-    p300x: '25em'
+    p260x: '19.375em',
+    p285x: '22.5em',
+    p300x: '25em',
+    p535x: '55.3125em',
   },
   fontSize: {
     p12x: '0.75rem',

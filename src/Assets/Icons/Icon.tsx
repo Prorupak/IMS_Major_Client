@@ -28,7 +28,11 @@ const Icon = {
   SideClose: require('./SideClose.svg').default,
   Vendor: require('./Vendor.svg').default,
   VendorClient: require('./VendorCredit.svg').default,
-  Quick: require('./Quick.svg').default
+  Quick: require('./Quick.svg').default,
+  Plus: require('./Plus.svg').default,
+  Purchase: require('./Purchase.svg').default,
+  Sales: require('./Sales.svg').default,
+  General: require('./General.svg').default,
 };
 
 export default Icon;

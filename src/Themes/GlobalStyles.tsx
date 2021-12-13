@@ -3,7 +3,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
-@import '~antd/dist/antd.css';
 
 
 
@@ -13,6 +12,10 @@ export default createGlobalStyle`
         box-sizing: border-box;
         text-decoration: none;
         list-style: none;
+    }
+
+    a {
+        text-decoration: none;
     }
     
 `;
