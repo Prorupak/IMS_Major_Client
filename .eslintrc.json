@@ -52,7 +52,7 @@
     "quotes": [2, "single"],
     "arrow-body-style": ["error", "always"],
     "jsx-quotes": 1,
-    "linebreak-style": [2, "windows"],
+    "linebreak-style": ["off"],
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "react/display-name": 1,

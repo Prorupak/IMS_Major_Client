@@ -1,132 +1,98 @@
 import Icon from '../../Assets/Icons/Icon';
 
 /* eslint-disable import/prefer-default-export */
-export const QuickActionData = [
+export const DashSection = [
   {
     title: 'Dashboard',
-
     path: '/',
-
-    icon: Icon.Plus
+    icon: Icon.Dashboard
   },
-
   {
     title: 'Products',
-
     path: '/Products',
+    icon: Icon.Products,
+    dropDown: Icon.ListItem
+  }
+];
 
-    icon: Icon.Plus
-  },
-
+export const SalesSection = [
   {
     title: 'Customer',
-
     path: '/Customer',
-
-    icon: Icon.Plus
+    icon: Icon.Customer
   },
-
   {
     title: 'Sales Order',
-
     path: '/SalesOrder',
-
-    icon: Icon.Plus
+    icon: Icon.SalesOrder
   },
-
   {
     title: 'Packages',
-
     path: '/Packages',
-
-    icon: Icon.Plus
+    icon: Icon.Package
   },
-
   {
     title: 'Invoices',
-
     path: '/Invoices',
-
-    icon: Icon.Plus
+    icon: Icon.Invoices
   },
-
   {
     title: 'Payments Received',
-
-    path: '/PaymentReceived',
-
-    icon: Icon.Plus
+    path: '/PaymentsReceived',
+    icon: Icon.PaymentsReceived
   },
-
   {
     title: 'Returns',
-
     path: '/Returns',
+    icon: Icon.Return
+  }
+];
 
-    icon: Icon.Plus
-  },
-
+export const PurchaseSection = [
   {
     title: 'Vendors',
-
     path: '/Vendors',
-
-    icon: Icon.Plus
+    icon: Icon.Vendor
   },
-
   {
     title: 'Purchase Orders',
-
     path: '/PurchaseOrders',
-
-    icon: Icon.Plus
+    icon: Icon.PurchaseOrder
   },
-
   {
     title: 'Bills',
-
     path: '/Bills',
-
-    icon: Icon.Plus
+    icon: Icon.Bill
   },
-
   {
     title: 'Payments Made',
-
-    path: '/PaymentMade',
-
-    icon: Icon.Plus
+    path: '/PaymentsMade',
+    icon: Icon.PaymentsReceived
   },
-
   {
-    title: 'Vendor Credits',
+    title: 'Vendors Credits',
+    path: '/VendorsCredits',
+    icon: Icon.VendorClient
+  }
+];
 
-    path: '/VendorCredits',
-
-    icon: Icon.Plus
-  },
-
+export const IntSection = [
   {
     title: 'Integrations',
-
     path: '/Integrations',
-
-    icon: Icon.Plus
+    icon: Icon.Integration
   },
-
   {
     title: 'Reports',
-
     path: '/Reports',
+    icon: Icon.Reports
+  }
+];
 
-    icon: Icon.Plus
-  },
-
+export const Document = [
   {
     title: 'Documents',
-
     path: '/Documents',
-
-    icon: Icon.Plus
+    icon: Icon.Document
   }
 ];

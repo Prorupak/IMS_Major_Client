@@ -57,10 +57,12 @@ export const Title = styled.div`
 `;
 
 export const Icon = styled.img`
-/* height: 16px;
-width: 16px; */
-font-size:10px;
+  cursor: pointer;
 `;
+
+export const ListIcon = styled.div`
+  display:flex;
+`
 
 export const QuickActionList = styled.ul`
   display: grid;
@@ -76,4 +78,8 @@ export const QLink = styled(Link)`
   color: ${(props) => {
     return props.theme.color.QuickAction;
   }};
+
+  .ListItemWrapper{
+    display: flex;
+  }
 `;

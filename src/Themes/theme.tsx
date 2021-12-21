@@ -7,7 +7,10 @@ export const theme = {
     textColor: '#292929',
     QuickAction: '#727272',
     QuickActionHeader: '#A3A3A3',
-    logoBack: '#DBDBDB'
+    logoBack: '#DBDBDB',
+    NotificationBack: '#F6FFFE',
+    SidebarBack: '#345B63',
+    SidebarBtm: '#467984'
   },
   emSizes: {
     p5x: '0.3125em',
@@ -37,11 +40,15 @@ export const theme = {
     p90x: '5.625em',
     p100x: '6.25em',
     p200x: '12.5em',
+    p225x: '15.625em',
     p255x: '18.75em',
     p260x: '19.375em',
     p285x: '22.5em',
     p300x: '25em',
+    p400x: '37.5em',
     p535x: '55.3125em',
+    p799x: '79.375em',
+
   },
   fontSize: {
     p12x: '0.75rem',

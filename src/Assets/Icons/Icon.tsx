@@ -10,7 +10,7 @@ const Icon = {
   Document: require('./Document.svg').default,
   Faq: require('./Faq.svg').default,
   Integration: require('./Integration.svg').default,
-  Invoices: require('./Avatar.svg').default,
+  Invoices: require('./Invoice.svg').default,
   ListItem: require('./ListItem.svg').default,
   Notification: require('./Notification.svg').default,
   Package: require('./Package.svg').default,
@@ -33,6 +33,7 @@ const Icon = {
   Purchase: require('./Purchase.svg').default,
   Sales: require('./Sales.svg').default,
   General: require('./General.svg').default,
+  Close: require('./Close.svg').default
 };
 
 export default Icon;

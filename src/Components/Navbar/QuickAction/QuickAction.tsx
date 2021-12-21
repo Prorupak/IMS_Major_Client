@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import * as Elements from './Element.QuickAction';
+
 import Icon from '../../../Assets/Icons/Icon';
 import { General, Sales, Purchases } from './QuickActionData';
 
@@ -18,7 +19,11 @@ const QuickAction = () => {
               {General.map((item, index) => {
                 return (
                   <Elements.QLink key={index} to={item.path}>
-                    <Elements.Icon alt={item.title} src={item.icon} style={{ width: '8px' }} />
+                    <Elements.Icon
+                      alt={item.title}
+                      src={item.icon}
+                      style={{ width: '8px' }}
+                    />
                     {item.title}
                   </Elements.QLink>
                 );
@@ -35,7 +40,11 @@ const QuickAction = () => {
               {Purchases.map((item, index) => {
                 return (
                   <Elements.QLink key={index} to={item.path}>
-                    <Elements.Icon alt={item.title} src={item.icon} style={{ width: '8px' }} />
+                    <Elements.Icon
+                      alt={item.title}
+                      src={item.icon}
+                      style={{ width: '8px' }}
+                    />
                     {item.title}
                   </Elements.QLink>
                 );
@@ -51,7 +60,11 @@ const QuickAction = () => {
               {Sales.map((item, index) => {
                 return (
                   <Elements.QLink key={index} to={item.path}>
-                    <Elements.Icon alt={item.title} src={item.icon} style={{ width: '8px' }} />
+                    <Elements.Icon
+                      alt={item.title}
+                      src={item.icon}
+                      style={{ width: '8px' }}
+                    />
                     {item.title}
                   </Elements.QLink>
                 );
