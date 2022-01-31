@@ -1,13 +1,12 @@
 import React from 'react';
-import Navbar from '../../Components/Navbar/Navbar';
-import Sidebar from '../../Components/Sidebar/Sidebar';
+import { Link, Outlet } from 'react-router-dom';
 
 const Dashboard = () => {
   return (
-    <>
-      <Navbar />
-      <Sidebar />
-    </>
+    <div>
+      <Link to="/dash/form">Form</Link>
+      <Outlet />
+    </div>
   );
 };
 

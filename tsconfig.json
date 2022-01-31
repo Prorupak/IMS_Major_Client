@@ -2,7 +2,12 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
       }
     }
   },
@@ -26,9 +31,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "src",
+    "baseUrl": "./src",
+    "typeRoots": [
+      "node_modules/@types"      
+    ],
   },
   "include": [
-    "src/Typescript", "custom.d.ts"
+    "src"
   ]
 }

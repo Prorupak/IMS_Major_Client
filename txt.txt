@@ -1,0 +1,122 @@
+// /* eslint-disable react/no-array-index-key */
+// import React from 'react';
+// import Icon from '../../../Assets/Icons/Icon';
+// // import { Dashboard } from './SidebarData';
+// import * as Elements from './Elements.Sidebar';
+// // import * as SidebarElements from './SidebarData';
+
+// const Sidebar = () => {
+//   const Dashboard = [
+//     {
+//       title: 'Dashboard',
+//       icon: Icon.Dashboard
+//     },
+//     {
+//       title: 'Inventory',
+//       icon: Icon.Inventory,
+//       dropDown: Icon.DropSide
+//     }
+//   ];
+
+//   const Document = [
+//     {
+//       title: 'Documents',
+//       path: '/Documents',
+//       icon: Icon.Documents
+//     }
+//   ];
+
+//   const IntSection = [
+//     {
+//       title: 'Reports',
+//       path: '/Reports',
+//       icon: Icon.Reports
+//     }
+//   ];
+
+//   const SalesSection = [
+//     {
+//       title: 'Sales',
+//       icon: Icon.SalesSide,
+//       dropDown: Icon.DropSide
+//     }
+//   ];
+//   const PurchaseSection = [
+//     {
+//       title: 'Purchases',
+//       icon: Icon.PurchaseSide,
+//       dropDown: Icon.DropSide
+//     }
+//   ];
+
+//   return (
+//     <Elements.StyledNav>
+//       <Elements.LogoWrapper>IMS</Elements.LogoWrapper>
+//       <Elements.Wrapper>
+//         <Elements.DashSection>
+//           <Elements.MapWrapper>
+//             {Dashboard.map((item, index) => {
+//               return (
+//                 <Elements.QLink key={index}>
+//                   <Elements.ListItemIcon alt={item.title} src={item.icon} />
+//                   {item.title}
+//                   <Elements.DropDownIcon src={item.dropDown} />
+//                 </Elements.QLink>
+//               );
+//             })}
+//           </Elements.MapWrapper>
+//         </Elements.DashSection>
+//         <Elements.SalesSection>
+//           {SalesSection.map((item, index) => {
+//             return (
+//               <>
+//                 <Elements.QLink key={index}>
+//                   <Elements.ListItemIcon alt={item.title} src={item.icon} />
+//                   {item.title}
+//                 </Elements.QLink>
+//               </>
+//             );
+//           })}
+//         </Elements.SalesSection>
+//         <Elements.PurchaseSection>
+//           {PurchaseSection.map((item, index) => {
+//             return (
+//               <>
+//                 <Elements.QLink key={index}>
+//                   <Elements.ListItemIcon alt={item.title} src={item.icon} />
+//                   {item.title}
+//                 </Elements.QLink>
+//               </>
+//             );
+//           })}
+//         </Elements.PurchaseSection>
+//         <Elements.IntSection>
+//           {IntSection.map((item, index) => {
+//             return (
+//               <>
+//                 <Elements.QLink key={index}>
+//                   <Elements.ListItemIcon alt={item.title} src={item.icon} />
+//                   {item.title}
+//                 </Elements.QLink>
+//               </>
+//             );
+//           })}
+//         </Elements.IntSection>
+//         <Elements.Document>
+//           {Document.map((item, index) => {
+//             return (
+//               <>
+//                 <Elements.QLink key={index}>
+//                   <Elements.ListItemIcon alt={item.title} src={item.icon} />
+//                   {item.title}
+//                 </Elements.QLink>
+//               </>
+//             );
+//           })}
+//         </Elements.Document>
+//       </Elements.Wrapper>
+//     </Elements.StyledNav>
+//   );
+// };
+
+// export default Sidebar;

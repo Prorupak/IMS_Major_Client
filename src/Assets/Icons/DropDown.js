@@ -1,0 +1,17 @@
+const DropDown = () => {
+  return (
+    <svg
+      fill="none"
+      height="10"
+      viewBox="0 0 10 10"
+      width="10"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M1.36841 3L9 3L5.5696 6.4304C5.46738 6.53259 5.32875 6.59 5.18421 6.59C5.03966 6.59 4.90103 6.53259 4.79881 6.4304L1.36841 3Z"
+        fill="#F7F7FC"
+      />
+    </svg>
+  );
+};
+
+export default DropDown;

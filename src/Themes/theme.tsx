@@ -1,16 +1,9 @@
 /* eslint-disable import/prefer-default-export */
 export const theme = {
   color: {
-    primWhite: '#ffffff',
-    navBack: ' #F4F5F5',
-    logo: '#4ECCA3',
-    textColor: '#292929',
-    QuickAction: '#727272',
-    QuickActionHeader: '#A3A3A3',
-    logoBack: '#DBDBDB',
-    NotificationBack: '#F6FFFE',
-    SidebarBack: '#345B63',
-    SidebarBtm: '#467984'
+    primaryLight: '#AACFCF',
+    white: '#fff',
+    textSecondary: '#555555'
   },
   emSizes: {
     p5x: '0.3125em',
@@ -41,14 +34,14 @@ export const theme = {
     p100x: '6.25em',
     p200x: '12.5em',
     p225x: '15.625em',
-    p255x: '18.75em',
+    p235x: '14.6875em',
+    p255x: '15.9375em',
     p260x: '19.375em',
     p285x: '22.5em',
     p300x: '25em',
     p400x: '37.5em',
     p535x: '55.3125em',
-    p799x: '79.375em',
-
+    p799x: '79. 375em'
   },
   fontSize: {
     p12x: '0.75rem',

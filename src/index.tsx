@@ -5,16 +5,13 @@ import App from './App';
 
 import { theme } from './Themes/theme';
 import GlobalStyles from './Themes/GlobalStyles';
-import { UsersContext } from './Hooks/useContext/UsersContext';
 
 ReactDOM.render(
   <>
-    <UsersContext>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <App />
-      </ThemeProvider>
-    </UsersContext>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <App />
+    </ThemeProvider>
   </>,
   document.getElementById('root')
 );
