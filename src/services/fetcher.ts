@@ -6,7 +6,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { logoutStart } from '../useReducer/action/authActions';
 
-const imsUrl = 'http://localhost:9001';
+export const imsUrl = 'http://localhost:9001';
 // const imsApiVersion = 'v1';
 axios.defaults.baseURL = `${imsUrl}/api`;
 axios.defaults.withCredentials = false;
@@ -45,6 +45,7 @@ axios.interceptors.response.use(
 const httpRequest = <T>(req: AxiosRequestConfig): Promise<T> => {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
+    console.log('req====', req);
     try {
       const request = await axios(req);
       resolve(request.data.data);

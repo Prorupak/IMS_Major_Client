@@ -26,6 +26,15 @@ export interface IRegister {
   isEmailVerified?: boolean;
 }
 
+export interface IFetchParams {
+  offset?: number;
+  limit?: number;
+  skip?: number;
+  query?: string;
+  type?: string;
+  sort?: 'asc' | 'desc';
+}
+
 export interface IProductsDetails {
   _id: string;
   id: string;
@@ -55,6 +64,33 @@ export interface IProductsDetails {
     description: string;
     tax: number;
   };
+}
+
+export interface IProductAction {
+  GET_PRODUCTS: string;
+  CREATE_PRODUCT: string;
+  UPDATE_PRODUCT: string;
+  DELETE_PRODUCT: string;
+}
+
+export type ICategories = {
+  _id?: string;
+  id?: string;
+  name: string;
+  description?: string;
+  image?: Record<string, null>[];
+  date?: Date;
+  isDeleted?: boolean;
+  // multipleItems?: {
+  //   attribute?: string[] | string;
+  //   options?: string[] | string;
+  // };
+};
+export interface ICategoriesAction {
+  GET_CATEGORIES: string;
+  CREATE_CATEGORY: string;
+  DELETE_CATEGORY: string;
+  UPDATE_CATEGORY: string;
 }
 
 export interface IError {

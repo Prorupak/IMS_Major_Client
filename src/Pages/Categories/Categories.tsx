@@ -1,8 +1,12 @@
+/* eslint-disable object-shorthand */
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { GET_CATEGORIES } from '../../constants/actionTypes';
 import useDocumentTitle from '../../Hooks/useDocumentTitle';
-import { getProducts } from '../../services/api';
-import { IError, IProductsDetails } from '../../Interfaces/Interfaces';
+import context from '../../contexts/context';
+// import { getProducts } from '../../services/api';
+// import { IError, IProductsDetails } from '../../Interfaces/Interfaces';
 
 // import { RouteComponentProps } from 'react-router';
 // import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
@@ -162,45 +166,35 @@ import { IError, IProductsDetails } from '../../Interfaces/Interfaces';
 
 // eslint-disable-next-line react/prop-types
 const Categories = () => {
-  const { id } = useParams<Record<string, string | undefined>>();
-  const [post, setPost] = React.useState<IProductsDetails[]>([]);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState<IError | null>(null);
-  console.log('prodcut=====', id);
-
-  useDocumentTitle(`${post}-Product` || 'Product');
-
-  const fetchProducts = async () => {
+  const { category, categoryDispatch } = React.useContext(context);
+  console.log('category===', category);
+  useDocumentTitle(`${category} - Categories`);
+  const fetchData = async () => {
     try {
-      setIsLoading(true);
-      const fetchedProducts = await getProducts();
-      console.log(fetchedProducts);
-      setPost(fetchedProducts);
-      setIsLoading(false);
-    } catch (err: any) {
-      console.log(err);
-      setError(err);
-      setIsLoading(false);
+      const { data } = await axios.get('http://localhost:9001/api/categories');
+      console.log('data====>', data);
+      categoryDispatch({ type: GET_CATEGORIES, payload: { data: data } });
+    } catch (error) {
+      console.log(error);
     }
   };
-
-  console.log('post=====', post);
-
   React.useEffect(() => {
-    fetchProducts();
+    fetchData();
   }, []);
+
+  // useDocumentTitle(`${post}-Product` || 'Product');
+
   return (
     <div style={{ width: '100%' }}>
-      {isLoading && !error && <div>Loading...</div>}
-      {post}
-      {/* <DataGrid
-        autoHeight
-        checkboxSelection
-        columns={columns}
-        pageSize={12}
-        rows={rows}
-        rowsPerPageOptions={[5]}
-      /> */}
+      hello
+      {category.data.map((item: any) => {
+        return (
+          <>
+            <div key={item.id}>{item.name}</div>
+          </>
+        );
+      })}
+      {/* {category} */}
     </div>
   );
 };

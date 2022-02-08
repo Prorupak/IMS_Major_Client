@@ -24,7 +24,7 @@ const initialState: IUser = {
 };
 
 const authReducer = (state = initialState, action: TAuthActionType) => {
-  // const { type } = action;
+  // const {  } = action;
   switch (action.type) {
     case LOGIN_SUCCESS:
       return action.payload;

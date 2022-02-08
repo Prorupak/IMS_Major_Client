@@ -52,11 +52,14 @@ export const createProducts = (post: FormData) => {
 };
 
 export const getProducts = () => {
+  console.log('httpRequest====', httpRequest);
   return httpRequest<IProductsDetails[]>({
     method: 'GET',
-    url: '/products'
+    url: 'products'
   });
 };
+
+console.log('getProducts====', getProducts);
 
 export const updateProducts = (
   postID: string,

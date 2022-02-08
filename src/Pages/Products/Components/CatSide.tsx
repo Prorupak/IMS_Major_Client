@@ -1,33 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
+import { GET_CATEGORIES } from '../../../constants/actionTypes';
+import useDocumentTitle from '../../../Hooks/useDocumentTitle';
+import context from '../../../contexts/context';
 import Icon from '../../../Assets/Icons/Icon';
 import * as Elements from './ELements.CatSide';
 
-interface props {
-  _id?: string;
-  name: string;
-  date: Date;
-}
-
 const CatSide = () => {
-  const [getItem, setGetItem] = React.useState([] as props[]);
-
+  const { category, categoryDispatch } = React.useContext(context);
+  console.log('category===', category);
+  useDocumentTitle(`${category} - Categories`);
   const fetchData = async () => {
-    await axios
-      .get('http://localhost:9001/api/products')
-      .then((data) => {
-        console.log(data.data);
-        setGetItem(data.data);
-      })
-      .catch((errs) => {
-        console.log(errs);
-      });
+    try {
+      const { data } = await axios.get('http://localhost:9001/api/categories');
+      console.log('data====>', data);
+      categoryDispatch({ type: GET_CATEGORIES, payload: { data } });
+    } catch (error) {
+      console.log(error);
+    }
   };
-  // @ts-ignore
-  useEffect(() => {
+  React.useEffect(() => {
     fetchData();
   }, []);
-  console.log(getItem);
   return (
     <>
       <Elements.MainWrapper>
@@ -38,9 +32,9 @@ const CatSide = () => {
           </Elements.HeaderWrapper>
         </Elements.Header>
         <Elements.Contents>
-          {getItem.map((item: props, index: any) => {
+          {category.data.map((item: any) => {
             // eslint-disable-next-line react/no-array-index-key
-            return <Elements.Item key={index}>{item.name}</Elements.Item>;
+            return <Elements.Item key={item.id}>{item.name}</Elements.Item>;
           })}
         </Elements.Contents>
       </Elements.MainWrapper>
