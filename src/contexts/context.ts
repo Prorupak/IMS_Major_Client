@@ -6,11 +6,11 @@ import { createContext } from 'react';
 //   category: ICategories[] | null;
 // };
 
-const CategoryContext = createContext<any>({
-  category: [],
-  categoryDispatch: () => {
+const Context = createContext<any>({
+  data: [],
+  dispatch: () => {
     return undefined;
   }
 });
 
-export default CategoryContext;
+export default Context;

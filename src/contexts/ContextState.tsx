@@ -1,25 +1,24 @@
-import React, { useReducer } from 'react';
-import CategoryContext from './context';
-import {
-  categoriesReducer,
-  initialState
-} from '../useReducer/reducers/categoryReducers';
+import React from 'react';
+import { categoryReducers, productsReducers } from '../useReducer';
+import Context from './context';
 
 interface IProps {
   children: React.ReactNode;
-  // category: string;
-  // categoryDispatch: React.Dispatch<any>;
 }
 
 const contextState: React.FC<IProps> = ({ children }) => {
-  const [category, categoryDispatch] = useReducer(
-    categoriesReducer,
-    initialState
-  );
+  const { category, categoryDispatch } = categoryReducers();
+  const { products, productsDispatch } = productsReducers();
   return (
-    <CategoryContext.Provider value={{ category, categoryDispatch }}>
+    <Context.Provider
+      value={{
+        products,
+        productsDispatch,
+        category,
+        categoryDispatch
+      }}>
       {children}
-    </CategoryContext.Provider>
+    </Context.Provider>
   );
 };
 

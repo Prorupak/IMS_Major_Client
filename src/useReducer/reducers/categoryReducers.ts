@@ -1,4 +1,4 @@
-// import { useReducer } from 'react';
+import React from 'react';
 import { ICategories } from '../../Interfaces/Interfaces';
 import { TCategoryAction } from '../action/categoriesAction';
 import {
@@ -18,7 +18,7 @@ export const initialState: initialStateType = {
   data: []
 };
 
-export const categoriesReducer = (
+const categoriesReducer = (
   state: typeof initialState,
   action: TCategoryAction
 ) => {
@@ -34,3 +34,17 @@ export const categoriesReducer = (
       return state;
   }
 };
+
+const categoryReducers = () => {
+  const [category, categoryDispatch] = React.useReducer(
+    categoriesReducer,
+    initialState
+  );
+
+  return {
+    category,
+    categoryDispatch
+  };
+};
+
+export default categoryReducers;

@@ -37,8 +37,10 @@ const authReducer = (state = initialState, action: TAuthActionType) => {
   }
 };
 
-export const authReducers = () => {
+const authReducers = () => {
   const [auth, authDispatch] = useReducer(authReducer, initialState);
 
   return { auth, authDispatch };
 };
+
+export default authReducers;

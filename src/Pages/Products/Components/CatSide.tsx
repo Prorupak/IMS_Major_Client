@@ -1,27 +1,11 @@
 import React from 'react';
-import axios from 'axios';
-import { GET_CATEGORIES } from '../../../constants/actionTypes';
-import useDocumentTitle from '../../../Hooks/useDocumentTitle';
-import context from '../../../contexts/context';
+// import { useFetch } from '../../../Hooks';
+// import { GET_CATEGORIES } from '../../../constants/actionTypes';
+// import Context from '../../../contexts/context';
 import Icon from '../../../Assets/Icons/Icon';
 import * as Elements from './ELements.CatSide';
 
 const CatSide = () => {
-  const { category, categoryDispatch } = React.useContext(context);
-  console.log('category===', category);
-  useDocumentTitle(`${category} - Categories`);
-  const fetchData = async () => {
-    try {
-      const { data } = await axios.get('http://localhost:9001/api/categories');
-      console.log('data====>', data);
-      categoryDispatch({ type: GET_CATEGORIES, payload: { data } });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  React.useEffect(() => {
-    fetchData();
-  }, []);
   return (
     <>
       <Elements.MainWrapper>
@@ -32,10 +16,10 @@ const CatSide = () => {
           </Elements.HeaderWrapper>
         </Elements.Header>
         <Elements.Contents>
-          {category.data.map((item: any) => {
+          {/* {data.map((item: any) => {
             // eslint-disable-next-line react/no-array-index-key
             return <Elements.Item key={item.id}>{item.name}</Elements.Item>;
-          })}
+          })} */}
         </Elements.Contents>
       </Elements.MainWrapper>
     </>

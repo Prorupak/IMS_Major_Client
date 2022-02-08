@@ -10,7 +10,7 @@ import {
 
 import { IRegister, IUser } from '../../Interfaces/Interfaces';
 
-export const loginStart = (email: string, password: string) => {
+const loginStart = (email: string, password: string) => {
   return <const>{
     type: LOGIN_START,
     payload: {
@@ -20,32 +20,28 @@ export const loginStart = (email: string, password: string) => {
   };
 };
 
-export const loginSuccess = (auth: IUser) => {
+const loginSuccess = (auth: IUser) => {
   return <const>{
     type: LOGIN_SUCCESS,
     payload: auth
   };
 };
 
-export const logoutStart = (callback?: () => void) => {
+const logoutStart = (callback?: () => void) => {
   return <const>{
     type: LOGOUT_START,
     payload: { callback }
   };
 };
 
-export const logoutSuccess = () => {
+const logoutSuccess = () => {
   return <const>{
     type: LOGOUT_SUCCESS
   };
 };
 
-export const registerStart = ({
-  email,
-  name,
-  password,
-  about = ''
-}: IRegister) => {
+// eslint-disable-next-line object-curly-newline
+const registerStart = ({ email, name, password, about = '' }: IRegister) => {
   return <const>{
     type: REGISTER_START,
     payload: {
@@ -57,14 +53,14 @@ export const registerStart = ({
   };
 };
 
-export const registerSuccess = (userAuth: IUser) => {
+const registerSuccess = (userAuth: IUser) => {
   return <const>{
     type: REGISTER_SUCCESS,
     payload: userAuth
   };
 };
 
-export const checkToken = () => {
+const checkToken = () => {
   return <const>{
     type: CHECK_TOKEN
   };
@@ -78,3 +74,13 @@ export type TAuthActionType =
   | ReturnType<typeof registerStart>
   | ReturnType<typeof registerSuccess>
   | ReturnType<typeof checkToken>;
+
+export default {
+  loginStart,
+  loginSuccess,
+  logoutStart,
+  logoutSuccess,
+  registerStart,
+  registerSuccess,
+  checkToken
+};

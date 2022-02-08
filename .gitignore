@@ -7,11 +7,13 @@
 
 # testing
 /coverage
+/package-lock.json
+/yarn.lock
 
 # production
 /build
 
-.env
+/.env
 
 # misc
 .DS_Store
