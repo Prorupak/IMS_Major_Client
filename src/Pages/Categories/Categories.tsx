@@ -1,15 +1,19 @@
 /* eslint-disable object-shorthand */
 import * as React from 'react';
+// import axios from 'axios';
+// import Context from '../../contexts/context';
 import axios from 'axios';
-// import { ProductsContext } from '../../contexts/context';
-// import { useDocumentTitle, useFetch } from '../../Hooks';
-// import { GET_CATEGORIES } from '../../constants/actionTypes';
+import { useDocumentTitle } from '../../Hooks';
+import { GET_CATEGORIES } from '../../constants/actionTypes';
+import Context from '../../contexts/context';
 // eslint-disable-next-line react/prop-types
 const Categories = () => {
+  const { category, categoryDispatch } = React.useContext(Context);
   const fetchData = async () => {
     try {
-      const { data } = await axios.get('http://localhost:9001/api/categories');
-      console.log('category CSP===', data);
+      const res = await axios.get('http://localhost:9001/api/categories');
+      console.log('category CSP===', res.data);
+      categoryDispatch({ type: GET_CATEGORIES, payload: { data: res.data } });
     } catch (error) {
       console.log('error', error);
     }
@@ -18,26 +22,19 @@ const Categories = () => {
   React.useEffect(() => {
     fetchData();
   }, []);
-  // const { products } = useFetch(
-  //   'http://localhost:9001/api/products',
-  //   GET_CATEGORIES,
-  //   ProductsContext
-  // );
-  // useDocumentTitle(`${products} - Categories`);
-  // console.log('category===', products);
 
-  // useDocumentTitle(`${post}-Product` || 'Product');
+  useDocumentTitle(`${category}-Category` || 'Category');
 
   return (
     <div style={{ width: '100%' }}>
       hello
-      {/* {products.data.map((item: any) => {
+      {category.data.map((item: any) => {
         return (
           <>
             <div key={item.id}>{item.name}</div>
           </>
         );
-      })} */}
+      })}
       {/* {category} */}
     </div>
   );

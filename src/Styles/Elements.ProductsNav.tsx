@@ -48,33 +48,6 @@ export const ButtonWrapper = styled.div`
   gap: var(--spacing-15);
 `;
 
-export const Button = styled.button.attrs({
-  type: 'submit'
-})`
-  /* cursor: pointer; */
-  display: flex;
-  /* place-items: center; */
-  align-items: center;
-  gap: 3px;
-  padding: 5px 10px;
-  background-color: var(--color-iconButton);
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.04);
-  p {
-    font-style: normal;
-    font-weight: normal;
-    font-size: var(--fSize-11);
-    line-height: var(--spacing-18);
-    color: #fcfcfc;
-  }
-
-  &:hover {
-    filter: contrast(0.9);
-  }
-`;
-
 export const Tips = styled.div`
   cursor: pointer;
   display: flex;

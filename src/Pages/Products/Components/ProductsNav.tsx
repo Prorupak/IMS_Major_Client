@@ -2,6 +2,7 @@ import React from 'react';
 // eslint-disable-next-line object-curly-newline
 import Icon from '../../../Assets/Icons/Icon';
 import * as Elements from '../../../Styles/Elements.ProductsNav';
+import { Button } from '../../../Themes/GlobalStyles';
 
 const ProductsNav = () => {
   return (
@@ -13,16 +14,16 @@ const ProductsNav = () => {
         </Elements.LeftSection>
         <Elements.RightSection>
           <Elements.ButtonWrapper>
-            <Elements.Button>
+            <Button>
               <Elements.IconButton src={Icon.ListView} />
-            </Elements.Button>
-            <Elements.Button style={{ background: 'var(--color-secondary)' }}>
+            </Button>
+            <Button style={{ background: 'var(--color-secondary)' }}>
               <Elements.IconButton src={Icon.BPlus} />
               <p>New</p>
-            </Elements.Button>
-            <Elements.Button>
+            </Button>
+            <Button>
               <Elements.IconButton src={Icon.Align} />
-            </Elements.Button>
+            </Button>
           </Elements.ButtonWrapper>
           <Elements.Tips>
             <Elements.IconButton
