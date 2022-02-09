@@ -33,21 +33,6 @@ export const Title = styled.p`
   color: var(--color-grayscale-titleActive);
 `;
 
-export const Icon = styled.img`
-  width: 14px;
-  height: 14px;
-`;
-export const IconButton = styled.img`
-  width: 17px;
-  height: 17px;
-`;
-
-export const ButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-15);
-`;
-
 export const Tips = styled.div`
   cursor: pointer;
   display: flex;

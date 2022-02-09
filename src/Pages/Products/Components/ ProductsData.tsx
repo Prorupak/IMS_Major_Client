@@ -1,37 +1,34 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import axios from 'axios';
-import Context from '../../../contexts/context';
-import { GET_PRODUCTS } from '../../../constants/actionTypes';
+import styled from 'styled-components';
+import ProductsDetailsHeader from './productDetails/ProductsDetailsHeader';
 
-const Categories = () => {
-  const { products, productsDispatch } = React.useContext(Context);
-  const fetchData = async () => {
-    try {
-      const { data } = await axios.get('http://localhost:9001/api/products');
-      console.log('category CSP===', data);
-      productsDispatch({ type: GET_PRODUCTS, payload: { data } });
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
+const Grid = styled.div`
+  display: grid;
+  grid-template: 500px 100vw / 200 / auto;
+`;
 
-  React.useEffect(() => {
-    fetchData();
-  }, []);
+const Header = styled.header`
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.04);
+`;
 
+const Section = styled.section``;
+
+interface IProps {
+  children: React.ReactNode;
+}
+
+const ProductsData: React.FC<IProps> = ({ children, ...rest }) => {
   return (
     <>
-      <h6>
-        {products.data.map((item: any) => {
-          return (
-            <>
-              <div key={item.id}>{item.name}</div>
-            </>
-          );
-        })}
-      </h6>
+      <Grid {...rest}>
+        <Header>
+          <ProductsDetailsHeader />
+        </Header>
+        <Section>{children}</Section>
+      </Grid>
     </>
   );
 };
 
-export default Categories;
+export default ProductsData;

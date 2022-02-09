@@ -2,7 +2,12 @@ import React from 'react';
 // eslint-disable-next-line object-curly-newline
 import Icon from '../../../Assets/Icons/Icon';
 import * as Elements from '../../../Styles/Elements.ProductsNav';
-import { Button } from '../../../Themes/GlobalStyles';
+import {
+  Button,
+  Icon as Icons,
+  IconButton,
+  ButtonWrapper
+} from '../../../Themes/GlobalStyles';
 
 const ProductsNav = () => {
   return (
@@ -10,26 +15,23 @@ const ProductsNav = () => {
       <Elements.Nav>
         <Elements.LeftSection>
           <Elements.Title>All Products Categories</Elements.Title>
-          <Elements.Icon src={Icon.DrpDwn} />
+          <Icons src={Icon.DrpDwn} />
         </Elements.LeftSection>
         <Elements.RightSection>
-          <Elements.ButtonWrapper>
+          <ButtonWrapper>
             <Button>
-              <Elements.IconButton src={Icon.ListView} />
+              <IconButton src={Icon.ListView} />
             </Button>
             <Button style={{ background: 'var(--color-secondary)' }}>
-              <Elements.IconButton src={Icon.BPlus} />
+              <IconButton src={Icon.BPlus} />
               <p>New</p>
             </Button>
             <Button>
-              <Elements.IconButton src={Icon.Align} />
+              <IconButton src={Icon.Align} />
             </Button>
-          </Elements.ButtonWrapper>
+          </ButtonWrapper>
           <Elements.Tips>
-            <Elements.IconButton
-              src={Icon.Tips}
-              style={{ width: '20px', height: '20px' }}
-            />
+            <IconButton src={Icon.Tips} />
             <Elements.Text>Page Tips</Elements.Text>
           </Elements.Tips>
         </Elements.RightSection>

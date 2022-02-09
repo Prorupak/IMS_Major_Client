@@ -29,6 +29,8 @@ const Icon = {
   ListView: require('./ListView.svg').default,
   Align: require('./Align.svg').default,
   BPlus: require('./BPlus.svg').default,
-  Tips: require('./Tips.svg').default
+  Tips: require('./Tips.svg').default,
+  Edit: require('./Edit.svg').default,
+  Menu: require('./Menu.svg').default
 };
 export default Icon;

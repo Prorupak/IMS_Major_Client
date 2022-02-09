@@ -21,6 +21,8 @@ export default createGlobalStyle`
         --color-header: #E3EBEB;
         --color-sidebar: #F2F8F8;
         --color-iconButton: #F0F0F0;
+        --color-border: rgba(0,0,0, .08);
+
 
         --primary-font: 'Poppins', sans-serif;
         --secondary-font: 'Roboto', sans-serif;
@@ -150,7 +152,30 @@ export const Button = styled.button.attrs({
     color: #fcfcfc;
   }
 
+  span {
+    font-style: normal;
+    font-weight: normal;
+    font-size: var(--fSize-11);
+    line-height: var(--spacing-18);
+    color: var(--color-primary-dark);
+  }
+
   &:hover {
     filter: contrast(0.9);
   }
+`;
+
+export const Icon = styled.img`
+  width: 14px;
+  height: 14px;
+`;
+export const IconButton = styled.img`
+  min-width: 18px;
+  min-height: 18px;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-15);
 `;
