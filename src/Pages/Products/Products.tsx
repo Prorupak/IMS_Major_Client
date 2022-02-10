@@ -1,46 +1,85 @@
 import React from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import Layout from '../../Components/layout/Layout';
+import ProductsNav from './Components/ProductsNav';
 import Categories from '../Categories/Categories';
+import CatSide from './Components/CatSide';
 import ProductsData from './Components/ ProductsData';
-import Layout from '../../layout/Layout';
-import ProductsLayout from '../../layout/ProductsLayout/ProductsLayout';
-import { useDocumentTitle } from '../../Hooks';
 import ProductDetails from './Components/productDetails/productDetails';
 
-const Grid = styled.div`
+const Grid = styled(motion.div)`
   display: grid;
-  grid-template: 500px 100vw / 200 / auto;
-`;
-const CatResult = styled.div`
-  grid-row: 1 / 2;
-  grid-column: 1 /2;
-  min-height: 100vh;
-  min-width: 500px;
-  border-right: 0.5px solid var(--color-border);
+  grid-template-areas:
+    'sidebar navbar navbar'
+    'sidebar main product'
+    'sidebar main product';
+  grid-template-rows: 45px 100vh auto;
+  grid-template-columns: 12.5rem auto 28.125rem;
+  height: 100vh;
 `;
 
-const CatData = styled.div`
-  grid-row: 1 / 2;
-  grid-column: 2 / 2;
+const CatSection = styled(motion.div).attrs({
+  initial: { x: -100, opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  exit: { x: -100, opacity: 0 }
+})`
+  min-width: 0px;
+  grid-area: sidebar;
+  background-color: var(--color-sidebar);
+  box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.03);
+`;
+
+const Nav = styled(motion.div).attrs({
+  initial: { x: -100, opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  exit: { x: -100, opacity: 0 }
+})`
+  display: grid;
+  align-items: center;
+  grid-area: navbar;
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.03);
+`;
+
+const Main = styled(motion.div).attrs({
+  initial: { x: -100, opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  exit: { x: -100, opacity: 0 }
+})`
+  grid-area: main;
+  border-right: 1px solid rgba(0, 0, 0, 0.04);
+`;
+
+const Product = styled(motion.div).attrs({
+  initial: { x: -100, opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  exit: { x: -100, opacity: 0 }
+})`
+  grid-area: product;
 `;
 
 const Products = () => {
-  useDocumentTitle('Categories');
   return (
-    <Layout>
-      <ProductsLayout>
+    <>
+      <Layout>
         <Grid>
-          <CatResult>
+          <Nav>
+            <ProductsNav />
+          </Nav>
+          <CatSection>
+            <CatSide />
+          </CatSection>
+          <Main>
             <Categories />
-          </CatResult>
-          <CatData>
+          </Main>
+          <Product>
             <ProductsData>
               <ProductDetails />
             </ProductsData>
-          </CatData>
+          </Product>
         </Grid>
-      </ProductsLayout>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

@@ -1,19 +1,24 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import CatSide from '../../Pages/Products/Components/CatSide';
-import ProductsNav from '../../Pages/Products/Components/ProductsNav';
+// import useToggle from '../../Hooks/useToggle';
+// import CatSide from '../../Pages/Products/Components/CatSide';
+// import ProductsNav from '../../Pages/Products/Components/ProductsNav';
 import * as Elements from '../../Styles/Elements.ProductsLayout';
 
 const ProductsLayout = ({ children, ...rest }: any) => {
+  // const { toggle } = useToggle();
+  // const [toggle, setToggle] = React.useState<boolean>(false)
   return (
     <>
       <Elements.Grid {...rest}>
-        <Elements.GridNav>
-          <CatSide />
-        </Elements.GridNav>
-        <Elements.GridHeader>
+        {/* {toggle ? (
+          <Elements.GridNav>
+            <CatSide />
+          </Elements.GridNav>
+        ) : null} */}
+        {/* <Elements.GridHeader>
           <ProductsNav />
-        </Elements.GridHeader>
+        </Elements.GridHeader> */}
         <Elements.GridMain>{children}</Elements.GridMain>
       </Elements.Grid>
     </>

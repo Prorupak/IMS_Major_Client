@@ -3,8 +3,10 @@ import React from 'react';
 import Context from '../../../contexts/context';
 import Icon from '../../../Assets/Icons/Icon';
 import * as Elements from './ELements.CatSide';
+import useToggle from '../../../Hooks/useToggle';
 
 const CatSide = () => {
+  const { handleOpenMain } = useToggle();
   const { category, categoryDispatch } = React.useContext(Context);
   const fetchData = async () => {
     try {
@@ -22,11 +24,12 @@ const CatSide = () => {
 
   return (
     <>
+      {/* {isOpen ? null : ( */}
       <Elements.MainWrapper>
         <Elements.Header>
           <Elements.HeaderWrapper>
             <p>Categories</p>
-            <Elements.Icon src={Icon.Close} />
+            <Elements.Icon onClick={handleOpenMain} src={Icon.Close} />
           </Elements.HeaderWrapper>
         </Elements.Header>
         <Elements.Contents>
@@ -36,6 +39,7 @@ const CatSide = () => {
           })}
         </Elements.Contents>
       </Elements.MainWrapper>
+      {/* )} */}
     </>
   );
 };

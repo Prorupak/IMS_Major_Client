@@ -1,6 +1,7 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/prefer-default-export */
 import styled, { createGlobalStyle } from 'styled-components';
+import { motion } from 'framer-motion/dist/framer-motion';
 
 export default createGlobalStyle`
 
@@ -32,7 +33,7 @@ export default createGlobalStyle`
         --fSize-5: 0.6875rem; //11
         --fSize-6: 0.75rem; //12
         --fSize-7: 0.8125rem; //13
-        --fSize-8: 0.875rem;
+        --fSize-8: 0.875rem;// 14
         --fSize-9: 0.9375rem;
         --fSize-11: 1rem;
         --fSize-12: 1.0625rem;
@@ -103,6 +104,7 @@ export default createGlobalStyle`
 
     body {
         overflow: hidden;
+        scroll-behavior: smooth;
     }
     
     
@@ -165,9 +167,14 @@ export const Button = styled.button.attrs({
   }
 `;
 
-export const Icon = styled.img`
-  width: 14px;
-  height: 14px;
+export const Icon = styled(motion.img).attrs({
+  whileHover: { scale: 1.1, rotate: 0.5 },
+  whileTap: { scale: 0.9 },
+  stiffness: 2000
+})`
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
 `;
 export const IconButton = styled.img`
   min-width: 18px;

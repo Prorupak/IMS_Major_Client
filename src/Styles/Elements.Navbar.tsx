@@ -4,8 +4,6 @@ import styled from 'styled-components';
 
 export const Nav = styled.nav`
   width: 100%;
-
-  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.04);
 `;
 
 export const NavWrapper = styled.div`

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const Grid = styled.div`
+  position: relative;
+  z-index: 999;
   display: grid;
   grid-template:
     [row-1-start] min-content
@@ -17,13 +19,11 @@ export const GridNav = styled.div`
 
 export const GridHeader = styled.header`
   grid-area: 1 / 2 / span 1 / 2;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
 `;
 
 export const GridMain = styled.main`
-  display: grid;
   grid-area: row-2-start / 2 / row-end / 3;
-  /* place-content: center; */
-  height: 100%;
   color: #000;
   background-color: #fff;
 `;

@@ -23,11 +23,12 @@ const Categories = () => {
     fetchData();
   }, []);
 
-  useDocumentTitle(`${category}-Category` || 'Category');
+  // convert objects into array
+
+  useDocumentTitle('Category');
 
   return (
     <div style={{ width: '100%' }}>
-      hello
       {category.data.map((item: any) => {
         return (
           <>

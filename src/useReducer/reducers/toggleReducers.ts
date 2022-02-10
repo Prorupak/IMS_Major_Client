@@ -3,41 +3,20 @@ import {
   TOGGLE_OPEN_MENU,
   TOGGLE_CLOSE_MENU
 } from '../../constants/actionTypes';
-import { TToggleAction } from '../action/toggleAction';
 
-type initialStateType = {
-  toggleClose: boolean;
-  toggleOpen: boolean;
-};
-
-const initialState: initialStateType = {
-  toggleClose: false,
-  toggleOpen: true
-};
-
-const toggleReducers = (state: typeof initialState, action: TToggleAction) => {
-  if (action.type === TOGGLE_OPEN_MENU) {
-    return {
-      ...state,
-      toggleClose: false,
-      toggleOpen: true
-    };
+const toggleReducers = (state: boolean, action: { type: string }) => {
+  switch (action.type) {
+    case TOGGLE_OPEN_MENU:
+      return false;
+    case TOGGLE_CLOSE_MENU:
+      return true;
+    default:
+      return state;
   }
-  if (action.type === TOGGLE_CLOSE_MENU) {
-    return {
-      ...state,
-      toggleClose: true,
-      toggleOpen: false
-    };
-  }
-  return state;
 };
 
 const toggleReducer = () => {
-  const [toggle, toggleDispatch] = React.useReducer(
-    toggleReducers,
-    initialState
-  );
+  const [toggle, toggleDispatch] = React.useReducer(toggleReducers, false);
 
   return {
     toggle,

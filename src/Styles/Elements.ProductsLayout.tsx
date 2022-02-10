@@ -28,6 +28,7 @@ export const GridHeader = styled.header`
 `;
 
 export const GridMain = styled.main`
+  flex-flow: 10;
   grid-row: 2 / 3;
   grid-column: 2 / 4;
 `;

@@ -1,17 +1,15 @@
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
-  display: grid;
-  grid-auto-flow: 100px;
-  grid-template: auto / auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 var(--spacing-15);
 `;
 
 export const LeftSection = styled.div`
   display: flex;
   align-items: center;
   gap: var(--spacing-5);
-  grid-row: 1 / 2;
-  grid-column: 1 / 2;
 `;
 
 export const RightSection = styled.div`
@@ -19,8 +17,6 @@ export const RightSection = styled.div`
   justify-content: end;
   align-items: center;
   gap: var(--spacing-15);
-  grid-row: 1 / 3;
-  grid-column: 2 / 3;
 `;
 
 export const Title = styled.p`

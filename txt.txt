@@ -106,7 +106,7 @@
 //           {Document.map((item, index) => {
 //             return (
 //               <>
-//                 <Elements.QLink key={index}>
+//                 <Elements.QLink={index}>
 //                   <Elements.ListItemIcon alt={item.title} src={item.icon} />
 //                   {item.title}
 //                 </Elements.QLink>
@@ -120,3 +120,85 @@
 // };
 
 // export default Sidebar;
+
+
+// products
+/* eslint-disable import/no-unresolved */
+import React from 'react';
+import styled from 'styled-components';
+import { motion } from 'framer-motion/dist/framer-motion';
+import useToggle from '../../Hooks/useToggle';
+import Categories from '../Categories/Categories';
+import ProductsData from './Components/ ProductsData';
+import Layout from '../../layout/Layout';
+import ProductsLayout from '../../layout/ProductsLayout/ProductsLayout';
+import { useDocumentTitle } from '../../Hooks';
+import ProductDetails from './Components/productDetails/productDetails';
+import Icon from '../../Assets/Icons/Icon';
+import { Icon as Icons } from '../../Themes/GlobalStyles';
+
+const Grid = styled.div`
+  display: grid;
+  grid-template: 500px 100vw / span 10px;
+
+  .isActive {
+    background-color: aliceblue;
+  }
+
+  .isInactive {
+    background-color: white;
+  }
+`;
+const CatResult = styled(motion.div).attrs({})`
+  display: flex;
+  padding: var(--spacing-15);
+  grid-row: 1 / 2;
+  grid-column: 1 /2;
+  min-height: 100vh;
+  min-width: 500px;
+  border-right: 0.5px solid var(--color-border);
+`;
+
+const CatData = styled(motion.div).attrs({
+  animate: { x: 0, opacity: 1 },
+  exit: { x: -300, opacity: 0 },
+  initial: { x: 300, opacity: 0 }
+})<{ toggle: boolean }>`
+  position: relative;
+  grid-row: 1 / 2;
+  grid-column: 2 / 2;
+  min-width: ${({ toggle }) => {
+    return toggle ? '0px' : '10px';
+  }};
+`;
+
+const Products = () => {
+  useDocumentTitle('Categories');
+  const { toggle, handleOpen } = useToggle();
+  return (
+    <Layout>
+      <ProductsLayout>
+        <Grid>
+          <Categories />
+          <CatResult>
+            {toggle && (
+              <Icons alt="icon" onClick={handleOpen} src={Icon.Menu} />
+            )}
+          </CatResult>
+          {toggle ? null : (
+            <CatData toggle={toggle}>
+              <ProductsData>
+                <ProductDetails />
+              </ProductsData>
+            </CatData>
+          )}
+        </Grid>
+      </ProductsLayout>
+    </Layout>
+  );
+};
+
+export default Products;
+
+
+cat

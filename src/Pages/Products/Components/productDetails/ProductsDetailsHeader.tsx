@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { TOGGLE_CLOSE_MENU } from '../../../../constants/actionTypes';
 import {
   Button,
   Icon as Icons,
@@ -8,13 +9,15 @@ import {
 } from '../../../../Themes/GlobalStyles';
 import Icon from '../../../../Assets/Icons/Icon';
 import * as Elements from '../../../../Styles/Elements.ProductsNav';
-import useToggle from '../../../../Hooks/useToggle';
+// import useToggle from '../../../../Hooks/useToggle';
+import ToggleMenuContext from '../../../../contexts/ToggleMenuContext';
 
 const Nav = styled.nav``;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+
   align-items: center;
   padding: var(--spacing-10) var(--spacing-15);
   .is-close {
@@ -27,38 +30,41 @@ const RightSection = styled.div`
 `;
 
 const ProductsDetailsHeader = () => {
-  // implement useToggle to toggle menu
-  const { toggle, handleClose, handleOpen } = useToggle(true);
+  const { toggle, toggleDispatch } = React.useContext(ToggleMenuContext);
+
+  const handleToggle = () => {
+    toggleDispatch({ type: TOGGLE_CLOSE_MENU });
+  };
 
   return (
-    <Nav>
-      <Wrapper>
-        <Elements.LeftSection>
-          <ButtonWrapper>
-            <Button>
-              <IconButton src={Icon.Edit} />
-            </Button>
-            <Button style={{ background: 'var(--color-secondary)' }}>
-              <IconButton src={Icon.BPlus} />
-              <p>Add Item</p>
-            </Button>
-            <Button>
-              <span>More</span>
-              <IconButton src={Icon.DrpDwn} />
-            </Button>
-          </ButtonWrapper>
-        </Elements.LeftSection>
-        {toggle ? (
-          <RightSection className="is-open" onClick={handleClose}>
-            <Icons src={Icon.Menu} />
-          </RightSection>
-        ) : (
-          <RightSection className="is-close" onClick={handleOpen}>
-            <Icons src={Icon.Close} />
-          </RightSection>
-        )}
-      </Wrapper>
-    </Nav>
+    <>
+      {toggle ? (
+        ''
+      ) : (
+        <Nav>
+          <Wrapper>
+            <Elements.LeftSection>
+              <ButtonWrapper>
+                <Button>
+                  <IconButton src={Icon.Edit} />
+                </Button>
+                <Button style={{ background: 'var(--color-secondary)' }}>
+                  <IconButton src={Icon.BPlus} />
+                  <p>Add Item</p>
+                </Button>
+                <Button>
+                  <span>More</span>
+                  <IconButton src={Icon.DrpDwn} />
+                </Button>
+              </ButtonWrapper>
+            </Elements.LeftSection>
+            <RightSection onClick={handleToggle}>
+              <Icons src={Icon.Close} />
+            </RightSection>
+          </Wrapper>
+        </Nav>
+      )}
+    </>
   );
 };
 
