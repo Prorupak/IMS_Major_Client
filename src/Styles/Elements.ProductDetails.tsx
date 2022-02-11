@@ -1,18 +1,28 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const Grid = styled.div`
+  overflow-x: hidden;
   display: grid;
   grid-template-areas:
     'header'
     'content'
     'body';
 
-  grid-template-rows: auto auto 100%;
+  grid-template-rows: auto auto fill-content;
 
   margin: var(--spacing-15) var(--spacing-15);
 `;
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  /* overflow: hidden; */
+  display: flex;
+  gap: 55px;
+  width: 100%;
+  /* max-width: 400px; */
+  max-width: 500px;
+  min-height: fit-content;
+`;
 
 export const Header = styled.header`
   grid-area: header;
@@ -22,21 +32,37 @@ export const Header = styled.header`
 
 export const Content = styled.section`
   grid-area: content;
-  /* margin: var(--spacing-10) var(--spacing-10); */
 `;
 
 export const Body = styled.section`
+  overflow: scroll;
   grid-area: body;
-  min-height: 100vh;
+  margin: var(--spacing-5) 0;
+`;
+
+export const Headings = styled(motion.div).attrs({})`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Data = styled(motion.div).attrs({})`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ColorWrapper = styled.div`
   /* display: flex; */
 `;
 
-export const Colors = styled.div`
+export const Colors = styled(motion.div).attrs({})`
+  overflow: scroll;
+  scroll-behavior: smooth;
+  scroll-snap-type: proximity;
   display: flex;
-  flex-wrap: 3;
-  min-width: 50%;
-  max-width: 100%;
+  flex-flow: row wrap;
+  gap: 10px;
+  min-height: 0px;
+  max-height: 70px;
+  min-width: 60rem;
+  max-width: 65rem;
 `;

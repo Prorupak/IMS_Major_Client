@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import styled from 'styled-components';
+import { getCategories } from 'api/api';
 import ProductsDetailsHeader from './productDetails/ProductsDetailsHeader';
 
 const Grid = styled.div`
@@ -14,11 +15,19 @@ const Header = styled.header`
 
 const Section = styled.section``;
 
-interface IProps {
+type IProps = {
   children: React.ReactNode;
-}
+};
 
 const ProductsData: React.FC<IProps> = ({ children, ...rest }) => {
+  const fetchData = async () => {
+    try {
+      const fetchDatas = await getCategories();
+      console.log('fetch===>', fetchDatas);
+    } catch (err) {
+      console.log('err====>', err);
+    }
+  };
   return (
     <>
       <Grid {...rest}>

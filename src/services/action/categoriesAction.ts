@@ -9,14 +9,14 @@ import {
 const listCategoryStart = (data: any) => {
   return <const>{
     type: GET_CATEGORIES,
-    payload: data
+    payload: [data]
   };
 };
 
 const listCategorySuccess = (category: ICategories[]) => {
   return <const>{
     type: GET_CATEGORIES_SUCCESS,
-    payload: category
+    payload: [category]
   };
 };
 

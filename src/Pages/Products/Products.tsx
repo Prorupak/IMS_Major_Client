@@ -1,33 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import useToggle from '../../Hooks/useToggle';
 import Layout from '../../Components/layout/Layout';
 import ProductsNav from './Components/ProductsNav';
 import Categories from '../Categories/Categories';
-import CatSide from './Components/CatSide';
 import ProductsData from './Components/ ProductsData';
 import ProductDetails from './Components/productDetails/productDetails';
 
 const Grid = styled(motion.div)`
   display: grid;
   grid-template-areas:
-    'sidebar navbar navbar'
-    'sidebar main product'
-    'sidebar main product';
+    'navbar navbar'
+    ' main product'
+    ' main product';
   grid-template-rows: 45px 100vh auto;
-  grid-template-columns: 12.5rem auto 28.125rem;
+  grid-template-columns: auto 70rem;
   height: 100vh;
-`;
-
-const CatSection = styled(motion.div).attrs({
-  initial: { x: -100, opacity: 0 },
-  animate: { x: 0, opacity: 1 },
-  exit: { x: -100, opacity: 0 }
-})`
-  min-width: 0px;
-  grid-area: sidebar;
-  background-color: var(--color-sidebar);
-  box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.03);
 `;
 
 const Nav = styled(motion.div).attrs({
@@ -59,6 +48,8 @@ const Product = styled(motion.div).attrs({
 `;
 
 const Products = () => {
+  const { toggle } = useToggle();
+
   return (
     <>
       <Layout>
@@ -66,17 +57,16 @@ const Products = () => {
           <Nav>
             <ProductsNav />
           </Nav>
-          <CatSection>
-            <CatSide />
-          </CatSection>
           <Main>
             <Categories />
           </Main>
-          <Product>
-            <ProductsData>
-              <ProductDetails />
-            </ProductsData>
-          </Product>
+          {toggle ? (
+            <Product>
+              <ProductsData>
+                <ProductDetails />
+              </ProductsData>
+            </Product>
+          ) : null}
         </Grid>
       </Layout>
     </>

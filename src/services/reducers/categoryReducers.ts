@@ -25,7 +25,7 @@ const categoriesReducer = (
   switch (action.type) {
     case GET_CATEGORIES:
       // eslint-disable-next-line no-case-declarations
-      const { data } = action.payload;
+      const [data] = action.payload;
       return {
         ...state,
         data

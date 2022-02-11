@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TOGGLE_CLOSE_MENU } from '../../../../constants/actionTypes';
+import useToggle from '../../../../Hooks/useToggle';
 import {
   Button,
   Icon as Icons,
@@ -10,7 +10,6 @@ import {
 import Icon from '../../../../Assets/Icons/Icon';
 import * as Elements from '../../../../Styles/Elements.ProductsNav';
 // import useToggle from '../../../../Hooks/useToggle';
-import ToggleMenuContext from '../../../../contexts/ToggleMenuContext';
 
 const Nav = styled.nav``;
 
@@ -29,41 +28,32 @@ const RightSection = styled.div`
   cursor: pointer;
 `;
 
-const ProductsDetailsHeader = () => {
-  const { toggle, toggleDispatch } = React.useContext(ToggleMenuContext);
-
-  const handleToggle = () => {
-    toggleDispatch({ type: TOGGLE_CLOSE_MENU });
-  };
-
+const ProductsDetailsHeader: React.FC = () => {
+  const { handleClose } = useToggle();
   return (
     <>
-      {toggle ? (
-        ''
-      ) : (
-        <Nav>
-          <Wrapper>
-            <Elements.LeftSection>
-              <ButtonWrapper>
-                <Button>
-                  <IconButton src={Icon.Edit} />
-                </Button>
-                <Button style={{ background: 'var(--color-secondary)' }}>
-                  <IconButton src={Icon.BPlus} />
-                  <p>Add Item</p>
-                </Button>
-                <Button>
-                  <span>More</span>
-                  <IconButton src={Icon.DrpDwn} />
-                </Button>
-              </ButtonWrapper>
-            </Elements.LeftSection>
-            <RightSection onClick={handleToggle}>
-              <Icons src={Icon.Close} />
-            </RightSection>
-          </Wrapper>
-        </Nav>
-      )}
+      <Nav>
+        <Wrapper>
+          <Elements.LeftSection>
+            <ButtonWrapper>
+              <Button>
+                <IconButton src={Icon.Edit} />
+              </Button>
+              <Button style={{ background: 'var(--color-secondary)' }}>
+                <IconButton src={Icon.BPlus} />
+                <p>Add Item</p>
+              </Button>
+              <Button>
+                <span>More</span>
+                <IconButton src={Icon.DrpDwn} />
+              </Button>
+            </ButtonWrapper>
+          </Elements.LeftSection>
+          <RightSection onClick={handleClose}>
+            <Icons src={Icon.Close} />
+          </RightSection>
+        </Wrapper>
+      </Nav>
     </>
   );
 };

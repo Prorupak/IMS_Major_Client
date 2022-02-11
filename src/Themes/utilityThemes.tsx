@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Item = styled.p`
   margin: 8px 0;
+  text-transform: capitalize;
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
