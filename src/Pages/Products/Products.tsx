@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { Icon as Icons } from 'Themes/GlobalStyles';
+import Icon from 'Assets/Icons/Icon';
 import useToggle from '../../Hooks/useToggle';
 import Layout from '../../Components/layout/Layout';
 import ProductsNav from './Components/ProductsNav';
@@ -48,7 +50,7 @@ const Product = styled(motion.div).attrs({
 `;
 
 const Products = () => {
-  const { toggle } = useToggle();
+  const [toggle, toggleHandle] = useToggle('persist', false);
 
   return (
     <>
@@ -59,6 +61,9 @@ const Products = () => {
           </Nav>
           <Main>
             <Categories />
+            {toggle ? null : (
+              <Icons alt="Icon" onClick={toggleHandle} src={Icon.Menu} />
+            )}
           </Main>
           {toggle ? (
             <Product>

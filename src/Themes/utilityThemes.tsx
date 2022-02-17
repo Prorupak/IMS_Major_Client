@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const Item = styled.p`
   margin: 8px 0;
@@ -15,6 +16,12 @@ export const Divider = styled.div`
   width: 100%;
   height: 0.5px;
   background-color: rgba(0, 0, 0, 0.07);
+  margin: 5px 0;
+`;
+export const WDiv = styled.hr`
+  width: 100%;
+  height: 0.5px;
+  background-color: rgb(255, 255, 255);
   margin: 5px 0;
 `;
 export const Heading = styled.p`
@@ -36,4 +43,9 @@ export const ItemWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const InputIcon = styled(motion.img).attrs({})`
+  height: 16px;
+  width: 16px;
 `;

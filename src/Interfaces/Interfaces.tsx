@@ -9,9 +9,10 @@ export interface IUser {
   name?: string;
   email: string;
   password: string;
-  about?: string;
+  phoneNumber: number;
+  about?: string[];
   role?: string;
-  history?: string;
+  history?: string[];
   isEmailVerified?: boolean;
   profilePicture?: Record<string, any>[];
 }
@@ -20,6 +21,8 @@ export interface IRegister {
   name: string;
   email: string;
   password: string;
+  phoneNumber: string;
+  country: string;
   about?: string;
   role?: string;
   history?: string;

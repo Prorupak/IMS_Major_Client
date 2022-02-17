@@ -1,7 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import axios from 'axios';
 import React from 'react';
+import { useParams } from 'react-router';
 import styled from 'styled-components';
-import { getCategories } from 'api/api';
+import { getCategories } from '../../../api/api';
 import ProductsDetailsHeader from './productDetails/ProductsDetailsHeader';
 
 const Grid = styled.div`
@@ -20,19 +22,28 @@ type IProps = {
 };
 
 const ProductsData: React.FC<IProps> = ({ children, ...rest }) => {
+  const [data, setData] = React.useState<string[] | any[]>([]);
   const fetchData = async () => {
     try {
-      const fetchDatas = await getCategories();
-      console.log('fetch===>', fetchDatas);
+      const fetchDatas = await axios.get(
+        'https://api.first.org/data/v1/countries'
+      );
+      setData([fetchDatas]);
+      console.log('fetch===>', fetchData);
     } catch (err) {
       console.log('err====>', err);
     }
   };
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <>
       <Grid {...rest}>
         <Header>
           <ProductsDetailsHeader />
+          {data}
         </Header>
         <Section>{children}</Section>
       </Grid>

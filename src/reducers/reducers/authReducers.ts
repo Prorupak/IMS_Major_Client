@@ -1,5 +1,6 @@
 import { useReducer } from 'react';
 import {
+  LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   LOGIN_SUCCESS
   // LOGOUT_SUCCESS
@@ -7,20 +8,14 @@ import {
 import { TAuthActionType } from '../action/authActions';
 import { IUser } from '../../Interfaces/Interfaces';
 
-// interface props {
-//   user: string | null;
-// }
-
-// const user: props = localStorage.getItem('currentUser')
-//   ? JSON.parse(localStorage.getItem('currentUser')).user
-//   : '';
-
-// const token = localStorage.getItem('currentUser')
-//   ? JSON.parse(localStorage.getItem('currentUser')).auth_token
-//   : '';
 const initialState: IUser = {
+  id: '',
+  name: '',
   email: '',
-  password: ''
+  password: '',
+  about: [],
+  history: [],
+  phoneNumber: 0
 };
 
 const authReducer = (state = initialState, action: TAuthActionType) => {
@@ -28,6 +23,9 @@ const authReducer = (state = initialState, action: TAuthActionType) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return action.payload;
+
+    case LOGOUT_SUCCESS:
+      return initialState;
 
     case REGISTER_SUCCESS:
       return action.payload;

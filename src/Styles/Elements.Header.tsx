@@ -46,7 +46,7 @@ export const SocialWrapper = styled.div`
 
 export const GoogleIcon = styled.img.attrs({
   alt: 'google',
-  src: `${Icons.GoogleIc}`
+  src: `${Icons.Google}`
 })`
   display: flex;
 `;

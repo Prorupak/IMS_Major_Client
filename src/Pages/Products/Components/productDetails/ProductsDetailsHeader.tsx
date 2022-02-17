@@ -29,7 +29,7 @@ const RightSection = styled.div`
 `;
 
 const ProductsDetailsHeader: React.FC = () => {
-  const { handleClose } = useToggle();
+  const [handleToggle] = useToggle('persist', false);
   return (
     <>
       <Nav>
@@ -49,8 +49,8 @@ const ProductsDetailsHeader: React.FC = () => {
               </Button>
             </ButtonWrapper>
           </Elements.LeftSection>
-          <RightSection onClick={handleClose}>
-            <Icons src={Icon.Close} />
+          <RightSection>
+            <Icons onClick={handleToggle} src={Icon.Close} />
           </RightSection>
         </Wrapper>
       </Nav>

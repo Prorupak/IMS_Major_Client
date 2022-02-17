@@ -1,0 +1,93 @@
+  <svg
+          height="820px"
+          version="1.1"
+          viewBox="0 0 1440 820"
+          width="1440px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Group</title>
+          <desc>Created with Sketch.</desc>
+          <defs>
+            <linearGradient
+              id="linearGradient-1"
+              x1="-8.43013734%"
+              x2="50%"
+              y1="-17.6243013%"
+              y2="50%">
+              <stop offset="0%" stopColor="#000000" stopOpacity="0.01" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0.02" />
+            </linearGradient>
+            <linearGradient
+              id="linearGradient-2"
+              x1="50%"
+              x2="66.8719014%"
+              y1="0%"
+              y2="87.9838784%">
+              <stop offset="0%" stopColor="#000000" stopOpacity="0.01" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0.04" />
+            </linearGradient>
+            <linearGradient
+              id="linearGradient-3"
+              x1="59.4260833%"
+              x2="75.0463678%"
+              y1="44.3123794%"
+              y2="65.2398003%">
+              <stop offset="0%" stopColor="#000000" stopOpacity="0.02" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient
+              id="linearGradient-4"
+              x1="77.6224786%"
+              x2="61.2142769%"
+              y1="34.4188974%"
+              y2="56.4009385%">
+              <stop offset="0%" stopColor="#000000" stopOpacity="0.05" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0.01" />
+            </linearGradient>
+            <linearGradient
+              id="linearGradient-5"
+              x1="-1.34707908%"
+              x2="87.1825875%"
+              y1="42.8813389%"
+              y2="100%">
+              <stop offset="0%" stopColor="#000000" stopOpacity="0.02" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0.03" />
+            </linearGradient>
+          </defs>
+          <g
+            fill="none"
+            fillRule="evenodd"
+            id="Signin"
+            stroke="none"
+            strokeWidth="1">
+            <g id="Username-FILLED-Copy">
+              <g id="Group">
+                <polygon
+                  fill="url(#linearGradient-1)"
+                  id="Path-5"
+                  points="1.84741111e-13 474 473 2.13162821e-14 1.84741111e-13 2.13162821e-14"
+                />
+                <polygon
+                  fill="url(#linearGradient-2)"
+                  id="Path-4"
+                  points="1385 820 1347 515 1440 515 1440 820"
+                />
+                <polygon
+                  fill="url(#linearGradient-3)"
+                  id="Path-3"
+                  points="1440 25 0 635 0 647 429 820 1440 820"
+                />
+                <polygon
+                  fill="url(#linearGradient-4)"
+                  id="Path"
+                  points="1440 696 0 310 0 141 185 0 1440 0"
+                />
+                <polygon
+                  fill="url(#linearGradient-5)"
+                  id="Path-2"
+                  points="796.210203 820 0.210203261 820 0.210203261 0 177.210203 0"
+                />
+              </g>
+            </g>
+          </g>
+        </svg>

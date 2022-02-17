@@ -6,7 +6,7 @@ const Icon = {
   fullName: require('./UserLog.svg').default,
   userCreate: require('./userCreate.svg').default,
   password: require('./lock.svg').default,
-  GoogleIc: require('./Google1.svg').default,
+  Google: require('./Google1.svg').default,
   FaceIc: require('./Facebook1.svg').default,
   Notification: require('./Notification.svg').default,
   Setting: require('./Setting.svg').default,
@@ -31,6 +31,15 @@ const Icon = {
   BPlus: require('./BPlus.svg').default,
   Tips: require('./Tips.svg').default,
   Edit: require('./Edit.svg').default,
-  Menu: require('./Menu.svg').default
+  Menu: require('./Menu.svg').default,
+  Company: require('./Company.svg').default,
+  Earth: require('./Earth.svg').default,
+  Mail: require('./Mail.svg').default,
+  Facebook: require('./Facebook.svg').default,
+  Linkedin: require('./Linkedin.svg').default,
+  Twitter: require('./Twitter.svg').default,
+  Microsoft: require('./Microsoft.svg').default,
+  Password: require('./Password.svg').default,
+  Phone: require('./Phone.svg').default
 };
 export default Icon;

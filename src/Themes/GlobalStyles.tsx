@@ -4,6 +4,13 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { motion } from 'framer-motion/dist/framer-motion';
 
 export default createGlobalStyle`
+*{
+  overflow: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 
     html {
         --color-primary: #345B63;
@@ -12,12 +19,14 @@ export default createGlobalStyle`
         --color-secondary: #1CC8EE;
         --color-secondary-dark: #0096B7;
         --color-secondary-light: #D5F7FF;
-        --color-error: #ED2E7E;
+        --color-error: #ed2e2e;
+        --color-button: #C61B37;
         --color-error-dark: #806570;
         --color-error-dark: #FFF2F7;
         --color-success:#00BA88;
         --color-success-dark:#00966D;
         --color-success-light:#F3FDFA;
+        --color-placeholder:#6d6e7b;
         --color-grayscale-titleActive:#14142A;
         --color-header: #E3EBEB;
         --color-sidebar: #F2F8F8;
@@ -103,8 +112,26 @@ export default createGlobalStyle`
     }
 
     body {
-        overflow: hidden;
+        overflow: -moz-hidden-unscrollable;
         scroll-behavior: smooth;
+
+
+        &::after {
+          content: "";
+        }
+
+        &::-webkit-scrollbar {
+            width: 0.5rem;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: var(--color-grayscale-titleActive);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--color-secondary);
+        }
+
     }
     
     
