@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router';
 import useInput from 'Hooks/useInput';
 import validation from 'validation/validation';
 import useAuth from 'Hooks/useAuth';
-import { AuthContext } from 'HOC/WithAuth';
+import { AuthContext, setSession } from 'HOC/WithAuth';
 
 const Container = styled(motion.section).attrs({})`
   margin: 0 20px;
@@ -92,13 +92,16 @@ const Form = () => {
         password: password.value
       });
       const { token } = res.data.tokens.access;
-      localStorage.setItem('jwtToken', token);
+      console.log('token', token);
       setAuth(token);
-      console.log('tokens===>', token);
+      // if (res.data.tokens.access) {
+      //   setSession(res.data.tokens.access);
+      //   setAuth(res.data.tokens.access);
+      // }
 
       navigate('/products');
     } catch (err: any) {
-      console.log('err===>', err.response);
+      console.log('err===>', err);
       setErrMsg(err.response.data.message);
     }
   };

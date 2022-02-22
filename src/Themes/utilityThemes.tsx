@@ -6,21 +6,39 @@ export const Item = styled.p`
   text-transform: capitalize;
   font-family: Poppins;
   font-style: normal;
-  font-weight: 500;
-  font-size: var(--fSize-10);
+  font-weight: 600;
+  font-size: var(--fSize-8);
   line-height: var(--spacing-18);
   color: var(--color-primary-dark);
 `;
 
+export const Title = styled.p`
+  cursor: pointer;
+  font-family: var(--primary-font);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--fSize-9);
+  line-height: var(--spacing-18);
+  color: var(--color-grayscale-titleActive);
+`;
+
+export const Text = styled.p`
+  font-style: normal;
+  font-weight: normal;
+  font-size: var(--fSize-7);
+  line-height: var(--spacing-18);
+  color: var(--color-secondary);
+`;
+
 export const Divider = styled.div`
   width: 100%;
-  height: 0.5px;
+  height: var(--spacing-05);
   background-color: rgba(0, 0, 0, 0.07);
-  margin: 5px 0;
+  margin: var(--spacing-5) 0;
 `;
 export const WDiv = styled.hr`
   width: 100%;
-  height: 0.5px;
+  height: var(--spacing-05);
   background-color: rgb(255, 255, 255);
   margin: 5px 0;
 `;
@@ -48,4 +66,64 @@ export const ItemWrapper = styled.div`
 export const InputIcon = styled(motion.img).attrs({})`
   height: 16px;
   width: 16px;
+`;
+
+export const Error = styled.p`
+  color: red;
+  font-size: var(--fSize-7);
+  font-weight: 600;
+  text-align: left;
+`;
+
+export const Button = styled.button.attrs({
+  type: 'submit'
+})`
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 8px;
+  background-color: var(--color-iconButton);
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.04);
+  p {
+    font-style: normal;
+    font-weight: normal;
+    font-size: var(--fSize-7);
+    line-height: var(--spacing-18);
+    color: #fcfcfc;
+  }
+
+  span {
+    font-style: normal;
+    font-weight: normal;
+    font-size: var(--fSize-7);
+    line-height: var(--spacing-18);
+    color: var(--color-primary-dark);
+  }
+
+  &:hover {
+    filter: contrast(0.9);
+  }
+`;
+
+export const Icon = styled(motion.img).attrs({
+  whileHover: { scale: 1.1 },
+  whileTap: { scale: 0.9 },
+  stiffness: 2000
+})`
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+`;
+export const IconButton = styled.img`
+  min-width: 14px;
+  min-height: 14px;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-15);
 `;

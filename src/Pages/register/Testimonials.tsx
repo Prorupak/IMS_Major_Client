@@ -15,8 +15,8 @@ const Testimonial = styled(motion.section).attrs({})`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    margin: 15px 0;
+    gap: var(--spacing-15);
+    margin: var(--spacing-15) 0;
     color: var(--color-header);
   }
 `;

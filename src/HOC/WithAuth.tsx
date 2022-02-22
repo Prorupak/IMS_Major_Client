@@ -23,7 +23,7 @@ const isValidToken = (token: string) => {
 
 export const AuthContext = React.createContext<any>({});
 
-const setSession = (token: string) => {
+export const setSession = (token: string) => {
   if (token) {
     localStorage.setItem('jwtToken', token);
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -31,6 +31,14 @@ const setSession = (token: string) => {
     localStorage.removeItem('jwtToken');
     delete axios.defaults.headers.common.Authorization;
   }
+};
+
+export const authHeader = () => {
+  const token = localStorage.getItem('jwtToken');
+  if (token && isValidToken(token)) {
+    return { Authorization: `Bearer ${token}` };
+  }
+  return {};
 };
 
 type AuthProviderProps = {

@@ -3,6 +3,8 @@ import Image from 'Assets/Image/Image';
 import { motion } from 'framer-motion';
 import { useDocumentTitle } from 'Hooks';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useLocation } from 'react-router';
 import Testimonials from './Testimonials';
 import Heading from './Header';
 import Form from './Form';
@@ -56,7 +58,7 @@ const Header = styled(motion.header).attrs({
   justify-content: end;
   grid-area: header;
   background-color: #fff;
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.04);
+  border-bottom: var(--spacing-05) solid rgba(0, 0, 0, 0.04);
 `;
 
 const Main = styled(motion.article).attrs({
@@ -72,7 +74,6 @@ const Main = styled(motion.article).attrs({
 `;
 
 const Register: React.FC = () => {
-  useDocumentTitle('Start your free trial(14 days)');
   return (
     <>
       <Grid>

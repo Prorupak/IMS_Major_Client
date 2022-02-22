@@ -16,7 +16,7 @@ export const QuickCreateWrapper = styled.div`
 
 export const Title = styled.p`
   display: flex;
-  gap: 15px;
+  gap: var(--spacing-15);
   font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 300;

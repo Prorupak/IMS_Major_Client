@@ -1,6 +1,7 @@
 import { ThemeProvider } from 'styled-components';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 
 import { theme } from './Themes/theme';
@@ -10,7 +11,9 @@ ReactDOM.render(
   <>
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <App />
+      <Router>
+        <App />
+      </Router>
     </ThemeProvider>
   </>,
   document.getElementById('root')

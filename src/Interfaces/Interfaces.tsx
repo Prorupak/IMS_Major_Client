@@ -41,8 +41,10 @@ export interface IFetchParams {
 export interface IProductsDetails {
   _id: string;
   id: string;
-  name: string;
+  name: string[];
   price: number;
+  products: string[];
+  brand: string[];
   quantity: number;
   description?: string;
   dimensions?: {

@@ -8,6 +8,7 @@ import style from 'styled-components';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import {
+  Autocomplete,
   Button,
   ButtonProps,
   Checkbox,
@@ -27,6 +28,7 @@ import {
   PASSWORD_REGEX,
   PHONE_REGEX
 } from 'validation/formRegex';
+import useCountry from 'Hooks/useCountry';
 
 const Form = style(motion.form).attrs({})`
   display: flex;
@@ -167,7 +169,7 @@ export const ButtonMain = styled(Button)<ButtonProps>(() => ({
 
 const FormSection = () => {
   const navigate = useNavigate();
-  // const { country } = useCountry();
+  const { country } = useCountry();
 
   const nameRef = useRef({} as HTMLInputElement);
   const emailRef = useRef({} as HTMLInputElement);
@@ -259,6 +261,16 @@ const FormSection = () => {
       errRef.current.focus();
     }
   };
+
+  console.log('Countries===>', country);
+
+  const options = country.map((option) => {
+    const firstLetter = option.toUpperCase();
+    return {
+      firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
+      ...option
+    };
+  });
 
   return (
     <>
@@ -378,6 +390,18 @@ const FormSection = () => {
           </Wrapper>
 
           <Wrapper transition={{ duration: 0.8, ease: 'easeInOut' }}>
+            {/* <Autocomplete
+              // getOptionLabel={(option) => option}
+              // groupBy={(option) => option.firstLetter}
+              id="grouped-demo"
+              options={options.sort(
+                (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+              )}
+              renderInput={(params) => (
+                <TextField {...params} label="With categories" />
+              )}
+              sx={{ width: 300 }}
+            /> */}
             <TextField
               ref={passwordRef}
               aria-describedby="cNote"

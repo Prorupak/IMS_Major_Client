@@ -10,12 +10,13 @@ const RequireAuth = () => {
   const jwtToken = localStorage.getItem('jwtToken');
 
   // check if user is logged in
-  if (!jwtToken) {
-    setIsLoggedIn(false);
-    return <Navigate replace state={{ from: location }} to="/login" />;
-  }
+  //   if (!jwtToken) {
+  //     setIsLoggedIn(false);
+  //     // eslint-disable-next-line react/jsx-indent
+  //     //     <Navigate replace state={{ from: location }} to="/login" />;
+  //   }
 
-  return jwtToken ? (
+  return !auth ? (
     <Outlet />
   ) : (
     <Navigate replace state={{ from: location }} to="/login" />

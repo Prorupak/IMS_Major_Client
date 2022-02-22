@@ -19,6 +19,7 @@
     "@mui/styled-engine": "^5.2.6",
     "@mui/styles": "^5.4.1",
     "@mui/x-data-grid": "^5.5.1",
+    "@mui/x-data-grid-generator": "^5.5.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -75,6 +76,7 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.17",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
     "eslint": "^7.32.0",

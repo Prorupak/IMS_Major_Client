@@ -156,7 +156,7 @@ const CatResult = styled(motion.div).attrs({})`
   grid-column: 1 /2;
   min-height: 100vh;
   min-width: 500px;
-  border-right: 0.5px solid var(--color-border);
+  border-right: var(--spacing-05) solid var(--color-border);
 `;
 
 const CatData = styled(motion.div).attrs({

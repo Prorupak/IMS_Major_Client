@@ -1,16 +1,80 @@
-/* eslint-disable object-shorthand */
+/* eslint-disable guard-for-in */
+/* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-import { useDocumentTitle } from '../../Hooks';
-import { GET_CATEGORIES } from '../../constants/actionTypes';
+import { ToggleContext } from 'Hooks/useToggle';
+import { Outlet, useNavigate } from 'react-router';
+import Items from 'layout/Items';
+import useFetch from 'Hooks/useFetch';
 
-// eslint-disable-next-line react/prop-types
-const Categories = () => {
-  // convert objects into array
+const columns = [
+  { field: 'id', headerName: 'ID', width: 5 },
+  {
+    field: 'name',
+    headerName: 'Items Summary',
+    width: 200,
+    editable: false
+  },
+  {
+    field: 'date',
+    headerName: 'Selling Price',
+    width: 200,
+    editable: true
+  }
+];
 
-  useDocumentTitle('Category');
+// eslint-disable-next-line react/no-multi-comp
+export default function Categories() {
+  const navigate = useNavigate();
 
-  return <div style={{ width: '100%' }}>{/* {category} */}</div>;
-};
+  const { toggleHandle } = React.useContext(ToggleContext);
 
-export default Categories;
+  const handleItem = (id: string, name: string) => {
+    navigate('', {
+      state: { catId: id, catName: name }
+    });
+  };
+
+  const {
+    data: tableData,
+    loading,
+    error
+  } = useFetch('http://localhost:9001/api/categories');
+
+  return (
+    <>
+      <div style={{ display: 'flex', height: '100%', width: '100%' }}>
+        <div style={{ flexGrow: '1' }}>
+          {/* @ts-ignore */}
+          <DataGrid
+            columns={columns}
+            // eslint-disable-next-line no-underscore-dangle
+            error={!tableData ? error : null}
+            getRowId={(row) => row.id}
+            loading={loading}
+            onRowClick={
+              // eslint-disable-next-line operator-linebreak
+              toggleHandle &&
+              ((e: any) => {
+                handleItem(e.id, e.row.name);
+                console.log('e====>', e);
+                console.log('length====>', e.row);
+                console.log('product====>', e.row.products[0]);
+                console.log(
+                  'ProductId====>',
+                  e.row.products.map((id: any) => id.id)
+                );
+              })
+            }
+            onRowDoubleClick={toggleHandle}
+            rows={tableData}
+            sx={{
+              border: 'none'
+            }}
+          />
+        </div>
+      </div>
+    </>
+  );
+}

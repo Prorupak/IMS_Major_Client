@@ -60,6 +60,7 @@ export default createGlobalStyle`
         --fSize-24: 2.375rem;
         --fSize-25: 2.5rem;
 
+        --spacing-05: 0.0313rem;
         --spacing-3: 0.1875rem;
         --spacing-5: 0.3125rem;
         --spacing-8: 0.5rem;
@@ -151,65 +152,4 @@ export default createGlobalStyle`
 
              
     
-`;
-
-export const Error = styled.p`
-  font-family: 'Poppins', sans-serif;
-  color: red;
-  font-size: 15px;
-  font-weight: 600;
-  text-align: left;
-`;
-
-export const Button = styled.button.attrs({
-  type: 'submit'
-})`
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  padding: 5px 10px;
-  background-color: var(--color-iconButton);
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.04);
-  p {
-    font-style: normal;
-    font-weight: normal;
-    font-size: var(--fSize-11);
-    line-height: var(--spacing-18);
-    color: #fcfcfc;
-  }
-
-  span {
-    font-style: normal;
-    font-weight: normal;
-    font-size: var(--fSize-11);
-    line-height: var(--spacing-18);
-    color: var(--color-primary-dark);
-  }
-
-  &:hover {
-    filter: contrast(0.9);
-  }
-`;
-
-export const Icon = styled(motion.img).attrs({
-  whileHover: { scale: 1.1, rotate: 0.5 },
-  whileTap: { scale: 0.9 },
-  stiffness: 2000
-})`
-  cursor: pointer;
-  width: 18px;
-  height: 18px;
-`;
-export const IconButton = styled.img`
-  min-width: 18px;
-  min-height: 18px;
-`;
-
-export const ButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-15);
 `;
