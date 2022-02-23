@@ -29,6 +29,7 @@ import {
   PHONE_REGEX
 } from 'validation/formRegex';
 import useCountry from 'Hooks/useCountry';
+import usePost from 'Hooks/usePost';
 
 const Form = style(motion.form).attrs({})`
   display: flex;
@@ -198,7 +199,7 @@ const FormSection = () => {
 
   const [checked, setChecked] = useState(false);
 
-  const [errMsg, setErrMsg] = useState<string | undefined>('');
+  // const [errMsg, setErrMsg] = useState<string | undefined>('');
 
   useEffect(() => {
     nameRef.current.focus();
@@ -214,53 +215,67 @@ const FormSection = () => {
     setValidPhone(PHONE_REGEX.test(phone));
   }, [name, email, password, phone]);
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // if button enabled with JS hack
-    const v1 = NAME_REGEX.test(name);
-    const v2 = EMAIL_REGEX.test(email);
-    const v3 = PASSWORD_REGEX.test(password);
-    const v4 = PHONE_REGEX.test(phone);
-    if (!v1 || !v2 || !v3 || !v4) {
-      setErrMsg('Invalid Entry');
-      return;
-    }
-
-    try {
-      const res = await axios.post('http://localhost:9001/api/user', {
-        name,
-        email,
-        password,
-        phone,
-        countries
-      });
-      console.log(res);
-      // eslint-disable-next-line react/jsx-indent
-      // <navigate to="/login" />;
-      navigate('/login');
-      if (res.status === 204 || res.status === 200 || res.status === 201) {
-        setErrMsg('');
-        setName('');
-        setEmail('');
-        setPassword('');
-        setPhone('');
-        setChecked(false);
-        setNameFocus(true);
-        setEmailFocus(true);
-        setPasswordFocus(true);
-        setPhoneFocus(true);
-        nameRef.current.focus();
-        emailRef.current.focus();
-        passwordRef.current.focus();
-        phoneRef.current.focus();
-      }
-    } catch (err: any) {
-      console.log('res', err.response.data.message);
-      setErrMsg(err.response.data.message);
-      errRef.current.focus();
-    }
+  const postData = {
+    name,
+    email,
+    password,
+    phone,
+    countries
   };
+
+  const { handleSubmit, error } = usePost(
+    'http://localhost:9001/api/user',
+    postData,
+    '/login'
+  );
+
+  // const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  //   // if button enabled with JS hack
+  //   const v1 = NAME_REGEX.test(name);
+  //   const v2 = EMAIL_REGEX.test(email);
+  //   const v3 = PASSWORD_REGEX.test(password);
+  //   const v4 = PHONE_REGEX.test(phone);
+  //   if (!v1 || !v2 || !v3 || !v4) {
+  //     setErrMsg('Invalid Entry');
+  //     return;
+  //   }
+
+  //   try {
+  //     const res = await axios.post('http://localhost:9001/api/user', {
+  //       name,
+  //       email,
+  //       password,
+  //       phone,
+  //       countries
+  //     });
+  //     console.log(res);
+  //     // eslint-disable-next-line react/jsx-indent
+  //     // <navigate to="/login" />;
+  //     navigate('/login');
+  //     if (res.status === 204 || res.status === 200 || res.status === 201) {
+  //       setErrMsg('');
+  //       setName('');
+  //       setEmail('');
+  //       setPassword('');
+  //       setPhone('');
+  //       setChecked(false);
+  //       setNameFocus(true);
+  //       setEmailFocus(true);
+  //       setPasswordFocus(true);
+  //       setPhoneFocus(true);
+  //       nameRef.current.focus();
+  //       emailRef.current.focus();
+  //       passwordRef.current.focus();
+  //       phoneRef.current.focus();
+  //     }
+  //   } catch (err: any) {
+  //     console.log('res', err.response.data.message);
+  //     setErrMsg(err.response.data.message);
+  //     errRef.current.focus();
+  //   }
+  // };
 
   console.log('Countries===>', country);
 
@@ -274,12 +289,12 @@ const FormSection = () => {
 
   return (
     <>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={handleSubmit}>
         <p
           ref={errRef}
           aria-live="assertive"
-          className={errMsg ? 'errmsg' : 'offscreen'}>
-          {errMsg}
+          className={error ? 'errmsg' : 'offscreen'}>
+          {error}
         </p>
         <Heading>Start your full-featured free trial for 14 days</Heading>
         <section className="form-section">

@@ -7,6 +7,7 @@ import {
   PASSWORD_REGEX,
   PHONE_REGEX
 } from 'validation/formRegex';
+import useSessionStorage from './useSessionStorage';
 
 type TUseInput = {
   value: string;
@@ -16,7 +17,7 @@ type TUseInput = {
   onBlur: () => void;
 };
 
-const useInput = (initValue: string) => {
+export const useInput = (initValue: string) => {
   const [value, setValue] = React.useState(initValue);
   const [focused, setFocused] = React.useState<boolean>(false);
   const resetHandle = () => setValue(initValue);
@@ -38,4 +39,25 @@ const useInput = (initValue: string) => {
   };
 };
 
-export default useInput;
+export const useInputSession = (key: string, initValue: any) => {
+  const [value, setValue] = useSessionStorage(key, initValue);
+  const [focused, setFocused] = React.useState<boolean>(false);
+  const resetHandle = () => setValue('');
+
+  const inputAttrs: TUseInput = {
+    value,
+    focused,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+    },
+    onFocus: () => setFocused(true),
+    onBlur: () => setFocused(false)
+  };
+
+  return {
+    value,
+    setValue,
+    resetHandle,
+    inputAttrs
+  };
+};

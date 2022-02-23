@@ -17,10 +17,10 @@ const PublicRoutes = () => {
       <AnimatePresence exitBeforeEnter initial>
         <Routes key={location.pathname} location={location}>
           <Route element={<RequireAuth />}>
-            <Route element={<CategoryContainer />} path="/">
-              <Route element={<AddCategories />} path="add" />
+            <Route element={<CategoryContainer />} path="/category">
               <Route element={<Categories />} path="category" />
             </Route>
+            <Route element={<AddCategories />} path="/category/add" />
             <Route element={<CategoryContainer />} />
           </Route>
           <Route element={<Categories />} path="/details" />

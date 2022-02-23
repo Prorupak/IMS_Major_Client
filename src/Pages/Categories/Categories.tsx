@@ -58,13 +58,6 @@ export default function Categories() {
               toggleHandle &&
               ((e: any) => {
                 handleItem(e.id, e.row.name);
-                console.log('e====>', e);
-                console.log('length====>', e.row);
-                console.log('product====>', e.row.products[0]);
-                console.log(
-                  'ProductId====>',
-                  e.row.products.map((id: any) => id.id)
-                );
               })
             }
             onRowDoubleClick={toggleHandle}

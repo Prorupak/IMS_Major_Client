@@ -8,10 +8,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { InputIcon } from 'Themes/utilityThemes';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
-import useInput from 'Hooks/useInput';
+import { useInput } from 'Hooks/useInput';
 import validation from 'validation/validation';
 import useAuth from 'Hooks/useAuth';
 import { AuthContext, setSession } from 'HOC/WithAuth';
+import usePost from 'Hooks/usePost';
 
 const Container = styled(motion.section).attrs({})`
   margin: 0 20px;
@@ -57,10 +58,6 @@ const Wrapper = styled(motion.div).attrs({})`
 const Error = styled(motion.div).attrs({})``;
 
 const Form = () => {
-  // const { setAuth } = useAuth();
-  const { setAuth } = React.useContext(AuthContext);
-  const navigate = useNavigate();
-
   const emailRef = useRef({} as HTMLInputElement);
   const passwordRef = useRef({} as HTMLInputElement);
 
@@ -76,35 +73,21 @@ const Form = () => {
     setValidPassword(password.value.length > 0);
   }, [email.value, password.value]);
 
-  const [errMsg, setErrMsg] = useState('');
-
   useEffect(() => {
     emailRef.current.focus();
     passwordRef.current.focus();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // const email = user;
-    try {
-      const res = await axios.post('http://localhost:9001/api/auth/login', {
-        email: email.value,
-        password: password.value
-      });
-      const { token } = res.data.tokens.access;
-      console.log('token', token);
-      setAuth(token);
-      // if (res.data.tokens.access) {
-      //   setSession(res.data.tokens.access);
-      //   setAuth(res.data.tokens.access);
-      // }
-
-      navigate('/products');
-    } catch (err: any) {
-      console.log('err===>', err);
-      setErrMsg(err.response.data.message);
-    }
+  const postData = {
+    email: email.value,
+    password: password.value
   };
+  // eslint-disable-next-line object-curly-newline
+  const { error, handleSubmit, loading, value } = usePost(
+    'http://localhost:9001/api/auth/login',
+    postData,
+    '/category/add'
+  );
 
   return (
     <>
@@ -179,7 +162,7 @@ const Form = () => {
               Please enter a valid company name.
             </Error>
           </Wrapper>
-          {errMsg && <p className="instructions">{errMsg}</p>}
+          {error && <p className="instructions">{error}</p>}
           <ButtonMain
             disabled={!validName || !validPassword}
             sx={{
