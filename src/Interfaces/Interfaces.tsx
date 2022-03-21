@@ -86,10 +86,10 @@ export type ICategories = {
   image?: Record<string, null>[];
   date?: Date;
   isDeleted?: boolean;
-  // multipleItems?: {
-  //   attribute?: string[] | string;
-  //   options?: string[] | string;
-  // };
+  multipleItems?: {
+    attribute: string[] | string;
+    options: string[] | string;
+  };
 };
 export interface ICategoriesAction {
   GET_CATEGORIES: string;

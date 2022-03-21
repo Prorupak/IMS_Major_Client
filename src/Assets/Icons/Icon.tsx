@@ -40,6 +40,7 @@ const Icon = {
   Twitter: require('./Twitter.svg').default,
   Microsoft: require('./Microsoft.svg').default,
   Password: require('./Password.svg').default,
-  Phone: require('./Phone.svg').default
+  Phone: require('./Phone.svg').default,
+  SmallFaq: require('./SmallFaq.svg').default,
 };
 export default Icon;

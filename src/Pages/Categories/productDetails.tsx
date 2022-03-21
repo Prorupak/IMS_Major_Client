@@ -16,11 +16,11 @@ import Image from 'Assets/Image/Image';
 import axios from 'axios';
 import { useLocation } from 'react-router';
 import { IProductsDetails } from 'Interfaces/Interfaces';
-import { v4 as uuid } from 'uuid';
 
 import styled from 'styled-components';
 import useFetch from 'Hooks/useFetch';
 import ProductsContainer from 'Components/shared/ProductsContainer';
+import { CategoryContext } from 'context/CategoryContext';
 
 interface ChipData {
   key: number;
@@ -94,23 +94,11 @@ const Colors = styled(motion.div).attrs({})`
 `;
 
 const ProductDetails = () => {
-  const location = useLocation();
-  // @ts-ignore
-  const ids = location && location.state && location.state.catId;
-  // @ts-ignore
-  const catName = location && location.state && location.state.catName;
-  // @ts-ignore
-  console.log('id===>', ids);
-  console.log('name===>', catName);
+  const { categoryDetails } = React.useContext(CategoryContext);
 
-  // get one element of brandId array at a time
+  const { catId, catName, multiItems } = categoryDetails;
 
-  // const fetch = async () => {
-  //   const res = await axios.get(
-  //     `http://localhost:9001/api/products/${brandId}/brand`
-  //   );
-  //   console.log('res====>', res.data);
-  // };
+  console.log('categoryDetails', categoryDetails);
 
   const [chipData, setChipData] = React.useState<readonly ChipData[]>([
     { key: 0, label: 'Red' },
@@ -145,7 +133,9 @@ const ProductDetails = () => {
     data: value,
     error,
     loading
-  } = useFetch(`http://localhost:9001/api/categories/${ids}/products`);
+  } = useFetch(`http://localhost:9001/api/categories/${catId}/products`);
+
+  console.log('value====>', value);
 
   const columns = [
     {
@@ -155,30 +145,36 @@ const ProductDetails = () => {
     },
     {
       field: 'name',
-      headerName: 'Items Summary',
+      headerName: 'ITEMS SUMMARY',
       width: 200
     },
     {
       field: 'price',
-      headerName: 'Created Date',
+      headerName: 'SELLING PRICE',
+      width: 200
+    },
+    {
+      field: 'CPrice',
+      headerName: ' COST PRICE',
       width: 200
     },
     {
       field: 'quantity',
-      headerName: 'products',
+      headerName: 'QUANTITY',
       width: 200
     },
     {
       field: 'date',
-      headerName: 'products',
+      headerName: 'DATE',
       width: 200
     }
   ];
 
   React.useEffect(() => {
     // fetch();
+
     setUnit(value.length);
-  }, [ids]);
+  }, [catId, catName, multiItems]);
 
   return (
     <ProductsContainer>
@@ -192,7 +188,7 @@ const ProductDetails = () => {
             <Headings>
               <Item>Unit</Item>
               <Item>brand</Item>
-              <Item>color</Item>
+              <Item>{multiItems}</Item>
               {}
             </Headings>
             <Data>

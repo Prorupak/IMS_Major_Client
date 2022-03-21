@@ -122,7 +122,7 @@ const Form = () => {
             />
             <Error
               className={
-                email.inputAttrs.focused && email.value && !validName
+                email.focused && email.value && !validName
                   ? 'instructions'
                   : 'offscreen'
               }
@@ -154,7 +154,7 @@ const Form = () => {
             />
             <Error
               className={
-                password.inputAttrs.focused && password.value && !validPassword
+                password.focused && password.value && !validPassword
                   ? 'instructions'
                   : 'offscreen'
               }

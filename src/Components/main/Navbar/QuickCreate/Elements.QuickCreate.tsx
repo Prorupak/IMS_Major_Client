@@ -3,10 +3,9 @@ import styled from 'styled-components';
 
 export const QuickCreate = styled.div`
   position: relative;
-left:252px;
+  /* left:252px; */
   width: max-content;
   padding: 30px 20px;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.05);
 `;
 
 export const QuickCreateWrapper = styled.div`

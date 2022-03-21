@@ -17,17 +17,25 @@ export const Title = styled.p`
   font-family: var(--primary-font);
   font-style: normal;
   font-weight: 600;
-  font-size: var(--fSize-9);
+  font-size: var(--fSize-13);
   line-height: var(--spacing-18);
   color: var(--color-grayscale-titleActive);
 `;
 
-export const Text = styled.p`
+export const Text = styled.legend<{
+  textColor?: string;
+  width?: string;
+  gap?: string;
+}>`
+  display: flex;
+  align-items: center;
+  gap: ${({ gap }) => gap || '0'};
   font-style: normal;
   font-weight: normal;
-  font-size: var(--fSize-7);
+  font-size: var(--fSize-8);
   line-height: var(--spacing-18);
-  color: var(--color-secondary);
+  width: ${({ width }) => width};
+  color: ${({ textColor }) => textColor};
 `;
 
 export const Divider = styled.div`
@@ -126,4 +134,15 @@ export const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: var(--spacing-15);
+`;
+
+export const SmallIcon = styled(motion.img).attrs<{ color?: string }>({
+  whileHover: { scale: 1.1 },
+  whileTap: { scale: 0.9 }
+})`
+  cursor: pointer;
+  fill: ${({ color }) => color};
+  // change color of icon
+  width: 14px;
+  height: 14px;
 `;

@@ -1,3 +1,4 @@
+import { QuickCreate } from 'Components/main/Navbar/QuickCreate/Elements.QuickCreate';
 import { AnimatePresence } from 'framer-motion';
 import LandingPage from 'Pages/landing/landingPage';
 import Login from 'Pages/login/Login';

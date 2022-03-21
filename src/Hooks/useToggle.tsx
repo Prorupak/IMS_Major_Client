@@ -9,7 +9,7 @@ export const ToggleContext = React.createContext<any>({});
 const useToggle = (key: any, initValue: boolean) => {
   const [value, setValue] = useSessionStorage(key, initValue);
   // use useContext to access the toggle state from the parent component
-  const toggleHandle = (action: string) => {
+  const toggleHandle = (action: any) => {
     console.log('action===>', action);
     setValue((prev: any) => {
       return typeof action === 'boolean' ? action : !prev;

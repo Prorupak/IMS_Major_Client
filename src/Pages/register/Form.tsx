@@ -30,6 +30,7 @@ import {
 } from 'validation/formRegex';
 import useCountry from 'Hooks/useCountry';
 import usePost from 'Hooks/usePost';
+import { useInput } from 'Hooks/useInput';
 
 const Form = style(motion.form).attrs({})`
   display: flex;
@@ -179,9 +180,10 @@ const FormSection = () => {
   const phoneRef = useRef({} as HTMLInputElement);
   const errRef = useRef({} as HTMLInputElement);
 
-  const [name, setName] = useState('');
+  const name = useInput('');
+  // const [name, setName] = useState('');
   const [validName, setValidName] = useState(false);
-  const [nameFocus, setNameFocus] = useState(true);
+  // const [nameFocus, setNameFocus] = useState(true);
 
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
@@ -209,14 +211,14 @@ const FormSection = () => {
   }, []);
 
   useEffect(() => {
-    setValidName(NAME_REGEX.test(name));
+    setValidName(NAME_REGEX.test(name.value));
     setValidEmail(EMAIL_REGEX.test(email));
     setValidPassword(PASSWORD_REGEX.test(password));
     setValidPhone(PHONE_REGEX.test(phone));
   }, [name, email, password, phone]);
 
   const postData = {
-    name,
+    name: name.value,
     email,
     password,
     phone,
@@ -313,20 +315,23 @@ const FormSection = () => {
                   </InputAdornment>
                 )
               }}
-              onBlur={() => setNameFocus(false)}
-              onChange={(e: any) => setName(e.target.value)}
-              onFocus={() => setNameFocus(true)}
+              {...name.inputAttrs}
+              // onBlur={() => setNameFocus(false)}
+              // onChange={(e: any) => setName(e.target.value)}
+              // onFocus={() => setNameFocus(true)}
               placeholder="Company Name"
               size="small"
               sx={{
                 width: '100%'
               }}
-              value={name}
+              // value={name}
               variant="outlined"
             />
             <Error
               className={
-                nameFocus && name && !validName ? 'instructions' : 'offscreen'
+                name.focused && name.value && !validName
+                  ? 'instructions'
+                  : 'offscreen'
               }
               id="uidNote">
               Please enter a valid company name.

@@ -1,14 +1,22 @@
 import { motion } from 'framer-motion';
+import { BiSearchAlt } from 'react-icons/bi';
 import React from 'react';
 import styled from 'styled-components';
 import Icon from 'Assets/Icons/Icon';
 import Image from 'Assets/Image/Image';
-import { alpha, InputBase } from '@mui/material';
+import { alpha, InputBase, Menu, MenuItem, Tooltip } from '@mui/material';
+import { Icon as IconNav } from 'Themes/utilityThemes';
+import QuickCreate from './QuickCreate/QuickCreate';
 // import QuickCreate from './QuickCreate/QuickCreate';
 
 /* eslint-disable indent */
 
-const Nav = styled.nav`
+const Nav = styled(motion.nav).attrs({
+  initial: { opacity: 0, y: -100 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -100 },
+  transition: { duration: 0.4 }
+})`
   width: 100%;
 `;
 
@@ -20,13 +28,14 @@ const NavWrapper = styled.div`
   display: flex;
 `;
 
-const Navbar = styled.div`
+const Navbar = styled.div<{ toggle: any }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: ${(props) => {
     return props.theme.color.white;
   }};
+  /* width: ${({ toggle }) => (toggle ? '86.65%' : '95%')}; */
   width: 100%;
   margin: 0 var(--spacing-15);
 `;
@@ -63,9 +72,6 @@ const Search = styled('div')(({ theme }) => ({
   borderRadius: '6px',
   padding: '5px',
   backgroundColor: 'rgba(0, 0, 0, 0.05)',
-  '&:hover': {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
-  },
   marginRight: 'var(--spacing-5)',
   marginLeft: '5px',
   width: '100%'
@@ -75,16 +81,20 @@ const Search = styled('div')(({ theme }) => ({
   // }
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  // padding: theme.spacing(0, 2),
-  padding: '0 5px',
-  height: '100%',
-  pointerEvents: 'none',
-  display: 'flex',
-  gap: '5px',
-  alignItems: 'center',
-  justifyContent: 'center'
-}));
+const SearchIconWrapper = styled.div`
+  cursor: pointer;
+  padding: 0 5px;
+  height: 100%;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SearchIcon = styled(BiSearchAlt).attrs({
+  size: '1.5em',
+  color: 'var(--color-primary-dark)'
+})``;
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
@@ -100,18 +110,68 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   }
 }));
 
-const Header = () => {
+const StyledMenu = styled(Menu)`
+  .MuiMenuItem-root {
+    background: none;
+  }
+  .MuiMenuItem-root:hover {
+    background: none;
+  }
+`;
+const StyledMenuItem = styled(MenuItem)`
+  .MuiMenuItem-root {
+    background: none;
+  }
+  .MuiMenuItem-root:hover {
+    background: none;
+  }
+`;
+
+const Header = (value: any) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<any>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const { toggle } = value;
+  console.log('nav', toggle);
   return (
     <>
       <Nav>
         <NavWrapper>
-          <Navbar>
+          <Navbar toggle={toggle}>
             <LeftIcons>
-              <Icons alt="Quick" src={Icon.QuickCreate} />
+              <Tooltip arrow title="Quick Create">
+                <Icons
+                  alt="Quick"
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-expanded={open ? 'true' : undefined}
+                  aria-haspopup="true"
+                  id="basic-button"
+                  onClick={handleClick}
+                  src={Icon.QuickCreate}
+                />
+              </Tooltip>
+              <StyledMenu
+                anchorEl={anchorEl}
+                id="basic-menu"
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button'
+                }}
+                onClose={handleClose}
+                open={open}>
+                <StyledMenuItem onClick={handleClose}>
+                  <QuickCreate />
+                </StyledMenuItem>
+              </StyledMenu>
               <Icons alt="Quick" src={Icon.Recent} />
               <Search>
                 <SearchIconWrapper>
-                  <img alt="search" src={Icon.Setting} />
+                  <SearchIcon />
                   <img alt="search" src={Icon.DrpDwn} />
                 </SearchIconWrapper>
                 <StyledInputBase

@@ -5,11 +5,13 @@ import {
   Icon as Icons,
   IconButton,
   ButtonWrapper,
-  Text,
   Title
 } from 'Themes/utilityThemes';
 import styled from 'styled-components';
 import Icon from 'Assets/Icons/Icon';
+import { TooltipMui } from 'Themes/MaterialUI';
+import { Link } from 'react-router-dom';
+import PageTips from './PageTips';
 
 const Nav = styled.nav`
   display: flex;
@@ -30,17 +32,19 @@ const RightSection = styled.div`
   gap: var(--spacing-15);
 `;
 
-const Tips = styled.div`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-5);
-  &:hover {
-    filter: saturate(0.6);
-  }
+const IconToggle = styled(Icons).attrs({})`
+  /* position: absolute;
+  top: 0;
+  bottom: 0; */
 `;
 
-const ProductsNav = () => {
+interface IProps {
+  value: boolean;
+  toggleHandle: (action: any) => void;
+}
+
+const ProductsNav: React.FC<IProps> = ({ value, toggleHandle }) => {
+  console.log('value==>', value);
   return (
     <>
       <Nav>
@@ -49,22 +53,28 @@ const ProductsNav = () => {
           <Icons src={Icon.DrpDwn} />
         </LeftSection>
         <RightSection>
+          {value ? (
+            ''
+          ) : (
+            <TooltipMui title="Product Details">
+              <IconToggle alt="Icon" onClick={toggleHandle} src={Icon.Menu} />
+            </TooltipMui>
+          )}
           <ButtonWrapper>
             <Button>
               <IconButton src={Icon.ListView} />
             </Button>
-            <Button style={{ background: 'var(--color-secondary)' }}>
-              <IconButton src={Icon.BPlus} />
-              <p>New</p>
-            </Button>
+            <Link to="/add">
+              <Button style={{ background: 'var(--color-secondary)' }}>
+                <IconButton src={Icon.BPlus} />
+                <p>New</p>
+              </Button>
+            </Link>
             <Button>
               <IconButton src={Icon.Align} />
             </Button>
           </ButtonWrapper>
-          <Tips>
-            <IconButton src={Icon.Tips} />
-            <Text>Page Tips</Text>
-          </Tips>
+          <PageTips />
         </RightSection>
       </Nav>
     </>

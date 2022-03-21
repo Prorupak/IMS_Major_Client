@@ -22,12 +22,16 @@ const Header = styled.header`
 
 const Section = styled.section``;
 
-const ProductsData: React.FC = () => {
+interface Props {
+  toggle: (action: any) => void;
+}
+
+const ProductsData: React.FC<Props> = ({ toggle }) => {
   return (
     <>
       <Grid>
         <Header>
-          <ProductsDetailsHeader />
+          <ProductsDetailsHeader toggle={toggle} />
         </Header>
         <Section>
           <ProductsContainer>

@@ -11,20 +11,20 @@ import useSessionStorage from './useSessionStorage';
 
 type TUseInput = {
   value: string;
-  focused: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus: () => void;
   onBlur: () => void;
 };
 
-export const useInput = (initValue: string) => {
-  const [value, setValue] = React.useState(initValue);
+export const useInput = (initValue: any) => {
+  const [value, setValue] = React.useState<any>(initValue);
   const [focused, setFocused] = React.useState<boolean>(false);
   const resetHandle = () => setValue(initValue);
 
+  console.log('useInput', value);
+
   const inputAttrs: TUseInput = {
     value,
-    focused,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
     },
@@ -34,6 +34,8 @@ export const useInput = (initValue: string) => {
 
   return {
     value,
+    setValue,
+    focused,
     resetHandle,
     inputAttrs
   };
@@ -46,7 +48,6 @@ export const useInputSession = (key: string, initValue: any) => {
 
   const inputAttrs: TUseInput = {
     value,
-    focused,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
     },

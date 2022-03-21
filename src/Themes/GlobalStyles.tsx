@@ -2,6 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 import styled, { createGlobalStyle } from 'styled-components';
 import { motion } from 'framer-motion/dist/framer-motion';
+import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
 export default createGlobalStyle`
 *{
@@ -16,11 +17,12 @@ export default createGlobalStyle`
         --color-primary: #345B63;
         --color-primary-dark: #25262D;
         --color-primary-light:#AACFCF;
-        --color-secondary: #1CC8EE;
+        --color-secondary: #46A0EB;
         --color-secondary-dark: #0096B7;
         --color-secondary-light: #D5F7FF;
         --color-error: #ed2e2e;
         --color-button: #C61B37;
+        --color-required: #e54643;
         --color-error-dark: #806570;
         --color-error-dark: #FFF2F7;
         --color-success:#00BA88;
@@ -29,10 +31,10 @@ export default createGlobalStyle`
         --color-placeholder:#6d6e7b;
         --color-grayscale-titleActive:#14142A;
         --color-header: #E3EBEB;
-        --color-sidebar: #F2F8F8;
+        --color-sidebar: #141E27;
         --color-iconButton: #F0F0F0;
         --color-border: rgba(0,0,0, .08);
-
+        --color-error-back: #FFECEC;
 
         --primary-font: 'Poppins', sans-serif;
         --secondary-font: 'Roboto', sans-serif;
@@ -149,7 +151,11 @@ export default createGlobalStyle`
         cursor: pointer
     }
 
-
+    .active {
+        color: var(--color-primary);
+        background-color: var(--color-secondary);
+        width: 100%;
+    }
              
     
 `;

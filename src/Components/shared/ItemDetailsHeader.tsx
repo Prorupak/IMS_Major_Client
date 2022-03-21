@@ -6,6 +6,8 @@ import {
   IconButton,
   ButtonWrapper
 } from 'Themes/utilityThemes';
+import { useLocation, useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ToggleContext } from '../../Hooks/useToggle';
 import Icon from '../../Assets/Icons/Icon';
 
@@ -29,9 +31,22 @@ const LeftSection = styled.div`
 const RightSection = styled.div`
   cursor: pointer;
 `;
+interface Props {
+  toggle: (action: any) => void;
+}
 
-const ItemDetailsHeader: React.FC = () => {
-  const { toggleHandle } = React.useContext(ToggleContext);
+const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  // @ts-ignore
+  const ids = location && location.state && location.state.catId;
+  // @ts-ignore
+  const catName = location && location.state && location.state.catName;
+  console.log('ids', ids);
+
+  const onNavigate = () => {
+    navigate('/add/:id', { state: { catId: ids, catName } });
+  };
   return (
     <>
       <Nav>
@@ -41,7 +56,9 @@ const ItemDetailsHeader: React.FC = () => {
               <Button>
                 <IconButton src={Icon.Edit} />
               </Button>
-              <Button style={{ background: 'var(--color-secondary)' }}>
+              <Button
+                onClick={onNavigate}
+                style={{ background: 'var(--color-secondary)' }}>
                 <IconButton src={Icon.BPlus} />
                 <p>Add Item</p>
               </Button>
@@ -52,7 +69,7 @@ const ItemDetailsHeader: React.FC = () => {
             </ButtonWrapper>
           </LeftSection>
           <RightSection>
-            <Icons onClick={toggleHandle} src={Icon.Close} />
+            <Icons onClick={toggle} src={Icon.Close} />
           </RightSection>
         </Wrapper>
       </Nav>

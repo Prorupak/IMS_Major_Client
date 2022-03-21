@@ -1,15 +1,15 @@
-import Icon from '../../../../Assets/Icons/Icon';
+import Icon from 'Assets/Icons/Icon';
 
 export const General = [
   {
-    title: 'Item',
+    title: 'Products',
     icon: Icon.BPlus,
-    path: '/Item'
+    path: '/products/add'
   },
   {
-    title: 'Item Groups',
+    title: 'Categories',
     icon: Icon.BPlus,
-    path: '/ItemGroups'
+    path: '/add'
   },
   {
     title: 'Inventory Adjustment',

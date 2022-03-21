@@ -5,15 +5,11 @@ import { useNavigate } from 'react-router';
 import { useInput, useInputSession } from './useInput';
 
 const usePost = (url: string, postData: any, path?: any) => {
-  //   const valueRef = React.useRef({} as HTMLInputElement);
   const navigate = useNavigate();
   const { setAuth } = React.useContext(AuthContext);
-
-  const [value, setValue] = React.useState<any>({});
+  const [value, setValue] = React.useState<any>('');
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
-
-  //   const {} = postData;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,7 +18,7 @@ const usePost = (url: string, postData: any, path?: any) => {
       const result = await axios.post(url, {
         ...postData
       });
-      console.log('result===>', result);
+      console.log('response', result.data);
       if (result.data.success === 'Successfully logged in') {
         setAuth(result.data.tokens.access.token);
       }
@@ -30,6 +26,7 @@ const usePost = (url: string, postData: any, path?: any) => {
       setLoading(false);
       navigate(path);
     } catch (err: any) {
+      console.log('err===>', err.message);
       setError(err.message);
       setLoading(false);
     }

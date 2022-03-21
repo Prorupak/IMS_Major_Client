@@ -3,36 +3,53 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-import { ToggleContext } from 'Hooks/useToggle';
+import useToggle, { ToggleContext } from 'Hooks/useToggle';
 import { Outlet, useNavigate } from 'react-router';
 import Items from 'layout/Items';
 import useFetch from 'Hooks/useFetch';
+import { CategoryContext } from 'context/CategoryContext';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 5 },
   {
     field: 'name',
-    headerName: 'Items Summary',
-    width: 200,
+    headerName: 'ITEMS SUMMARY',
+    width: 500,
     editable: false
   },
   {
-    field: 'date',
-    headerName: 'Selling Price',
-    width: 200,
+    field: 'sku',
+    headerName: 'SKU',
+    width: 500,
+    editable: true
+  },
+  {
+    field: 'stock',
+    headerName: 'STOCK IN HAND',
+    width: 500,
+    editable: true
+  },
+  {
+    field: 'reorder',
+    headerName: 'REORDER POINT',
+    width: 500,
     editable: true
   }
 ];
 
 // eslint-disable-next-line react/no-multi-comp
-export default function Categories() {
+export default function Categories({ toggleHandle }: any) {
   const navigate = useNavigate();
+  const { setCategoryDetails } = React.useContext(CategoryContext);
 
-  const { toggleHandle } = React.useContext(ToggleContext);
-
-  const handleItem = (id: string, name: string) => {
+  const handleItem = (id: string, name: string, multi: any) => {
     navigate('', {
-      state: { catId: id, catName: name }
+      state: { catId: id, catName: name, multiItems: multi }
+    });
+    setCategoryDetails({
+      catId: id,
+      catName: name,
+      multiItems: multi
     });
   };
 
@@ -42,9 +59,11 @@ export default function Categories() {
     error
   } = useFetch('http://localhost:9001/api/categories');
 
+  // setCategoryDetails(tableData);
+
   return (
     <>
-      <div style={{ display: 'flex', height: '100%', width: '100%' }}>
+      <div style={{ display: 'flex', height: '100vh', width: '100%' }}>
         <div style={{ flexGrow: '1' }}>
           {/* @ts-ignore */}
           <DataGrid
@@ -52,12 +71,19 @@ export default function Categories() {
             // eslint-disable-next-line no-underscore-dangle
             error={!tableData ? error : null}
             getRowId={(row) => row.id}
-            loading={loading}
+            loading={tableData ? loading : true}
             onRowClick={
               // eslint-disable-next-line operator-linebreak
               toggleHandle &&
               ((e: any) => {
-                handleItem(e.id, e.row.name);
+                setCategoryDetails({
+                  catId: e.id
+                });
+                handleItem(
+                  e.id,
+                  e.row.name,
+                  e.row.multipleItems.map((item: any) => item.attribute)
+                );
               })
             }
             onRowDoubleClick={toggleHandle}

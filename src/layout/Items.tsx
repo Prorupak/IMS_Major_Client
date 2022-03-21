@@ -4,9 +4,10 @@ import { motion } from 'framer-motion';
 import { Icon as Icons } from 'Themes/utilityThemes';
 import Icon from 'Assets/Icons/Icon';
 import { useLocation } from 'react-router';
-import { ToggleContext } from 'Hooks/useToggle';
+import useToggle, { ToggleContext } from 'Hooks/useToggle';
 import Header from 'Components/shared/ItemsHeader';
 import ProductsData from 'Components/shared/ ProductsData';
+import Categories from 'Pages/Categories/Categories';
 
 const Grid = styled(motion.div)<{ toggle: boolean }>`
   display: grid;
@@ -28,7 +29,8 @@ const Nav = styled(motion.div).attrs({
   display: grid;
   align-items: center;
   grid-area: navbar;
-  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.03);
+  /* box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.03); */
+  border: 1px solid rgba(0, 0, 0, 0.03);
 `;
 
 const Main = styled(motion.div).attrs({
@@ -37,7 +39,6 @@ const Main = styled(motion.div).attrs({
   exit: { x: -100, opacity: 0 }
 })`
   position: relative;
-  overflow: scroll;
   grid-area: main;
   display: flex;
   justify-content: space-between;
@@ -55,18 +56,13 @@ const Product = styled(motion.div).attrs({
   grid-area: product;
 `;
 
-const IconToggle = styled(Icons).attrs({})`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-`;
-
 interface IProps {
   children: React.ReactNode;
 }
 
-const Items: React.FC<IProps> = ({ children }) => {
-  const { value, toggleHandle } = React.useContext(ToggleContext);
+const Items: React.FC = () => {
+  // const { value, toggleHandle } = React.useContext(ToggleContext);
+  const { value, toggleHandle } = useToggle('itemToggle', false);
 
   const location = useLocation();
   console.log('location===', location && location.state);
@@ -75,19 +71,14 @@ const Items: React.FC<IProps> = ({ children }) => {
     <>
       <Grid toggle={value}>
         <Nav>
-          <Header />
+          <Header toggleHandle={toggleHandle} value={value} />
         </Nav>
         <Main>
-          {value ? (
-            ''
-          ) : (
-            <IconToggle alt="Icon" onClick={toggleHandle} src={Icon.Menu} />
-          )}
-          {children}
+          <Categories toggleHandle={toggleHandle} />
         </Main>
         {value ? (
           <Product>
-            <ProductsData />
+            <ProductsData toggle={toggleHandle} />
           </Product>
         ) : null}
       </Grid>
