@@ -4,9 +4,9 @@ import { Outlet } from 'react-router';
 
 const CategoryContainer = () => {
   return (
-    <Items>
+    <>
       <Outlet />
-    </Items>
+    </>
   );
 };
 
