@@ -26,6 +26,7 @@ const Grid = styled(motion.div).attrs({})`
   grid-template-rows: 45px auto 55px;
   grid-template-columns: 100%;
   height: 100vh;
+  background-color: #fbfafa;
 `;
 
 const Header = styled(motion.div).attrs({})`
@@ -47,7 +48,7 @@ const Content = styled(motion.div).attrs({})`
   grid-area: content;
   overflow: scroll;
   min-height: 100%;
-  background-color: #fbfafa;
+  width: 70%;
 `;
 
 const Hr = styled.hr`

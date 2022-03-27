@@ -117,6 +117,7 @@ export default createGlobalStyle`
     body {
         overflow: -moz-hidden-unscrollable;
         scroll-behavior: smooth;
+        /* background-color: #fbfafa; */
 
 
         &::after {
