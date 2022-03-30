@@ -50,12 +50,8 @@ const Login = () => {
           <FormContainer>
             <Form />
           </FormContainer>
-          <Footer>
-            <h4>footer</h4>
-          </Footer>
-          <Ad>
-            <h4>ad</h4>
-          </Ad>
+          <Footer />
+          <Ad />
         </Grid>
       </Container>
     </>
@@ -63,3 +59,4 @@ const Login = () => {
 };
 
 export default Login;
+

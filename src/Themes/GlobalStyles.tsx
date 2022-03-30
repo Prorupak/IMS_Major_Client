@@ -6,7 +6,6 @@ import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
 export default createGlobalStyle`
 *{
-  overflow: none;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -115,26 +114,10 @@ export default createGlobalStyle`
     }
 
     body {
-        overflow: -moz-hidden-unscrollable;
+        /* overflow: -moz-hidden-unscrollable; */
         scroll-behavior: smooth;
         /* background-color: #fbfafa; */
-
-
-        &::after {
-          content: "";
-        }
-
-        &::-webkit-scrollbar {
-            width: 0.5rem;
-        }
-
-        &::-webkit-scrollbar-track {
-            background: var(--color-grayscale-titleActive);
-        }
-
-        &::-webkit-scrollbar-thumb {
-            background: var(--color-secondary);
-        }
+        overflow: hidden;
 
     }
     

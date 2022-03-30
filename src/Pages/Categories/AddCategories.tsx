@@ -45,7 +45,6 @@ const Header = styled(motion.div).attrs({})`
 
 const Content = styled(motion.div).attrs({})`
   grid-area: content;
-  overflow: scroll;
   min-height: 100%;
   background-color: #fbfafa;
 `;
@@ -142,3 +141,4 @@ const AddCategories = () => {
 };
 
 export default AddCategories;
+

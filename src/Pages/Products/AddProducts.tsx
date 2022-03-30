@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import usePost from 'Hooks/usePost';
 import { useLocation } from 'react-router';
-import { ICategories } from 'Interfaces/Interfaces';
+import { ICategories, IProductsDetails } from 'Interfaces/Interfaces';
 import { QuickCreate } from 'Components/main/Navbar/QuickCreate/Elements.QuickCreate';
 import ProductsForm from './ProductsForm';
 
@@ -46,9 +46,13 @@ const Header = styled(motion.div).attrs({})`
 
 const Content = styled(motion.div).attrs({})`
   grid-area: content;
-  overflow: scroll;
   min-height: 100%;
   width: 70%;
+  padding: 15px 15px 70px 15px;
+`;
+
+const ContentWrapper = styled(motion.div).attrs({})`
+  overflow: scroll;
 `;
 
 const Hr = styled.hr`
@@ -58,6 +62,7 @@ const Hr = styled.hr`
 
 const Footer = styled(motion.div).attrs({})`
   position: sticky;
+  background-color: #fff;
   bottom: 0;
   display: flex;
   align-items: center;
@@ -74,23 +79,49 @@ const AddCategories = () => {
   // @ts-ignore
   const catName = location && location.state && location.state.catName;
 
-  const [data, setData] = React.useState<ICategories>({} as ICategories);
+  const [data, setData] = React.useState<IProductsDetails>(
+    {} as IProductsDetails
+  );
   const postData = (post: any) => {
     setData(post);
+    console.log('postData', post);
   };
 
-  console.log('multipleItems', data.multipleItems);
+  console.log('sales', data.salesInformation);
 
   const PData = {
     name: data.name,
+    sku: data.sku,
+    unit: data.unit,
     description: data.description,
-    multipleItems: data.multipleItems
+    manufacturer: data.manufacturer,
+    brand: data.brand,
+    dimensions: data.dimensions,
+    dUnit: data.dUnit,
+    weight: data.weight,
+    wUnit: data.wUnit,
+    SalesInformation: [
+      {
+        sellingPrice: data.sellingPrice,
+        account: data.saleAccount,
+        description: data.sellDescription,
+        tax: data.sellTax
+      }
+    ],
+    PurchaseInformation: [
+      {
+        costPrice: data.costPrice,
+        account: data.costAccount,
+        description: data.costDescription,
+        tax: data.costTax
+      }
+    ]
   };
 
   const { handleSubmit } = usePost(
-    'http://localhost:9001/api/categories',
+    `http://localhost:9001/api/categories/${ids}/products`,
     PData,
-    '/details'
+    '/products'
   );
 
   return (
@@ -107,9 +138,11 @@ const AddCategories = () => {
             </Link>
           </div>
         </Header>
-        <Content>
-          <ProductsForm postData={postData} />
-        </Content>
+        <ContentWrapper>
+          <Content>
+            <ProductsForm postData={postData} />
+          </Content>
+        </ContentWrapper>
         <Footer>
           <Button
             color="primary"

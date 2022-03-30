@@ -1,3 +1,8 @@
+/* eslint-disable no-multiple-empty-lines */
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
+/* eslint-disable no-plusplus */
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/display-name */
 /* eslint-disable react/no-multi-comp */
@@ -23,8 +28,8 @@ import ProductsContainer from 'Components/shared/ProductsContainer';
 import { CategoryContext } from 'context/CategoryContext';
 
 interface ChipData {
-  key: number;
-  label: string;
+  key: any;
+  label: any;
 }
 
 export const Grid = styled.div`
@@ -61,7 +66,6 @@ const Content = styled.section`
 `;
 
 const Body = styled.section`
-  overflow: scroll;
   grid-area: body;
   margin: var(--spacing-5) 0;
 `;
@@ -81,7 +85,6 @@ const ColorWrapper = styled.div`
 `;
 
 const Colors = styled(motion.div).attrs({})`
-  overflow: scroll;
   scroll-behavior: smooth;
   scroll-snap-type: proximity;
   display: flex;
@@ -96,20 +99,25 @@ const Colors = styled(motion.div).attrs({})`
 const ProductDetails = () => {
   const { categoryDetails } = React.useContext(CategoryContext);
 
-  const { catId, catName, multiItems } = categoryDetails;
+  const { catId, catName, mId, attrs, options } = categoryDetails;
+
+  // options.forEach((element: any) => {
+  //   console.log('element', element);
+  // });
 
   console.log('categoryDetails', categoryDetails);
+  console.log('mId', mId);
+  console.log('arrts', attrs);
+  console.log('options', options);
 
   const [chipData, setChipData] = React.useState<readonly ChipData[]>([
-    { key: 0, label: 'Red' },
-    { key: 1, label: 'Blue' },
-    { key: 2, label: 'Cyan' },
-    { key: 3, label: 'Cyan' },
-    { key: 4, label: 'Cyan' },
-    { key: 5, label: 'Cyan' },
-    { key: 6, label: 'Cyan' },
-    { key: 7, label: 'Cyan' }
+    { key: 0, label: 'red' },
+    { key: 1, label: 'blue' },
+    { key: 2, label: 'gray' }
   ]);
+  // use mId and options in chip data
+  // const [chipData, setChipData] = React.useState<readonly ChipData[]>([
+  //   { key: mId, label: options }
 
   const handleDelete = (chipToDelete: ChipData) => {
     return () => {
@@ -123,19 +131,11 @@ const ProductDetails = () => {
 
   const [unit, setUnit] = React.useState<any>('');
 
-  const fetch = async () => {
-    const res = await axios.get('http://localhost:9001/api/brands');
-
-    console.log('res====>', res.data);
-  };
-
   const {
     data: value,
     error,
     loading
   } = useFetch(`http://localhost:9001/api/categories/${catId}/products`);
-
-  console.log('value====>', value);
 
   const columns = [
     {
@@ -149,18 +149,13 @@ const ProductDetails = () => {
       width: 200
     },
     {
-      field: 'price',
+      field: 'sellingPrice',
       headerName: 'SELLING PRICE',
       width: 200
     },
     {
-      field: 'CPrice',
+      field: 'costPrice',
       headerName: ' COST PRICE',
-      width: 200
-    },
-    {
-      field: 'quantity',
-      headerName: 'QUANTITY',
       width: 200
     },
     {
@@ -174,7 +169,7 @@ const ProductDetails = () => {
     // fetch();
 
     setUnit(value.length);
-  }, [catId, catName, multiItems]);
+  }, [catId, catName, mId]);
 
   return (
     <ProductsContainer>
@@ -186,17 +181,14 @@ const ProductDetails = () => {
         <Content>
           <Wrapper>
             <Headings>
-              <Item>Unit</Item>
               <Item>brand</Item>
-              <Item>{multiItems}</Item>
-              {}
+              <Item>{attrs}</Item>
             </Headings>
             <Data>
-              <Item>{unit}</Item>
               <Item>
-                {value.map((item: any) => (
+                {/* {value.map((item: any) => (
                   <p>{item.brand}</p>
-                ))}
+                ))} */}
               </Item>
               <Item>
                 <ColorWrapper>
@@ -233,8 +225,8 @@ const ProductDetails = () => {
           <Divider />
         </Content>
         <Body>
-          <div style={{ margin: '10px 0', height: '55vh', width: '100%' }}>
-            <div style={{ height: '55vh', width: '100%' }}>
+          <div style={{ margin: '10px 0', height: '66vh', width: '100%' }}>
+            <div style={{ height: '66vh', width: '100%' }}>
               {/* {value.map((item: any) => {
                 return <p>{item.name}</p>;
               })} */}
@@ -258,3 +250,4 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+

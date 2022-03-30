@@ -39,35 +39,41 @@ export interface IFetchParams {
 }
 
 export interface IProductsDetails {
-  _id: string;
-  id: string;
-  name: string[];
-  price: number;
-  products: string[];
-  brand: string[];
-  quantity: number;
+  _id?: string;
+  id?: string;
+  name?: string;
+  brand?: string;
+  quantity?: number;
   description?: string;
-  dimensions?: {
-    length: number;
-    width: number;
-    height: number;
-    unit: string;
+  manufacturer?: string;
+  sku?: string;
+  unit?: string;
+  sellingPrice?: string;
+  saleAccount?: string;
+  sellDescription?: string;
+  sellTax?: string;
+  costPrice?: string;
+  costAccount?: string;
+  costDescription?: string;
+  costTax?: string;
+  dimensions?: string;
+  dUnit?: string;
+  weight?: number;
+  wUnit?: string;
+  images?: Record<string, any>[];
+  date?: Date;
+  isbn?: string;
+  salesInformation?: {
+    sellingPrice?: number;
+    account?: string;
+    description?: string;
+    tax?: number;
   };
-  weight: number;
-  images: Record<string, any>[];
-  date: Date;
-  isbn: string;
-  salesInformation: {
-    sellingPrice: number;
-    account: string;
-    description: string;
-    tax: number;
-  };
-  purchaseInformation: {
-    costPrice: number;
-    account: string;
-    description: string;
-    tax: number;
+  purchaseInformation?: {
+    costPrice?: number;
+    account?: string;
+    description?: string;
+    tax?: number;
   };
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-multiple-empty-lines */
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import useAuth from 'Hooks/useAuth';
 import React from 'react';
@@ -24,3 +25,4 @@ const RequireAuth = () => {
 };
 
 export default RequireAuth;
+

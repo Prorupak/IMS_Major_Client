@@ -33,13 +33,14 @@
         "tsx": "never"
       }
     ],
+    "no-multiple-empty-lines": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "react/jsx-filename-extension": [
       1,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
-
+"function-paren-newline": ["off", "consistent"],
     
 
     "indent": [

@@ -86,7 +86,7 @@ const Form = () => {
   const { error, handleSubmit, loading, value } = usePost(
     'http://localhost:9001/api/auth/login',
     postData,
-    '/category/add'
+    '/details'
   );
 
   return (
@@ -117,7 +117,7 @@ const Form = () => {
               sx={{
                 width: '70%'
               }}
-              // type="email"
+              type="email"
               variant="outlined"
             />
             <Error
@@ -149,7 +149,7 @@ const Form = () => {
               sx={{
                 width: '70%'
               }}
-              // type="password"
+              type="password"
               variant="outlined"
             />
             <Error
@@ -171,7 +171,7 @@ const Form = () => {
             }}
             type="submit"
             variant="contained">
-            Create your free account
+            Login
           </ButtonMain>
           <Wrapper />
         </LoginForm>
@@ -182,3 +182,6 @@ const Form = () => {
 };
 
 export default Form;
+
+
+

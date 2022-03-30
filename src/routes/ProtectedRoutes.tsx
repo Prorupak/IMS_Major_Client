@@ -11,6 +11,7 @@ import Items from 'layout/Items';
 import QuickCreate from 'Components/main/Navbar/QuickCreate/QuickCreate';
 import AddProducts from 'Pages/Products/AddProducts';
 import CreateProducts from 'Pages/Products/CreateProducts';
+import Products from 'Pages/Products/Components/productDetails/Products';
 import RequireAuth from './RequireAuth';
 
 const PublicRoutes = () => {
@@ -28,6 +29,7 @@ const PublicRoutes = () => {
             <Route element={<AddProducts />} path="/add/:id" />
             <Route element={<CategoryContainer />} />
             <Route element={<Items />} path="/details" />
+            <Route element={<Products />} path="/products" />
           </Route>
         </Routes>
       </AnimatePresence>
