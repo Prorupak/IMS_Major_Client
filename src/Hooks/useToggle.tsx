@@ -7,7 +7,8 @@ export const ToggleContext = React.createContext<any>({});
 // provide a stored toggle state to global context
 
 const useToggle = (key: any, initValue: boolean) => {
-  const [value, setValue] = useSessionStorage(key, initValue);
+  // const [value, setValue] = useSessionStorage(key, initValue);
+  const [value, setValue] = React.useState(initValue);
   // use useContext to access the toggle state from the parent component
   const toggleHandle = (action: any) => {
     console.log('action===>', action);
@@ -37,3 +38,4 @@ export const ToggleProvider = (props: any) => {
 };
 
 export default useToggle;
+

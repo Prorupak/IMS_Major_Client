@@ -60,7 +60,7 @@ interface IProps {
   children: React.ReactNode;
 }
 
-const Items: React.FC = () => {
+const Items: React.FC = ({ children }: any) => {
   // const { value, toggleHandle } = React.useContext(ToggleContext);
   const { value, toggleHandle } = useToggle('itemToggle', false);
 
@@ -74,7 +74,8 @@ const Items: React.FC = () => {
           <Header toggleHandle={toggleHandle} value={value} />
         </Nav>
         <Main>
-          <Categories toggleHandle={toggleHandle} />
+          {/* <Categories toggleHandle={toggleHandle} /> */}
+          {children}
         </Main>
         {value ? (
           <Product>
@@ -87,3 +88,4 @@ const Items: React.FC = () => {
 };
 
 export default Items;
+

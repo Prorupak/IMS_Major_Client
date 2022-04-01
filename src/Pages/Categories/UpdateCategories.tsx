@@ -1,3 +1,5 @@
+/* eslint-disable operator-linebreak */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
@@ -23,6 +25,10 @@ import {
 
 import { useInput } from 'Hooks/useInput';
 import Icon from 'Assets/Icons/Icon';
+import { useLocation, useNavigate, useParams } from 'react-router';
+import useFetch from 'Hooks/useFetch';
+import axios from 'axios';
+import { CategoryContext } from 'context/CategoryContext';
 import AddCategories from './AddCategories';
 
 const Grid = styled(motion.div).attrs({})`
@@ -109,8 +115,37 @@ const Error = styled(motion.div)<{ error: any }>`
   background: var(--color-error-back);
 `;
 
-const CategoryForm = ({ postData }: any) => {
+const UpdateCategories = () => {
+  const { updateData } = React.useContext(CategoryContext);
+
   const [checked, setChecked] = React.useState(true);
+  const [values, setValues] = React.useState<any[]>([]);
+  const [multiple, setMultiple] = React.useState<any>({});
+  const { id } = useParams();
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`http://localhost:9001/api/categories/${id}`);
+      setValues([res.data]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const multipleItem = values.map((item: any) => item.multipleItems);
+
+  React.useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line array-callback-return
+    multipleItem.map((item: any) => {
+      if (Array.isArray(item)) {
+        setMultiple({ item });
+      }
+    });
+    return () => {};
+  }, [id]);
+  console.log('values===>', values);
+  console.log('multiple===>', multiple);
 
   const catRef = React.useRef({} as HTMLInputElement);
   const desRef = React.useRef({} as HTMLInputElement);
@@ -151,12 +186,13 @@ const CategoryForm = ({ postData }: any) => {
     multipleItems: {
       attribute: attrs.value,
       options: option.value
-    }
+    },
+    id
   };
 
   React.useEffect(() => {
-    postData(Cdata);
-  }, [category.value, description.value, attrs.value, option.value]);
+    updateData(Cdata);
+  }, [category.value, description.value, attrs.value, option.value, id]);
 
   const handleRemoveClick = (index: any) => {
     const list = [...inputList];
@@ -201,9 +237,13 @@ const CategoryForm = ({ postData }: any) => {
             </Text>
             <TextField
               ref={catRef}
-              {...category.inputAttrs}
+              defaultValue={values.map((item: any) => item.name)}
+              //     placeholder={values?.name}
+              //     {...category.inputAttrs.onChange}
+              onChange={category.inputAttrs.onChange}
               size="small"
               sx={{ width: '820px' }}
+              value={category.value || values.map((item: any) => item.name)}
               variant="standard"
             />
           </ItemWrapper>
@@ -213,12 +253,16 @@ const CategoryForm = ({ postData }: any) => {
             </Text>
             <TextField
               ref={desRef}
-              {...description.inputAttrs}
+              //     {...description.inputAttrs}
               aria-label="minimum height"
               minRows={2}
+              onChange={description.inputAttrs.onChange}
               style={{
                 width: '820px'
               }}
+              value={
+                description.value || values.map((item: any) => item.description)
+              }
               variant="standard"
             />
           </ItemWrapper>
@@ -258,13 +302,22 @@ const CategoryForm = ({ postData }: any) => {
                             </Text>
                             <TextField
                               ref={attrsRef}
-                              {...attrs.inputAttrs}
+                              // {...attrs.inputAttrs}
                               aria-label="minimum height"
-                              minRows={2}
+                              onChange={attrs.inputAttrs.onChange}
                               size="small"
                               style={{
                                 width: '370px'
                               }}
+                              value={
+                                // eslint-disable-next-line operator-linebreak
+                                attrs.value ||
+                                values.map((item: any) =>
+                                  item.multipleItems.map(
+                                    (items: any) => items.attribute
+                                  )
+                                )
+                              }
                               variant="outlined"
                             />
                           </ItemWrapper>
@@ -289,7 +342,13 @@ const CategoryForm = ({ postData }: any) => {
                                   option.setValue((state: any) => value)
                                 // eslint-disable-next-line react/jsx-curly-newline
                               }
-                              options={[]}
+                              options={[
+                                values.map((item: any) =>
+                                  item.multipleItems.map(
+                                    (items: any) => items.options
+                                  )
+                                )
+                              ]}
                               renderInput={(params: any) => (
                                 <TextField
                                   ref={optionsRef}
@@ -304,8 +363,15 @@ const CategoryForm = ({ postData }: any) => {
                               renderTags={(value: any, getTagProps: any) =>
                                 option.value.map((opt: any, index: any) => (
                                   <Chip
-                                    label={opt}
-                                    {...option.inputAttrs}
+                                    label={
+                                      opt ||
+                                      values.map((item: any) =>
+                                        item.multipleItems.map(
+                                          (items: any) => items.options
+                                        )
+                                      )
+                                    }
+                                    // {...option.inputAttrs}
                                     sx={{
                                       background:
                                         'var(--color-secondary-light)',
@@ -344,6 +410,5 @@ const CategoryForm = ({ postData }: any) => {
   );
 };
 
-export default CategoryForm;
-
+export default UpdateCategories;
 

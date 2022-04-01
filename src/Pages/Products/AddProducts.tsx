@@ -133,7 +133,7 @@ const AddCategories = () => {
           <div className="rightSection">
             <PageTips />
             <Hr />
-            <Link to="/details">
+            <Link to="/category/details">
               <Icons src={Icon.Close} />
             </Link>
           </div>
@@ -183,3 +183,4 @@ const AddCategories = () => {
 };
 
 export default AddCategories;
+

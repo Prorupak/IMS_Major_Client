@@ -41,10 +41,10 @@ export default function Categories({ toggleHandle }: any) {
     error
   } = useFetch('http://localhost:9001/api/categories');
 
-  console.log('tableData', tableData.length);
+  console.log('tableData', tableData);
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 5 },
+    // { field: 'id', headerName: 'ID', width: 5 },
     {
       field: 'name',
       headerName: 'ITEMS SUMMARY',
@@ -67,7 +67,7 @@ export default function Categories({ toggleHandle }: any) {
         <div style={{ flexGrow: '1' }}>
           {/* @ts-ignore */}
           <DataGrid
-            columns={columns}
+            columns={[{ field: 'id' }] && columns}
             // eslint-disable-next-line no-underscore-dangle
             error={!tableData ? error : null}
             getRowId={(row) => row.id}
@@ -91,7 +91,7 @@ export default function Categories({ toggleHandle }: any) {
               })
             }
             onRowDoubleClick={toggleHandle}
-            rows={tableData}
+            rows={[{ id: 1 }] && tableData}
             sx={{
               border: 'none'
             }}
@@ -101,5 +101,9 @@ export default function Categories({ toggleHandle }: any) {
     </>
   );
 }
+
+
+
+
 
 

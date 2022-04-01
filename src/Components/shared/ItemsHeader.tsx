@@ -64,7 +64,7 @@ const ProductsNav: React.FC<IProps> = ({ value, toggleHandle }) => {
             <Button>
               <IconButton src={Icon.ListView} />
             </Button>
-            <Link to="/add">
+            <Link to="/category/add">
               <Button style={{ background: 'var(--color-secondary)' }}>
                 <IconButton src={Icon.BPlus} />
                 <p>New</p>
@@ -82,3 +82,4 @@ const ProductsNav: React.FC<IProps> = ({ value, toggleHandle }) => {
 };
 
 export default ProductsNav;
+

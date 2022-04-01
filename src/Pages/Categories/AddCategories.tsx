@@ -8,10 +8,12 @@ import Icon from 'Assets/Icons/Icon';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import usePost from 'Hooks/usePost';
-import { useLocation } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { ICategories } from 'Interfaces/Interfaces';
 import { QuickCreate } from 'Components/main/Navbar/QuickCreate/Elements.QuickCreate';
+import { CategoryContext } from 'context/CategoryContext';
 import CategoryForm from './CategoryForm';
+import UpdateCategories from './UpdateCategories';
 
 const Form = styled.form`
   height: 100vh;
@@ -65,28 +67,39 @@ const Footer = styled(motion.div).attrs({})`
   border-top: 1px solid rgba(0, 0, 0, 0.07);
 `;
 
-const AddCategories = () => {
-  const [data, setData] = React.useState<ICategories>({} as ICategories);
-  const postData = (post: any) => {
-    setData(post);
-  };
+const AddCategories = ({ children }: any) => {
+  const { update } = React.useContext(CategoryContext);
+  console.log('data', update);
+  // console.log('categoryDetails===', categoryDetails);
 
-  console.log('multipleItems', data.multipleItems);
+  // console.log('multipleItems', data.multipleItems);
 
-  const PData = {
-    name: data.name,
-    description: data.description,
-    multipleItems: data.multipleItems
-  };
+  // const PData = {
+  //   name: data.name,
+  //   description: data.description,
+  //   multipleItems: data.multipleItems
+  // };
 
-  const { handleSubmit } = usePost(
-    'http://localhost:9001/api/categories',
-    PData,
-    '/details'
-  );
+  // const { id } = update;
+
+  // console.log('id', id);
+
+  // const UData = {
+  //   name: update.name,
+  //   description: update.description,
+  //   multipleItems: update.multipleItems
+  // };
+
+  // const { handleSubmit } = usePost(
+  //   'http://localhost:9001/api/categories',
+  //   PData,
+  //   '/details'
+  // );
+
+  const { id } = update;
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <Grid>
         <Header>
           <Title>New Product Category</Title>
@@ -98,9 +111,7 @@ const AddCategories = () => {
             </Link>
           </div>
         </Header>
-        <Content>
-          <CategoryForm postData={postData} />
-        </Content>
+        <Content>{children}</Content>
         <Footer>
           <Button
             color="primary"
@@ -116,7 +127,7 @@ const AddCategories = () => {
             }}
             type="submit"
             variant="contained">
-            Save
+            {id ? 'Update' : 'Save'}
           </Button>
           <Button
             color="primary"
@@ -141,4 +152,26 @@ const AddCategories = () => {
 };
 
 export default AddCategories;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
