@@ -97,15 +97,20 @@ const Colors = styled(motion.div).attrs({})`
 `;
 
 const ProductDetails = () => {
-  const { categoryDetails } = React.useContext(CategoryContext);
-
-  const { catId, catName, mId, attrs, options } = categoryDetails;
-
-  // options.forEach((element: any) => {
-  //   console.log('element', element);
-  // });
-
-  console.log('categoryDetails', categoryDetails);
+  const location = useLocation();
+  const [productDetails, setProductDetails] = React.useState<any[]>([]);
+  // const { catId, attrs, options, catName, mId }: any = location.state;
+  // @ts-ignore
+  const catId = location && location.state && location.state.catId;
+  // @ts-ignore
+  const catName = location && location.state && location.state.catName;
+  // @ts-ignore
+  const mId = location && location.state && location.state.mId;
+  // @ts-ignore
+  const attrs = location && location.state && location.state.attrs;
+  // @ts-ignore
+  const options = location && location.state && location.state.options;
+  console.log('ids', catId);
   console.log('mId', mId);
   console.log('arrts', attrs);
   console.log('options', options);
@@ -115,9 +120,6 @@ const ProductDetails = () => {
     { key: 1, label: 'blue' },
     { key: 2, label: 'gray' }
   ]);
-  // use mId and options in chip data
-  // const [chipData, setChipData] = React.useState<readonly ChipData[]>([
-  //   { key: mId, label: options }
 
   const handleDelete = (chipToDelete: ChipData) => {
     return () => {
@@ -129,14 +131,36 @@ const ProductDetails = () => {
     };
   };
 
-  const [unit, setUnit] = React.useState<any>('');
-
   const {
     data: value,
     error,
     loading
-  } = useFetch(`http://localhost:9001/api/categories/${catId}/products`);
+  } = useFetch(`http://localhost:9001/api/categories/${catId}`);
 
+  console.log('value', value);
+
+  const productDetailsData = value.map((item: any) => item.products);
+
+  // setProductDetails([productDetailsData]);
+
+  console.log('productDetailsData', productDetailsData);
+
+  // setProductDetails(value);
+  // setProductDetails(
+  //   value.map((item: any) => {
+  //     item.map((item1: any) => {
+  //       return item1;
+  //     });
+  //   })
+  // );
+
+  console.log('productDetails', productDetails);
+
+  const [unit, setUnit] = React.useState<any>();
+  console.log('unit', unit);
+  React.useEffect(() => {
+    setUnit(value.length);
+  }, [value]);
   const columns = [
     {
       field: 'id',
@@ -164,12 +188,6 @@ const ProductDetails = () => {
       width: 200
     }
   ];
-
-  React.useEffect(() => {
-    // fetch();
-
-    setUnit(value.length);
-  }, [catId, catName, mId]);
 
   return (
     <ProductsContainer>
@@ -234,9 +252,9 @@ const ProductDetails = () => {
                 columns={columns}
                 density="compact"
                 getRowId={(data: any) => data.id}
-                loading={!value ? loading : false}
+                loading={!productDetailsData ? loading : false}
                 // eslint-disable-next-line no-underscore-dangle
-                rows={value}
+                rows={productDetailsData}
                 sx={{
                   border: 'none'
                 }}
@@ -250,4 +268,35 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

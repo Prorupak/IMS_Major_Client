@@ -9,7 +9,7 @@ export const ToggleContext = React.createContext<any>({});
 const useToggle = (key: any, initValue: boolean) => {
   // const [value, setValue] = useSessionStorage(key, initValue);
   const [value, setValue] = React.useState(initValue);
-  // use useContext to access the toggle state from the parent component
+
   const toggleHandle = (action: any) => {
     console.log('action===>', action);
     setValue((prev: any) => {
@@ -18,7 +18,7 @@ const useToggle = (key: any, initValue: boolean) => {
   };
 
   const handleOpen = () => {
-    setValue(false);
+    setValue(true);
   };
 
   return { value, toggleHandle, handleOpen };
@@ -38,4 +38,8 @@ export const ToggleProvider = (props: any) => {
 };
 
 export default useToggle;
+
+
+
+
 

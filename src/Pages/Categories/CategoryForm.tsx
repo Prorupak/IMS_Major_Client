@@ -23,6 +23,7 @@ import {
 
 import { useInput } from 'Hooks/useInput';
 import Icon from 'Assets/Icons/Icon';
+import { CategoryContext } from 'context/CategoryContext';
 import AddCategories from './AddCategories';
 
 const Grid = styled(motion.div).attrs({})`
@@ -109,8 +110,9 @@ const Error = styled(motion.div)<{ error: any }>`
   background: var(--color-error-back);
 `;
 
-const CategoryForm = ({ postData }: any) => {
+const CategoryForm = () => {
   const [checked, setChecked] = React.useState(true);
+  const { postData } = React.useContext(CategoryContext);
 
   const catRef = React.useRef({} as HTMLInputElement);
   const desRef = React.useRef({} as HTMLInputElement);
@@ -182,7 +184,7 @@ const CategoryForm = ({ postData }: any) => {
   // };
 
   return (
-    <AddCategories>
+    <>
       <Grid>
         {error ? (
           <Error error={error}>
@@ -340,10 +342,14 @@ const CategoryForm = ({ postData }: any) => {
           </ItemWrapper>
         </Top>
       </Grid>
-    </AddCategories>
+    </>
   );
 };
 
 export default CategoryForm;
+
+
+
+
 
 

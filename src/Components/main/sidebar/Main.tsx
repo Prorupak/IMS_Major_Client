@@ -184,7 +184,7 @@ const Sidebar: React.FC<Props> = ({ toggle }) => {
                     }}
                   />
                 </StyledNavLink>
-                <StyledNavLink to="/category/details">
+                <StyledNavLink to="/details">
                   <StyledTreeItem
                     label="Categories"
                     nodeId="3"
@@ -341,3 +341,4 @@ const Sidebar: React.FC<Props> = ({ toggle }) => {
 };
 
 export default Sidebar;
+

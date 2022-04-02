@@ -1,24 +1,20 @@
 import { CategoryContext } from 'context/CategoryContext';
 import Items from 'layout/Items';
+import Categories from 'Pages/Categories/Categories';
 import React from 'react';
 import { Outlet } from 'react-router';
-import AddCategories from './AddCategories';
-import CategoryForm from './CategoryForm';
-import UpdateCategories from './UpdateCategories';
 
 const CategoryContainer = () => {
+  // const { update } = React.useContext(CategoryContext);
+
+  // const { id } = update;
+
   return (
-    <AddCategories>
-      <Outlet />
-    </AddCategories>
+    <Items>
+      <Categories />
+    </Items>
   );
 };
 
 export default CategoryContainer;
-
-
-
-
-
-
 

@@ -13,6 +13,8 @@ import AddProducts from 'Pages/Products/AddProducts';
 import CreateProducts from 'Pages/Products/CreateProducts';
 import Products from 'Pages/Products/Components/productDetails/Products';
 import UpdateCategories from 'Pages/Categories/UpdateCategories';
+import { ItemWrapper } from 'Themes/utilityThemes';
+import CategoryForm from 'Pages/Categories/CategoryForm';
 import RequireAuth from './RequireAuth';
 
 const PublicRoutes = () => {
@@ -27,11 +29,12 @@ const PublicRoutes = () => {
             </Route> */}
             <Route element={<CreateProducts />} path="/create" />
             <Route element={<AddProducts />} path="/add/:id" />
-            <Route element={<CategoryContainer />} path="category">
-              <Route element={<Categories />} path="details" />
-              <Route element={<AddCategories />} path="add" />
+            <Route element={<CategoryContainer />} path="/category">
+              <Route element={<CategoryForm />} path="add" />
               <Route element={<UpdateCategories />} path="edit/:id" />
             </Route>
+            <Route element={<ItemWrapper />} path="/category/details" />
+            <Route element={<Categories />} path="/details" />
             <Route element={<Products />} path="/products" />
           </Route>
         </Routes>
@@ -41,6 +44,17 @@ const PublicRoutes = () => {
 };
 
 export default PublicRoutes;
+
+
+
+
+
+
+
+
+
+
+
 
 
 

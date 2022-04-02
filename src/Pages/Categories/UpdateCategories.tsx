@@ -121,12 +121,17 @@ const UpdateCategories = () => {
   const [checked, setChecked] = React.useState(true);
   const [values, setValues] = React.useState<any[]>([]);
   const [multiple, setMultiple] = React.useState<any>({});
-  const { id } = useParams();
+  const location = useLocation();
+
+  // @ts-ignore
+  const id = location && location.state && location.state.catId;
+
+  console.log('id', id);
 
   const fetchData = async () => {
     try {
       const res = await axios.get(`http://localhost:9001/api/categories/${id}`);
-      setValues([res.data]);
+      setValues(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -218,7 +223,7 @@ const UpdateCategories = () => {
   // };
 
   return (
-    <AddCategories>
+    <>
       <Grid>
         {error ? (
           <Error error={error}>
@@ -406,9 +411,15 @@ const UpdateCategories = () => {
           </ItemWrapper>
         </Top>
       </Grid>
-    </AddCategories>
+    </>
   );
 };
 
 export default UpdateCategories;
+
+
+
+
+
+
 

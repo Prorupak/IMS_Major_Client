@@ -8,6 +8,7 @@ import { Outlet, useNavigate } from 'react-router';
 import Items from 'layout/Items';
 import useFetch from 'Hooks/useFetch';
 import { CategoryContext } from 'context/CategoryContext';
+import { ProductContext, ProductData } from 'context/ProductContext';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 5 },
@@ -40,24 +41,15 @@ const columns = [
 // eslint-disable-next-line react/no-multi-comp
 export default function Products({ toggleHandle }: any) {
   const navigate = useNavigate();
-  const { setCategoryDetails } = React.useContext(CategoryContext);
 
   const handleItem = (id: string, name: string, multi: any) => {
     navigate('', {
       state: { catId: id, catName: name, multiItems: multi }
     });
-    setCategoryDetails({
-      catId: id,
-      catName: name,
-      multiItems: multi
-    });
   };
 
-  const {
-    data: tableData,
-    loading,
-    error
-  } = useFetch('http://localhost:9001/api/products');
+  const [productDetails] = React.useContext(ProductData);
+  const { error, loading } = React.useContext(ProductContext);
 
   // setCategoryDetails(tableData);
 
@@ -69,16 +61,13 @@ export default function Products({ toggleHandle }: any) {
           <DataGrid
             columns={columns}
             // eslint-disable-next-line no-underscore-dangle
-            error={!tableData ? error : null}
+            error={!productDetails ? error : null}
             getRowId={(row) => row.id}
-            loading={tableData ? loading : true}
+            loading={productDetails ? loading : true}
             onRowClick={
               // eslint-disable-next-line operator-linebreak
               toggleHandle &&
               ((e: any) => {
-                setCategoryDetails({
-                  catId: e.id
-                });
                 handleItem(
                   e.id,
                   e.row.name,
@@ -87,7 +76,7 @@ export default function Products({ toggleHandle }: any) {
               })
             }
             onRowDoubleClick={toggleHandle}
-            rows={tableData}
+            rows={productDetails}
             sx={{
               border: 'none'
             }}
@@ -97,3 +86,6 @@ export default function Products({ toggleHandle }: any) {
     </>
   );
 }
+
+
+

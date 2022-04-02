@@ -68,17 +68,23 @@ const Footer = styled(motion.div).attrs({})`
 `;
 
 const AddCategories = ({ children }: any) => {
-  const { update } = React.useContext(CategoryContext);
-  console.log('data', update);
+  const location = useLocation();
+  // @ts-ignore
+  const ids = location && location.state && location.state.catId;
+
+  const { data } = React.useContext(CategoryContext);
+  console.log('data===>', data);
   // console.log('categoryDetails===', categoryDetails);
 
   // console.log('multipleItems', data.multipleItems);
 
-  // const PData = {
-  //   name: data.name,
-  //   description: data.description,
-  //   multipleItems: data.multipleItems
-  // };
+  const PData = {
+    name: data.name,
+    description: data.description,
+    multipleItems: data.multipleItems
+  };
+
+  console.log('datPData===>', PData);
 
   // const { id } = update;
 
@@ -90,23 +96,24 @@ const AddCategories = ({ children }: any) => {
   //   multipleItems: update.multipleItems
   // };
 
-  // const { handleSubmit } = usePost(
-  //   'http://localhost:9001/api/categories',
-  //   PData,
-  //   '/details'
-  // );
+  const { handleSubmit } = usePost(
+    'http://localhost:9001/api/categories',
+    PData,
+    '/details'
+  );
 
-  const { id } = update;
+  // const id = update;
+  // console.log('update', update);
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Grid>
         <Header>
           <Title>New Product Category</Title>
           <div className="rightSection">
             <PageTips />
             <Hr />
-            <Link to="/details">
+            <Link to="/category/details">
               <Icons src={Icon.Close} />
             </Link>
           </div>
@@ -127,24 +134,26 @@ const AddCategories = ({ children }: any) => {
             }}
             type="submit"
             variant="contained">
-            {id ? 'Update' : 'Save'}
+            {ids ? 'Update' : 'Save'}
           </Button>
-          <Button
-            color="primary"
-            size="small"
-            sx={{
-              boxShadow: 'none',
-              borderRadius: '6px',
-              background: '#f5f5f5',
-              border: '1px solid #e0e0e0',
-              color: 'var(--color-primary-dark)',
-              '&:hover': {
-                boxShadow: 'none'
-              }
-            }}
-            variant="contained">
-            Cancel
-          </Button>
+          <Link to="/category/details">
+            <Button
+              color="primary"
+              size="small"
+              sx={{
+                boxShadow: 'none',
+                borderRadius: '6px',
+                background: '#f5f5f5',
+                border: '1px solid #e0e0e0',
+                color: 'var(--color-primary-dark)',
+                '&:hover': {
+                  boxShadow: 'none'
+                }
+              }}
+              variant="contained">
+              Cancel
+            </Button>
+          </Link>
         </Footer>
       </Grid>
     </Form>
@@ -152,6 +161,23 @@ const AddCategories = ({ children }: any) => {
 };
 
 export default AddCategories;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

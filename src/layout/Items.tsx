@@ -1,13 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { Icon as Icons } from 'Themes/utilityThemes';
-import Icon from 'Assets/Icons/Icon';
 import { useLocation } from 'react-router';
-import useToggle, { ToggleContext } from 'Hooks/useToggle';
 import Header from 'Components/shared/ItemsHeader';
 import ProductsData from 'Components/shared/ ProductsData';
-import Categories from 'Pages/Categories/Categories';
+import { ToggleContext } from 'Hooks/useToggle';
 
 const Grid = styled(motion.div)<{ toggle: boolean }>`
   display: grid;
@@ -61,8 +58,8 @@ interface IProps {
 }
 
 const Items: React.FC = ({ children }: any) => {
-  // const { value, toggleHandle } = React.useContext(ToggleContext);
-  const { value, toggleHandle } = useToggle('itemToggle', false);
+  const { value, toggleHandle } = React.useContext(ToggleContext);
+  // const { value, toggleHandle } = useToggle('itemToggle', false);
 
   const location = useLocation();
   console.log('location===', location && location.state);
@@ -88,4 +85,6 @@ const Items: React.FC = ({ children }: any) => {
 };
 
 export default Items;
+
+
 

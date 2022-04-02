@@ -8,6 +8,7 @@ import AuthProvider from 'HOC/WithAuth';
 import { SnackbarProvider } from 'notistack';
 import Layout from 'layout/Layout';
 import { CategoryProvider } from 'context/CategoryContext';
+import { ProductProvider } from 'context/ProductContext';
 
 const App = () => {
   return (
@@ -15,12 +16,14 @@ const App = () => {
       <SnackbarProvider maxSnack={3}>
         <AuthProvider>
           <CategoryProvider>
-            <ToggleProvider>
-              <PublicRoutes />
-              <Layout>
-                <ProtectedRoutes />
-              </Layout>
-            </ToggleProvider>
+            <ProductProvider>
+              <ToggleProvider>
+                <PublicRoutes />
+                <Layout>
+                  <ProtectedRoutes />
+                </Layout>
+              </ToggleProvider>
+            </ProductProvider>
           </CategoryProvider>
         </AuthProvider>
       </SnackbarProvider>
@@ -28,6 +31,7 @@ const App = () => {
   );
 };
 export default App;
+
 
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable guard-for-in */
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
@@ -7,14 +8,32 @@ import useToggle, { ToggleContext } from 'Hooks/useToggle';
 import { Outlet, useNavigate } from 'react-router';
 import Items from 'layout/Items';
 import useFetch from 'Hooks/useFetch';
-import { CategoryContext } from 'context/CategoryContext';
-
-
+import {
+  CategoryContext,
+  CategoryData,
+  CategoryToggle
+} from 'context/CategoryContext';
 
 // eslint-disable-next-line react/no-multi-comp
-export default function Categories({ toggleHandle }: any) {
+export default function Categories() {
   const navigate = useNavigate();
-  const { setCategoryDetails } = React.useContext(CategoryContext);
+  const [tableData, setTableData] = React.useState<any[]>([]);
+  const { error, loading } = React.useContext(CategoryContext);
+  const { toggleHandle, handleOpen } = React.useContext(ToggleContext);
+  const { categoryDetails, setCategoryDetails } =
+    React.useContext(CategoryData);
+
+  const fetchData = async () => {
+    const response = await axios.get('http://localhost:9001/api/categories');
+    setTableData(response.data);
+    console.log('response.data', response.data);
+  };
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log('CategoryDetails=====>', categoryDetails);
 
   const handleItem = (
     id: string,
@@ -27,24 +46,16 @@ export default function Categories({ toggleHandle }: any) {
       state: { catId: id, catName: name, mId, attrs, options }
     });
     setCategoryDetails({
-      catId: id,
-      catName: name,
-      mId,
+      id,
+      name,
       attrs,
-      options
+      options,
+      mId
     });
   };
 
-  const {
-    data: tableData,
-    loading,
-    error
-  } = useFetch('http://localhost:9001/api/categories');
-
-  console.log('tableData', tableData);
-
   const columns = [
-    // { field: 'id', headerName: 'ID', width: 5 },
+    { field: 'id', headerName: 'ID', width: 5 },
     {
       field: 'name',
       headerName: 'ITEMS SUMMARY',
@@ -52,34 +63,32 @@ export default function Categories({ toggleHandle }: any) {
       editable: false
     },
     {
-      field: `${tableData.length}`,
+      field: 'sku',
       headerName: 'STOCK IN HAND',
       width: 500,
-      editable: true
+      editable: false
     }
   ];
 
   // setCategoryDetails(tableData);
 
   return (
-    <>
+    <Items>
       <div style={{ display: 'flex', height: '100vh', width: '100%' }}>
         <div style={{ flexGrow: '1' }}>
           {/* @ts-ignore */}
           <DataGrid
-            columns={[{ field: 'id' }] && columns}
-            // eslint-disable-next-line no-underscore-dangle
+            columns={columns}
             error={!tableData ? error : null}
+            // eslint-disable-next-line no-underscore-dangle
             getRowId={(row) => row.id}
-            loading={tableData ? loading : true}
+            loading={tableData ? false : loading}
             onRowClick={
               // eslint-disable-next-line operator-linebreak
-              toggleHandle &&
-              ((e: any) => {
+              (e: any) => {
+                handleOpen();
                 console.log('eros', e.row);
-                setCategoryDetails({
-                  catId: e.id
-                });
+
                 handleItem(
                   e.id,
                   e.row.name,
@@ -88,22 +97,17 @@ export default function Categories({ toggleHandle }: any) {
                   // eslint-disable-next-line no-underscore-dangle
                   e.row.multipleItems.map((item: any) => item._id)
                 );
-              })
+              }
             }
             onRowDoubleClick={toggleHandle}
-            rows={[{ id: 1 }] && tableData}
+            rows={tableData}
             sx={{
               border: 'none'
             }}
           />
         </div>
       </div>
-    </>
+    </Items>
   );
 }
-
-
-
-
-
 

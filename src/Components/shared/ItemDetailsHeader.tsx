@@ -70,7 +70,7 @@ const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
             <ButtonWrapper>
               <Tooltip title="Edit Category">
                 <Button>
-                  <Link to={`/edit/${ids}`}>
+                  <Link to={`/category/edit/${ids}`}>
                     <IconButton src={Icon.Edit} />
                   </Link>
                 </Button>
@@ -116,4 +116,7 @@ const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
 };
 
 export default ItemDetailsHeader;
+
+
+
 
