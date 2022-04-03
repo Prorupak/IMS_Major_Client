@@ -122,16 +122,13 @@ const UpdateCategories = () => {
   const [values, setValues] = React.useState<any[]>([]);
   const [multiple, setMultiple] = React.useState<any>({});
   const location = useLocation();
-
-  // @ts-ignore
-  const id = location && location.state && location.state.catId;
-
+  const { id } = useParams();
   console.log('id', id);
 
   const fetchData = async () => {
     try {
       const res = await axios.get(`http://localhost:9001/api/categories/${id}`);
-      setValues(res.data);
+      setValues([res.data]);
     } catch (error) {
       console.log(error);
     }
@@ -157,7 +154,10 @@ const UpdateCategories = () => {
   const attrsRef = React.useRef({} as HTMLInputElement);
   const optionsRef = React.useRef({} as HTMLInputElement);
 
-  const category = useInput('');
+  const category = useInput(
+    values.length > 0 ? values.map((item: any) => item.name) : ''
+  );
+  console.log('category', category.value);
   const [validCategory, setValidCategory] = React.useState(false);
 
   const attrs = useInput('');
@@ -194,6 +194,8 @@ const UpdateCategories = () => {
     },
     id
   };
+
+  console.log('Cdata', Cdata);
 
   React.useEffect(() => {
     updateData(Cdata);
@@ -244,7 +246,7 @@ const UpdateCategories = () => {
               ref={catRef}
               defaultValue={values.map((item: any) => item.name)}
               //     placeholder={values?.name}
-              //     {...category.inputAttrs.onChange}
+              // {...category.inputAttrs}
               onChange={category.inputAttrs.onChange}
               size="small"
               sx={{ width: '820px' }}
@@ -258,16 +260,14 @@ const UpdateCategories = () => {
             </Text>
             <TextField
               ref={desRef}
-              //     {...description.inputAttrs}
+              // {...description.inputAttrs}
               aria-label="minimum height"
               minRows={2}
               onChange={description.inputAttrs.onChange}
               style={{
                 width: '820px'
               }}
-              value={
-                description.value || values.map((item: any) => item.description)
-              }
+              value={values.map((item: any) => item.description)}
               variant="standard"
             />
           </ItemWrapper>
@@ -416,6 +416,27 @@ const UpdateCategories = () => {
 };
 
 export default UpdateCategories;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

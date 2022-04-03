@@ -3,11 +3,12 @@ import { motion } from 'framer-motion';
 
 export const Item = styled.p`
   margin: 8px 0;
+  height: 1%;
   text-transform: capitalize;
-  font-family: Poppins;
+  font-family: 'Poppins', 'sans-serif';
   font-style: normal;
   font-weight: 600;
-  font-size: var(--fSize-8);
+  font-size: var(--fSize-5);
   line-height: var(--spacing-18);
   color: var(--color-primary-dark);
 `;
@@ -146,3 +147,9 @@ export const SmallIcon = styled(motion.img).attrs<{ color?: string }>({
   width: 14px;
   height: 14px;
 `;
+
+
+
+
+
+

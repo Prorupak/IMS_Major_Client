@@ -12,6 +12,7 @@ import { useLocation, useParams } from 'react-router';
 import { ICategories } from 'Interfaces/Interfaces';
 import { QuickCreate } from 'Components/main/Navbar/QuickCreate/Elements.QuickCreate';
 import { CategoryContext } from 'context/CategoryContext';
+import usePut from 'Hooks/usePut';
 import CategoryForm from './CategoryForm';
 import UpdateCategories from './UpdateCategories';
 
@@ -69,14 +70,9 @@ const Footer = styled(motion.div).attrs({})`
 
 const AddCategories = ({ children }: any) => {
   const location = useLocation();
-  // @ts-ignore
-  const ids = location && location.state && location.state.catId;
+  const { id } = useParams();
 
-  const { data } = React.useContext(CategoryContext);
-  console.log('data===>', data);
-  // console.log('categoryDetails===', categoryDetails);
-
-  // console.log('multipleItems', data.multipleItems);
+  const { data, update } = React.useContext(CategoryContext);
 
   const PData = {
     name: data.name,
@@ -90,15 +86,20 @@ const AddCategories = ({ children }: any) => {
 
   // console.log('id', id);
 
-  // const UData = {
-  //   name: update.name,
-  //   description: update.description,
-  //   multipleItems: update.multipleItems
-  // };
+  const UData = {
+    name: update.name,
+    description: update.description,
+    multipleItems: update.multipleItems
+  };
 
   const { handleSubmit } = usePost(
     'http://localhost:9001/api/categories',
     PData,
+    '/details'
+  );
+  const { handleSubmit: handlePut } = usePut(
+    `http://localhost:9001/api/categories/${id}`,
+    id ? UData : PData,
     '/details'
   );
 
@@ -106,7 +107,7 @@ const AddCategories = ({ children }: any) => {
   // console.log('update', update);
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={id ? handlePut : handleSubmit}>
       <Grid>
         <Header>
           <Title>New Product Category</Title>
@@ -134,7 +135,7 @@ const AddCategories = ({ children }: any) => {
             }}
             type="submit"
             variant="contained">
-            {ids ? 'Update' : 'Save'}
+            {id ? 'Update' : 'Save'}
           </Button>
           <Link to="/category/details">
             <Button
@@ -161,6 +162,13 @@ const AddCategories = ({ children }: any) => {
 };
 
 export default AddCategories;
+
+
+
+
+
+
+
 
 
 

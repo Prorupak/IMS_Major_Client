@@ -17,15 +17,11 @@ import { Item, Divider, Heading } from '../../Themes/utilityThemes';
 import { DataGrid } from '@mui/x-data-grid';
 import Icon from 'Assets/Icons/Icon';
 import { motion } from 'framer-motion';
-import Image from 'Assets/Image/Image';
 import axios from 'axios';
 import { useLocation } from 'react-router';
-import { IProductsDetails } from 'Interfaces/Interfaces';
 
 import styled from 'styled-components';
-import useFetch from 'Hooks/useFetch';
 import ProductsContainer from 'Components/shared/ProductsContainer';
-import { CategoryContext } from 'context/CategoryContext';
 
 interface ChipData {
   key: any;
@@ -98,7 +94,7 @@ const Colors = styled(motion.div).attrs({})`
 
 const ProductDetails = () => {
   const location = useLocation();
-  const [productDetails, setProductDetails] = React.useState<any[]>([]);
+  const [productDetails, setProductDetails] = React.useState<any>({});
   // const { catId, attrs, options, catName, mId }: any = location.state;
   // @ts-ignore
   const catId = location && location.state && location.state.catId;
@@ -131,19 +127,41 @@ const ProductDetails = () => {
     };
   };
 
-  const {
-    data: value,
-    error,
-    loading
-  } = useFetch(`http://localhost:9001/api/categories/${catId}`);
+  // const {
+  //   data: value,
+  //   error,
+  //   loading
+  // } = useFetch(`http://localhost:9001/api/categories/${catId}/products`);
 
-  console.log('value', value);
+  const [unit, setUnit] = React.useState<any[]>([]);
 
-  const productDetailsData = value.map((item: any) => item.products);
+  const fetchData = async () => {
+    const response = await axios.get(
+      `http://localhost:9001/api/categories/${catId}/products`
+    );
+    console.log('response', response.data);
+    setProductDetails(response.data);
+    setUnit([response.data]);
+    console.log('unit', unit);
+  };
 
-  // setProductDetails([productDetailsData]);
+  console.log('product--', productDetails);
 
-  console.log('productDetailsData', productDetailsData);
+  React.useEffect(() => {
+    fetchData();
+  }, [catId]);
+
+  console.log('productDetails==>', productDetails);
+
+  console.log(
+    'value',
+    productDetails.products?.map((item: any) => item.name)
+  );
+
+  const productDetailsData = productDetails.products;
+  const pData = unit.map((item: any) => item.products);
+
+  console.log('productDetailsData', pData);
 
   // setProductDetails(value);
   // setProductDetails(
@@ -156,11 +174,9 @@ const ProductDetails = () => {
 
   console.log('productDetails', productDetails);
 
-  const [unit, setUnit] = React.useState<any>();
-  console.log('unit', unit);
-  React.useEffect(() => {
-    setUnit(value.length);
-  }, [value]);
+  // React.useEffect(() => {
+  //   setUnit(productDetails.products.length);
+  // }, [productDetailsData]);
   const columns = [
     {
       field: 'id',
@@ -194,7 +210,7 @@ const ProductDetails = () => {
       <Grid>
         <Header>
           <Heading>{catName}</Heading>
-          <Item>{unit} Item(s)</Item>
+          <Item>{unit.map((item: any) => item.products.length)} Item(s)</Item>
         </Header>
         <Content>
           <Wrapper>
@@ -204,9 +220,9 @@ const ProductDetails = () => {
             </Headings>
             <Data>
               <Item>
-                {/* {value.map((item: any) => (
-                  <p>{item.brand}</p>
-                ))} */}
+                {unit.map((item: any) => (
+                  <p>{item.products.map((item2: any) => item2.brand)}</p>
+                ))}
               </Item>
               <Item>
                 <ColorWrapper>
@@ -251,9 +267,9 @@ const ProductDetails = () => {
               <DataGrid
                 columns={columns}
                 density="compact"
-                getRowId={(data: any) => data.id}
-                loading={!productDetailsData ? loading : false}
                 // eslint-disable-next-line no-underscore-dangle
+                getRowId={(data: any) => data.id}
+                loading={false}
                 rows={productDetailsData}
                 sx={{
                   border: 'none'
@@ -268,6 +284,64 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
