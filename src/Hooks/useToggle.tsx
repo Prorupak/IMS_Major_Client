@@ -26,7 +26,7 @@ const useToggle = (key: any, initValue: boolean) => {
 
 export const ToggleProvider = (props: any) => {
   const { children } = props;
-  const { value, toggleHandle, handleOpen } = useToggle('toggle', false);
+  const { value, toggleHandle, handleOpen } = useToggle('toggle', true);
 
   console.log('value===>', value);
 
@@ -38,6 +38,7 @@ export const ToggleProvider = (props: any) => {
 };
 
 export default useToggle;
+
 
 
 

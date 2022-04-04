@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-export const Item = styled.p`
+export const Item = styled.p<{
+  height?: string;
+  fontSize?: string;
+  fontWeight?: string;
+}>`
   margin: 8px 0;
-  height: 1%;
+  height: ${({ height }) => height || '0%'};
   text-transform: capitalize;
   font-family: 'Poppins', 'sans-serif';
   font-style: normal;
-  font-weight: 600;
-  font-size: var(--fSize-5);
+  font-weight: ${({ fontWeight }) => fontWeight || '600'};
+  font-size: ${({ fontSize }) => fontSize || 'var(--fSize-5)'};
   line-height: var(--spacing-18);
   color: var(--color-primary-dark);
 `;
@@ -147,6 +151,12 @@ export const SmallIcon = styled(motion.img).attrs<{ color?: string }>({
   width: 14px;
   height: 14px;
 `;
+
+
+
+
+
+
 
 
 

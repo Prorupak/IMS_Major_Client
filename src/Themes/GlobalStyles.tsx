@@ -1,6 +1,7 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/prefer-default-export */
 import styled, { createGlobalStyle } from 'styled-components';
+import 'antd/dist/antd.css';
 import { motion } from 'framer-motion/dist/framer-motion';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 

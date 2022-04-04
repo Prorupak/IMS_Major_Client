@@ -9,6 +9,7 @@ import Items from 'layout/Items';
 import useFetch from 'Hooks/useFetch';
 import { CategoryContext } from 'context/CategoryContext';
 import { ProductContext, ProductData } from 'context/ProductContext';
+import Product from 'layout/Product';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 5 },
@@ -39,22 +40,23 @@ const columns = [
 ];
 
 // eslint-disable-next-line react/no-multi-comp
-export default function Products({ toggleHandle }: any) {
+export default function Products() {
   const navigate = useNavigate();
 
-  const handleItem = (id: string, name: string, multi: any) => {
+  const handleItem = (row: any) => {
     navigate('', {
-      state: { catId: id, catName: name, multiItems: multi }
+      state: { row }
     });
   };
 
+  const { handleOpen, toggleHandle } = React.useContext(ToggleContext);
   const [productDetails] = React.useContext(ProductData);
   const { error, loading } = React.useContext(ProductContext);
 
   // setCategoryDetails(tableData);
 
   return (
-    <>
+    <Product>
       <div style={{ display: 'flex', height: '100vh', width: '100%' }}>
         <div style={{ flexGrow: '1' }}>
           {/* @ts-ignore */}
@@ -66,14 +68,11 @@ export default function Products({ toggleHandle }: any) {
             loading={productDetails ? loading : true}
             onRowClick={
               // eslint-disable-next-line operator-linebreak
-              toggleHandle &&
-              ((e: any) => {
-                handleItem(
-                  e.id,
-                  e.row.name,
-                  e.row.multipleItems.map((item: any) => item.attribute)
-                );
-              })
+              (e: any) => {
+                handleOpen();
+                console.log('e.row=====>', e.row);
+                handleItem(e.row);
+              }
             }
             onRowDoubleClick={toggleHandle}
             rows={productDetails}
@@ -83,9 +82,16 @@ export default function Products({ toggleHandle }: any) {
           />
         </div>
       </div>
-    </>
+    </Product>
   );
 }
+
+
+
+
+
+
+
 
 
 

@@ -184,21 +184,23 @@ const ProductDetails = () => {
       <Grid>
         <Header>
           <Heading>{catName}</Heading>
-          <Item>{unit.map((item: any) => item.products.length)} Item(s)</Item>
+          <Item height="1%">
+            {unit.map((item: any) => item.products)} Item(s)
+          </Item>
         </Header>
         <Content>
           <Wrapper>
             <Headings>
-              <Item>brand</Item>
-              <Item>{attrs}</Item>
+              <Item height="1%">brand</Item>
+              <Item height="1%">{attrs}</Item>
             </Headings>
             <Data>
-              <Item>
+              <Item height="1%">
                 {unit.map((item: any) => (
                   <p>{item.products.map((item2: any) => item2.brand)}</p>
                 ))}
               </Item>
-              <Item>
+              <Item height="1%">
                 <ColorWrapper>
                   <Colors>
                     {chipData.map((data) => {
@@ -255,6 +257,10 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+
+
+
 
 
 
