@@ -17,6 +17,7 @@ import Icon from '../../Assets/Icons/Icon';
 const Nav = styled.nav``;
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
 
@@ -116,6 +117,7 @@ const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
 };
 
 export default ItemDetailsHeader;
+
 
 
 

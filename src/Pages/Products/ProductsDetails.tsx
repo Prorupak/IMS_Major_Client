@@ -1,9 +1,13 @@
+/* eslint-disable operator-linebreak */
 import { motion } from 'framer-motion';
 import { ToggleContext } from 'Hooks/useToggle';
 import React from 'react';
 import { useLocation } from 'react-router';
 import styled from 'styled-components';
 import CompHeader from './Components/productDetails/CompHeader';
+import Overview from './Components/Overview';
+import History from './Components/History';
+import Transactions from './Components/Transactions';
 
 const Grid = styled(motion.div).attrs({})`
   display: grid;
@@ -11,41 +15,37 @@ const Grid = styled(motion.div).attrs({})`
     'header header'
     'content content';
   grid-template-rows: auto auto;
-  grid-template-columns: 100vh 100vh;
+  grid-template-columns: 103vh 103vh;
   padding: var(--spacing-15) var(--spacing-15);
+  width: 100%;
 `;
 
 const Header = styled(motion.nav).attrs({})`
   grid-area: header;
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
-
-const Body = styled(motion.div).attrs({})`
-  grid-area: content;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const LeftDetails = styled(motion.div).attrs({})``;
-
-const RightDetails = styled(motion.div).attrs({})``;
-
-const PrimaryDetails = styled(motion.div).attrs({})``;
-
-const SalesInfo = styled(motion.div).attrs({})``;
-
-const Summary = styled(motion.div).attrs({})``;
-
-const ImageContainer = styled(motion.div).attrs({})``;
-
-const StockSummary = styled(motion.div).attrs({})``;
 
 const ProductsDetails = () => {
   const location = useLocation();
-
+  const [current, setCurrent] = React.useState('overview');
+  const handleClicked = (event: any) => {
+    console.log('click', event);
+    setCurrent(event.key);
+  };
+  console.log('current', current);
   const { toggleHandle } = React.useContext(ToggleContext);
-
+  const Body = styled(motion.div).attrs({
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+    transition: { duration: 0.5, ease: 'easeIn' }
+  })`
+    grid-area: content;
+    display: flex;
+    justify-content: space-between;
+  `;
   // @ts-ignore
   const ids = location && location.state && location.state.row;
 
@@ -53,31 +53,28 @@ const ProductsDetails = () => {
   // @ts-ignore
   const catName = location && location.state && location.state.catName;
 
+  const tabs = ({ currents }: any) => {
+    switch (currents) {
+      case 'overview':
+        return <Overview />;
+      case 'transaction':
+        return <Transactions />;
+      case 'history':
+        return <History />;
+      default:
+        return <Overview />;
+    }
+  };
+
   return (
     <Grid>
       <Header>
-        <CompHeader />
+        <CompHeader current={current} handleClicked={handleClicked} />
       </Header>
       <Body>
-        <LeftDetails>
-          <PrimaryDetails>
-            <p>primary</p>
-          </PrimaryDetails>
-          <SalesInfo>
-            <p>sales info</p>
-          </SalesInfo>
-          <Summary>
-            <p>summary</p>
-          </Summary>
-        </LeftDetails>
-        <RightDetails>
-          <ImageContainer>
-            <p>image</p>
-          </ImageContainer>
-          <StockSummary>
-            <p>stock summary</p>
-          </StockSummary>
-        </RightDetails>
+        {(current === 'overview' ||
+          current === 'transaction' ||
+          current === 'history') && <>{tabs({ currents: current })}</>}
       </Body>
     </Grid>
   );

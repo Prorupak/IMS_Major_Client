@@ -18,12 +18,11 @@ const HeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-5);
-  border: 1px solid rgba(0, 0, 0, 0.07);
 `;
 
 const HeaderContent = styled.div`
   position: absolute;
-  top: 15px;
+  top: 87px;
   display: flex;
   align-items: center;
   gap: var(--spacing-5);
@@ -45,9 +44,8 @@ const StyledMenuAntd = styled(MenuAntd)`
     }
   }
 `;
-const CompHeader = () => {
+const CompHeader = ({ current, handleClicked }: any) => {
   const location = useLocation();
-  const [current, setCurrent] = React.useState('overview');
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { toggleHandle } = React.useContext(ToggleContext);
@@ -61,10 +59,6 @@ const CompHeader = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-  const handleClicked = (event: any) => {
-    console.log('click', event);
-    setCurrent(event.key);
   };
 
   const { handleDelete } = useDelete(
@@ -85,8 +79,11 @@ const CompHeader = () => {
           </TooltipMui>
           <Button
             //     onClick={onNavigate}
-            style={{ background: 'var(--color-secondary)' }}>
-            <p>Adjust Stock</p>
+            style={{
+              background: 'var(--color-secondary)'
+              // padding: '0px 8px'
+            }}>
+            Adjust Stock
           </Button>
           <Menu
             anchorEl={anchorEl}
@@ -133,8 +130,7 @@ const CompHeader = () => {
         selectedKeys={[current]}
         style={{
           fontSize: '13px',
-          lineHeight: '20px',
-          padding: '10px'
+          lineHeight: '20px'
         }}>
         <MenuAntd.Item key="overview" style={{ padding: '10px' }}>
           Overview
@@ -151,4 +147,14 @@ const CompHeader = () => {
 };
 
 export default CompHeader;
+
+
+
+
+
+
+
+
+
+
 

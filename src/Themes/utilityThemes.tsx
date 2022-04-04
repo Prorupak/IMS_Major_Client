@@ -101,11 +101,16 @@ export const Button = styled.button.attrs({
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.04);
+  font-style: normal;
+  font-weight: normal;
+  text-align: center;
+  font-size: var(--fSize-7);
+  color: #fcfcfc;
   p {
     font-style: normal;
     font-weight: normal;
+    text-align: center;
     font-size: var(--fSize-7);
-    line-height: var(--spacing-18);
     color: #fcfcfc;
   }
 
@@ -152,6 +157,9 @@ export const SmallIcon = styled(motion.img).attrs<{ color?: string }>({
   width: 14px;
   height: 14px;
 `;
+
+
+
 
 
 
