@@ -1,8 +1,11 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+import { Divider } from 'antd';
 import Icon from 'Assets/Icons/Icon';
 import Image from 'Assets/Image/Image';
 import { motion } from 'framer-motion';
 import React from 'react';
 import styled from 'styled-components';
+import { TooltipMui } from 'Themes/MaterialUI';
 import { Button, Item, Icon as Icons } from 'Themes/utilityThemes';
 import { Chart } from './productDetails/Chart';
 
@@ -13,7 +16,7 @@ const LeftDetails = styled(motion.div).attrs({})`
   width: 100%;
   max-width: 500px;
   min-height: fit-content;
-  padding: 110px var(--spacing-15);
+  padding: 130px var(--spacing-15);
 `;
 
 const RightDetails = styled(motion.div).attrs({})`
@@ -21,13 +24,19 @@ const RightDetails = styled(motion.div).attrs({})`
 
   display: flex;
   flex-direction: column;
+  /* width: 100%; */
+  max-width: 500px;
+
+  /* align-items: flex-start; */
   min-height: fit-content;
-  padding: 110px var(--spacing-15);
+  padding: 130px var(--spacing-15);
 `;
 
 const PrimaryDetails = styled(motion.div).attrs({})``;
 
-const SalesInfo = styled(motion.div).attrs({})``;
+const SalesInfo = styled(motion.div).attrs({})`
+  margin: var(--spacing-30) 0;
+`;
 
 const PurchaseInfo = styled(motion.div).attrs({})``;
 
@@ -38,6 +47,7 @@ const Summary = styled(motion.div).attrs({})`
 const StocksContainer = styled(motion.div).attrs({})``;
 
 const ImageContainer = styled(motion.div).attrs({})`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -65,18 +75,59 @@ const ImageXl = styled.div`
   }
 `;
 
+const ImageAlt = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 const SmallImageContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
 `;
 
-const StockSummary = styled(motion.div).attrs({})``;
+const StockSummary = styled(motion.div).attrs({})`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--spacing-5) var(--spacing-15);
+  margin: var(--spacing-40) 0 0 0;
+  background-color: #f5f5f5;
+`;
 
-const Content = styled(motion.div).attrs({})`
+const Content = styled(motion.div).attrs({})<{ gap?: string }>`
   display: flex;
   align-items: center;
-  gap: 10em;
+  gap: ${(props) => props.gap || '0px'};
+`;
+
+const StkGroup = styled(motion.div).attrs({})`
+  display: flex;
+  align-items: center;
+  width: 60%;
+  padding: var(--spacing-15) 0 0 0;
+`;
+
+const ShippInfo = styled(motion.div).attrs({})`
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  width: 90%;
+`;
+
+const ShippInfoItem = styled(motion.div).attrs({})`
+  text-align: center;
+`;
+
+const ShippInfoContainer = styled(motion.div).attrs({})`
+  padding: var(--spacing-20);
+  background-color: #fff;
+  border-radius: 7px;
+  text-align: center;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 `;
 
 const Wrapper = styled(motion.div).attrs({})`
@@ -95,7 +146,7 @@ const Overview = () => {
             primary Details
           </Item>
           <Wrapper>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Product Name
               </Item>
@@ -103,7 +154,7 @@ const Overview = () => {
                 Fashion
               </Item>
             </Content>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Color
               </Item>
@@ -111,7 +162,7 @@ const Overview = () => {
                 red
               </Item>
             </Content>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 SKU
               </Item>
@@ -119,7 +170,7 @@ const Overview = () => {
                 RS-002
               </Item>
             </Content>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Unit
               </Item>
@@ -127,7 +178,7 @@ const Overview = () => {
                 Box
               </Item>
             </Content>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Dimensions
               </Item>
@@ -135,7 +186,7 @@ const Overview = () => {
                 10 &#215; 10 &#215; 10 cm
               </Item>
             </Content>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Weight
               </Item>
@@ -143,7 +194,7 @@ const Overview = () => {
                 45 kg
               </Item>
             </Content>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Brand
               </Item>
@@ -151,7 +202,7 @@ const Overview = () => {
                 Dell
               </Item>
             </Content>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Inventory Account
               </Item>
@@ -166,7 +217,7 @@ const Overview = () => {
             Sales Information
           </Item>
           <Wrapper>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Selling Price
               </Item>
@@ -174,7 +225,7 @@ const Overview = () => {
                 NPR 100
               </Item>
             </Content>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Sales Account
               </Item>
@@ -182,7 +233,7 @@ const Overview = () => {
                 Cost of Goods Sold
               </Item>
             </Content>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Description
               </Item>
@@ -197,7 +248,7 @@ const Overview = () => {
             Purchase Information
           </Item>
           <Wrapper>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Cost Price
               </Item>
@@ -205,7 +256,7 @@ const Overview = () => {
                 NPR 100
               </Item>
             </Content>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Purchase Account
               </Item>
@@ -213,7 +264,7 @@ const Overview = () => {
                 Cost of Goods Sold
               </Item>
             </Content>
-            <Content>
+            <Content gap="10px">
               <Item color="#777777" fontSize="12px" fontWeight="400">
                 Preferred Vendor
               </Item>
@@ -229,6 +280,21 @@ const Overview = () => {
       </LeftDetails>
       <RightDetails>
         <ImageContainer>
+          <ImageAlt>
+            <Item fontSize="11px" fontWeight="500">
+              <p
+                style={{
+                  padding: '5px',
+                  borderRadius: '5px',
+                  backgroundColor: '#e3edf7',
+                  width: '55px',
+                  textAlign: 'center'
+                }}>
+                Primary
+              </p>
+            </Item>
+            <Icons src={Icon.Close} />
+          </ImageAlt>
           <ImageX>
             <img alt="" src={Image.Product} />
           </ImageX>
@@ -242,18 +308,284 @@ const Overview = () => {
             <ImageXl>
               <img alt="" src={Image.Product} />
             </ImageXl>
-            <Button>
+            <Button
+              style={{
+                padding: '15px'
+              }}>
               <Icons
                 src={Icon.BPlus}
                 style={{
-                  fill: '#000'
+                  fill: '#000',
+                  width: '20px',
+                  height: '20px'
                 }}
               />
             </Button>
           </SmallImageContainer>
         </ImageContainer>
         <StockSummary>
-          <p>stock summary</p>
+          <StkGroup
+            style={{
+              marginBottom: '10px'
+            }}>
+            <TooltipMui title="The stock available for sale at the beginning of the accounting period.">
+              <Item
+                fontSize="12px"
+                fontWeight="bold"
+                height="50%"
+                style={{
+                  borderBottom: '1px dashed #969696',
+                  paddingBottom: '2px'
+                }}
+                width="100%">
+                Opening Stock
+              </Item>
+            </TooltipMui>
+            <Item fontWeight="bold" height="40%" style={{ margin: '0 30px' }}>
+              : 20.00
+            </Item>
+          </StkGroup>
+          <Item fontSize="16px" fontWeight="medium">
+            Accounting Stock
+            <TooltipMui title="This is calculated based on Bills and Invoices.">
+              <Icons src={Icon.Iicn} style={{ marginLeft: '5px' }} />
+            </TooltipMui>
+          </Item>
+          <StkGroup
+            style={{
+              marginTop: '20px'
+            }}>
+            <TooltipMui title="Current stock available for this product.">
+              <Item
+                fontSize="12px"
+                fontWeight="medium"
+                height="100%"
+                margin="-2px 0"
+                style={{
+                  borderBottom: '1px dashed #969696',
+                  paddingBottom: '2px'
+                }}
+                width="100%">
+                Stock on Hand
+              </Item>
+            </TooltipMui>
+            <Item
+              fontWeight="medium"
+              height="40%"
+              margin="-2px 0"
+              style={{ margin: '0 30px' }}>
+              : 20.00
+            </Item>
+          </StkGroup>
+          <StkGroup>
+            <TooltipMui title="Stock that is committed to sales order(s) but not yet shipped">
+              <Item
+                fontSize="12px"
+                fontWeight="medium"
+                height="100%"
+                margin="-2px 0"
+                style={{
+                  borderBottom: '1px dashed #969696',
+                  paddingBottom: '2px'
+                }}
+                width="100%">
+                Committed Stock
+              </Item>
+            </TooltipMui>
+            <Item
+              fontWeight="medium"
+              height="40%"
+              margin="-2px 0"
+              style={{ margin: '0 30px' }}>
+              : 0.00
+            </Item>
+          </StkGroup>
+          <StkGroup
+            style={{
+              marginBottom: '10px'
+            }}>
+            <TooltipMui title="Available for Sale = Stock on Hand - Committed Stock">
+              <Item
+                fontSize="12px"
+                fontWeight="medium"
+                height="100%"
+                margin="-2px 0"
+                style={{
+                  borderBottom: '1px dashed #969696',
+                  paddingBottom: '2px'
+                }}
+                width="100%">
+                Available Stock
+              </Item>
+            </TooltipMui>
+            <Item
+              fontWeight="medium"
+              height="40%"
+              margin="-2px 0"
+              style={{ margin: '0 30px' }}>
+              : 20.00
+            </Item>
+          </StkGroup>
+          <Item fontSize="16px" fontWeight="medium">
+            Physical Stock
+            <TooltipMui title="This is calculated based on Bills and Invoices.">
+              <Icons src={Icon.Iicn} style={{ marginLeft: '5px' }} />
+            </TooltipMui>
+          </Item>
+          <StkGroup
+            style={{
+              marginTop: '20px'
+            }}>
+            <TooltipMui title="Current stock available for this product.">
+              <Item
+                fontSize="12px"
+                fontWeight="medium"
+                height="100%"
+                margin="-2px 0"
+                style={{
+                  borderBottom: '1px dashed #969696',
+                  paddingBottom: '2px'
+                }}
+                width="100%">
+                Stock on Hand
+              </Item>
+            </TooltipMui>
+            <Item
+              fontWeight="medium"
+              height="40%"
+              margin="-2px 0"
+              style={{ margin: '0 30px' }}>
+              : 20.00
+            </Item>
+          </StkGroup>
+          <StkGroup>
+            <TooltipMui title="Stock that is committed to sales order(s) but not yet shipped">
+              <Item
+                fontSize="12px"
+                fontWeight="medium"
+                height="100%"
+                margin="-2px 0"
+                style={{
+                  borderBottom: '1px dashed #969696',
+                  paddingBottom: '2px'
+                }}
+                width="100%">
+                Committed Stock
+              </Item>
+            </TooltipMui>
+            <Item
+              fontWeight="medium"
+              height="40%"
+              margin="-2px 0"
+              style={{ margin: '0 30px' }}>
+              : 0.00
+            </Item>
+          </StkGroup>
+          <StkGroup>
+            <TooltipMui title="Available for Sale = Stock on Hand - Committed Stock">
+              <Item
+                fontSize="12px"
+                fontWeight="medium"
+                height="100%"
+                margin="-2px 0"
+                style={{
+                  borderBottom: '1px dashed #969696',
+                  paddingBottom: '2px'
+                }}
+                width="100%">
+                Available Stock
+              </Item>
+            </TooltipMui>
+            <Item
+              fontWeight="medium"
+              height="40%"
+              margin="-2px 0"
+              style={{ margin: '0 30px' }}>
+              : 20.00
+            </Item>
+          </StkGroup>
+          <Divider />
+          <ShippInfo>
+            <ShippInfoContainer>
+              <ShippInfoItem>
+                <Item fontSize="16px" fontWeight="medium">
+                  0
+                </Item>{' '}
+                <Item fontSize="10px" fontWeight="medium">
+                  Qty
+                </Item>
+              </ShippInfoItem>
+              <Item fontSize="10px" fontWeight="medium">
+                To be shipped
+              </Item>
+            </ShippInfoContainer>
+            <ShippInfoContainer>
+              <ShippInfoItem>
+                <Item fontSize="16px" fontWeight="medium">
+                  0
+                </Item>{' '}
+                <Item fontSize="10px" fontWeight="medium">
+                  Qty
+                </Item>
+              </ShippInfoItem>
+              <Item fontSize="10px" fontWeight="medium">
+                To be Received
+              </Item>
+            </ShippInfoContainer>
+            <ShippInfoContainer>
+              <ShippInfoItem>
+                <Item fontSize="16px" fontWeight="medium">
+                  0
+                </Item>{' '}
+                <Item fontSize="10px" fontWeight="medium">
+                  Qty
+                </Item>
+              </ShippInfoItem>
+              <Item fontSize="10px" fontWeight="medium">
+                To be Invoiced
+              </Item>
+            </ShippInfoContainer>
+            <ShippInfoContainer>
+              <ShippInfoItem>
+                <Item fontSize="16px" fontWeight="medium">
+                  0
+                </Item>{' '}
+                <Item fontSize="10px" fontWeight="medium">
+                  Qty
+                </Item>
+              </ShippInfoItem>
+              <Item fontSize="10px" fontWeight="medium">
+                To be Billed
+              </Item>
+            </ShippInfoContainer>
+          </ShippInfo>
+          <Divider />
+          <StkGroup
+            style={{
+              flexDirection: 'column',
+              alignItems: 'flex-start'
+            }}>
+            <TooltipMui title="Stock that is committed to sales order(s) but not yet shipped">
+              <Item
+                fontSize="12px"
+                fontWeight="medium"
+                height="50%"
+                style={{
+                  borderBottom: '1px dashed #969696',
+                  paddingBottom: '2px'
+                }}
+                width="32%">
+                Reorder Point
+              </Item>
+            </TooltipMui>
+            <Item
+              fontSize="17px"
+              fontWeight="bold"
+              height="40%"
+              margin="-2px 0">
+              0.00
+            </Item>
+          </StkGroup>
         </StockSummary>
       </RightDetails>
       <Summary>{/* <Chart /> */}</Summary>

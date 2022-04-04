@@ -11,11 +11,6 @@ import Transactions from './Components/Transactions';
 
 const Grid = styled(motion.div).attrs({})`
   display: grid;
-  grid-template-areas:
-    'header header'
-    'content content';
-  grid-template-rows: auto auto;
-  grid-template-columns: 50vh 50vh;
   width: 100%;
 `;
 const Body = styled(motion.div).attrs({
@@ -31,8 +26,8 @@ const Body = styled(motion.div).attrs({
     'left right'
     'down down';
   grid-template-rows: auto auto;
-  grid-template-columns: 100% 100%;
-  width: 100%;
+  grid-template-columns: 90vh 70vh;
+  /* width: 100%; */
 `;
 
 const Header = styled(motion.nav).attrs({})`
@@ -94,4 +89,17 @@ const ProductsDetails = () => {
 };
 
 export default ProductsDetails;
+
+
+
+
+
+
+
+
+
+
+
+
+
 

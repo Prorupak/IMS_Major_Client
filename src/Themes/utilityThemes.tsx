@@ -1,15 +1,16 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-export const Item = styled.p<{
+export const Item = styled.span<{
   height?: string;
   fontSize?: string;
   fontWeight?: string;
   color?: string;
   width?: string;
+  margin?: string;
 }>`
   width: ${({ width }) => width || '100%'};
-  margin: 8px 0;
+  margin: ${({ margin }) => margin || '8px 0'};
   height: ${({ height }) => height || '0%'};
   text-transform: capitalize;
   font-family: 'Poppins', 'sans-serif';
@@ -166,6 +167,15 @@ export const Loader = styled(motion.div).attrs({})`
   left: 50%;
   top: 50%; ;
 `;
+
+
+
+
+
+
+
+
+
 
 
 

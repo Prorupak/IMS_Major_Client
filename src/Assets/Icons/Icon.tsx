@@ -42,6 +42,7 @@ const Icon = {
   Password: require('./Password.svg').default,
   Phone: require('./Phone.svg').default,
   SmallFaq: require('./SmallFaq.svg').default,
-  Return: require('./Return.svg').default
+  Return: require('./Return.svg').default,
+  Iicn: require('./Iicn.svg').default
 };
 export default Icon;

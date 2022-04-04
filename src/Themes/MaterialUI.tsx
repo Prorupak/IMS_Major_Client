@@ -32,13 +32,7 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 export const ButtonMui = style(Button).attrs({})``;
 
-export const TooltipMui = style(HtmlTooltip).attrs<{
-  title?: string;
-  em?: string;
-  bold?: string;
-  underline?: string;
-  content?: string;
-}>({})``;
+export const TooltipMui = style(HtmlTooltip).attrs<{}>({})``;
 
 const blue = {
   100: '#DAECFF',
@@ -173,3 +167,4 @@ export function CustomSelect(props: SelectUnstyledProps<number>) {
 
   return <SelectUnstyled {...props} components={components} />;
 }
+
