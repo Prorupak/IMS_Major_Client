@@ -1,7 +1,10 @@
+import Icon from 'Assets/Icons/Icon';
+import Image from 'Assets/Image/Image';
 import { motion } from 'framer-motion';
 import React from 'react';
 import styled from 'styled-components';
-import { Item } from 'Themes/utilityThemes';
+import { Button, Item, Icon as Icons } from 'Themes/utilityThemes';
+import { Chart } from './productDetails/Chart';
 
 const LeftDetails = styled(motion.div).attrs({})`
   grid-area: left;
@@ -34,7 +37,39 @@ const Summary = styled(motion.div).attrs({})`
 
 const StocksContainer = styled(motion.div).attrs({})``;
 
-const ImageContainer = styled(motion.div).attrs({})``;
+const ImageContainer = styled(motion.div).attrs({})`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+const ImageX = styled.div`
+  width: 250px;
+  height: 230px;
+  border: 1px solid #d6d6d6;
+  border-radius: 5px;
+  img {
+    width: 250px;
+    height: 230px;
+  }
+`;
+const ImageXl = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 1px solid #d6d6d6;
+  border-radius: 5px;
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+`;
+
+const SmallImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
 
 const StockSummary = styled(motion.div).attrs({})``;
 
@@ -194,15 +229,34 @@ const Overview = () => {
       </LeftDetails>
       <RightDetails>
         <ImageContainer>
-          <p>image</p>
+          <ImageX>
+            <img alt="" src={Image.Product} />
+          </ImageX>
+          <SmallImageContainer>
+            <ImageXl>
+              <img alt="" src={Image.Product} />
+            </ImageXl>
+            <ImageXl>
+              <img alt="" src={Image.Product} />
+            </ImageXl>
+            <ImageXl>
+              <img alt="" src={Image.Product} />
+            </ImageXl>
+            <Button>
+              <Icons
+                src={Icon.BPlus}
+                style={{
+                  fill: '#000'
+                }}
+              />
+            </Button>
+          </SmallImageContainer>
         </ImageContainer>
         <StockSummary>
           <p>stock summary</p>
         </StockSummary>
       </RightDetails>
-      <Summary>
-        <p>summary</p>
-      </Summary>
+      <Summary>{/* <Chart /> */}</Summary>
     </>
   );
 };
