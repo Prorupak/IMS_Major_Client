@@ -25,9 +25,13 @@ const ContentWrapper = styled.div`
   gap: var(--spacing-5);
   padding: var(--spacing-8) var(--spacing-15);
 
-  &:hover {
+  /* & > a:not(.activeLink): hover {
+    color: var(--color-primary);
+  } */
+
+  /* &:hover {
     background-color: #1d2c38;
-  }
+  } */
   &:focus-visible {
     background-color: #1d2c38;
   }
@@ -42,7 +46,13 @@ const StyledLink = styled(Link)`
 
 const StyledNavLink = styled(NavLink).attrs({
   className: `${({ isActive }: any) =>
-    [isActive ? 'active' : null].filter(Boolean).join(' ')}`
+    [isActive ? 'active' : null].filter(Boolean).join(' ')}`,
+  style: ({ isActive }: any) => ({
+    color: isActive ? '#fff' : '#fff'
+  }),
+  '&.active': {
+    background: '#fff'
+  }
 })`
   display: flex;
   align-items: center;
@@ -51,6 +61,7 @@ const StyledNavLink = styled(NavLink).attrs({
 `;
 
 const MapWrapper = styled.div<{ toggle: boolean }>`
+  cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
@@ -59,9 +70,6 @@ const MapWrapper = styled.div<{ toggle: boolean }>`
     toggle ? 'var(--spacing-8) var(--spacing-15)' : '16px var(--spacing-15)'};
   /* gap: var(--spacing-50); */
   width: 100%;
-  &:hover {
-    background-color: #1d2c38;
-  }
   .treeView {
     position: absolute;
     top: 8px;
@@ -72,6 +80,8 @@ const ListItemIcon = styled.img`
   width: 24px;
   height: 24px;
 `;
+
+const Button = styled(NavLink)``;
 
 const PurchaseWrapper = styled.div``;
 
@@ -132,28 +142,31 @@ const StyledTreeItem = styled(TreeItem)`
 
 interface Props {
   toggle: boolean;
+  toggleHandle: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
-const Sidebar: React.FC<Props> = ({ toggle }) => {
+const Sidebar: React.FC<Props> = ({ toggle, toggleHandle }) => {
   console.log('value===', toggle);
   // react-checkbox-tree
   const [checked, setChecked] = React.useState([]);
   const [expanded, setExpanded] = React.useState([]);
   return (
     <StyledNav>
-      <DashSection>
-        <MapWrapper toggle={toggle}>
-          <ListItemIcon
-            src={Icon.Dashboard}
-            style={toggle ? { position: 'absolute', top: '15px' } : {}}
-          />
-          {toggle ? (
-            <ContentWrapper style={{ margin: '0 0 0 15px' }}>
-              <StyledLink to="/dashboard">Dashboard</StyledLink>
-            </ContentWrapper>
-          ) : null}
-        </MapWrapper>
-      </DashSection>
+      <StyledNavLink className="activeLink" to="/dashboard">
+        <DashSection>
+          <MapWrapper toggle={toggle}>
+            <ListItemIcon
+              src={Icon.Dashboard}
+              style={toggle ? { position: 'absolute', top: '15px' } : {}}
+            />
+            {toggle ? (
+              <ContentWrapper style={{ margin: '0 0 0 15px' }}>
+                <StyledLink to="/dashboard">Dashboard</StyledLink>
+              </ContentWrapper>
+            ) : null}
+          </MapWrapper>
+        </DashSection>
+      </StyledNavLink>
       <MapWrapper toggle={toggle}>
         <ListItemIcon
           src={Icon.Inventory}
@@ -341,4 +354,19 @@ const Sidebar: React.FC<Props> = ({ toggle }) => {
 };
 
 export default Sidebar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

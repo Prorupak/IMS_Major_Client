@@ -95,7 +95,6 @@ const Colors = styled(motion.div).attrs({})`
 const ProductDetails = () => {
   const location = useLocation();
   const [productDetails, setProductDetails] = React.useState<any>({});
-  // const { catId, attrs, options, catName, mId }: any = location.state;
   // @ts-ignore
   const catId = location && location.state && location.state.catId;
   // @ts-ignore
@@ -111,11 +110,7 @@ const ProductDetails = () => {
   console.log('arrts', attrs);
   console.log('options', options);
 
-  const [chipData, setChipData] = React.useState<readonly ChipData[]>([
-    { key: 0, label: 'red' },
-    { key: 1, label: 'blue' },
-    { key: 2, label: 'gray' }
-  ]);
+  const [chipData, setChipData] = React.useState<readonly ChipData[]>([]);
 
   const handleDelete = (chipToDelete: ChipData) => {
     return () => {
@@ -127,12 +122,6 @@ const ProductDetails = () => {
     };
   };
 
-  // const {
-  //   data: value,
-  //   error,
-  //   loading
-  // } = useFetch(`http://localhost:9001/api/categories/${catId}/products`);
-
   const [unit, setUnit] = React.useState<any[]>([]);
 
   const fetchData = async () => {
@@ -142,41 +131,26 @@ const ProductDetails = () => {
     console.log('response', response.data);
     setProductDetails(response.data);
     setUnit([response.data]);
-    console.log('unit', unit);
   };
-
-  console.log('product--', productDetails);
 
   React.useEffect(() => {
     fetchData();
   }, [catId]);
 
-  console.log('productDetails==>', productDetails);
-
-  console.log(
-    'value',
-    productDetails.products?.map((item: any) => item.name)
+  const productDetailsData = productDetails.products;
+  const productDetailsSell = unit.map((item: any) => {
+    return item.products.map((item1: any) => {
+      return item1.SalesInformation.map((item2: any) => item2.SellingPrice);
+    });
+  });
+  const productDetailsChip = unit.map((item: any) =>
+    item.multipleItems.map((item1: any) => item1.options)
   );
 
-  const productDetailsData = productDetails.products;
-  const pData = unit.map((item: any) => item.products);
+  console.log('productDetailsChip', productDetailsChip);
+  console.log('productDetailsSell', productDetailsSell);
+  console.log('productDetailsData', productDetailsData);
 
-  console.log('productDetailsData', pData);
-
-  // setProductDetails(value);
-  // setProductDetails(
-  //   value.map((item: any) => {
-  //     item.map((item1: any) => {
-  //       return item1;
-  //     });
-  //   })
-  // );
-
-  console.log('productDetails', productDetails);
-
-  // React.useEffect(() => {
-  //   setUnit(productDetails.products.length);
-  // }, [productDetailsData]);
   const columns = [
     {
       field: 'id',
@@ -261,9 +235,6 @@ const ProductDetails = () => {
         <Body>
           <div style={{ margin: '10px 0', height: '66vh', width: '100%' }}>
             <div style={{ height: '66vh', width: '100%' }}>
-              {/* {value.map((item: any) => {
-                return <p>{item.name}</p>;
-              })} */}
               <DataGrid
                 columns={columns}
                 density="compact"
@@ -284,6 +255,32 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

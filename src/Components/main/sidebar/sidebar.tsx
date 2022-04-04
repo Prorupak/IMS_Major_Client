@@ -61,7 +61,7 @@ const Sidebar: React.FC<Props> = ({ toggle, toggleHandle }) => {
         <Logo />
       </Header>
       <Main>
-        <MainData toggle={toggle} />
+        <MainData toggle={toggle} toggleHandle={toggleHandle} />
       </Main>
       <FooterGrid>
         <Footer toggle={toggle} toggleHandle={toggleHandle} />
@@ -71,3 +71,4 @@ const Sidebar: React.FC<Props> = ({ toggle, toggleHandle }) => {
 };
 
 export default Sidebar;
+
