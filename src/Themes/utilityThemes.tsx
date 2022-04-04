@@ -93,6 +93,7 @@ export const Button = styled.button.attrs({
 })`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 3px;
   padding: 4px 8px;
   background-color: var(--color-iconButton);
@@ -151,6 +152,7 @@ export const SmallIcon = styled(motion.img).attrs<{ color?: string }>({
   width: 14px;
   height: 14px;
 `;
+
 
 
 

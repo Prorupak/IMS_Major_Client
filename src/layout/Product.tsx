@@ -11,7 +11,6 @@ const Grid = styled(motion.div)<{ toggle: boolean }>`
   display: grid;
 
   grid-template-areas:
-    'navbar navbar'
     'main product '
     'main product';
   grid-template-rows: 45px auto;
@@ -68,16 +67,9 @@ const Product: React.FC = ({ children }: any) => {
   return (
     <>
       <Grid toggle={value}>
-        <Nav>
-          <Header toggleHandle={toggleHandle} value={value} />
-        </Nav>
-        <Main>
-          {/* <Categories toggleHandle={toggleHandle} /> */}
-          {children}
-        </Main>
+        <Main>{children}</Main>
         {value ? (
           <Products>
-            {/* <ProductsData toggle={toggleHandle} /> */}
             <ProductsDetails />
           </Products>
         ) : null}
@@ -87,4 +79,8 @@ const Product: React.FC = ({ children }: any) => {
 };
 
 export default Product;
+
+
+
+
 
