@@ -15,37 +15,50 @@ const Grid = styled(motion.div).attrs({})`
     'header header'
     'content content';
   grid-template-rows: auto auto;
-  grid-template-columns: 103vh 103vh;
-  padding: var(--spacing-15) var(--spacing-15);
+  grid-template-columns: 50vh 50vh;
+  width: 100%;
+`;
+const Body = styled(motion.div).attrs({
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.5, ease: 'easeIn' }
+})`
+  /* padding: var(--spacing-15) var(--spacing-15); */
+  grid-area: content;
+  display: grid;
+  grid-template-areas:
+    'left right'
+    'down down';
+  grid-template-rows: auto auto;
+  grid-template-columns: 100% 100%;
   width: 100%;
 `;
 
 const Header = styled(motion.nav).attrs({})`
+  padding: 10px 15px;
+  position: fixed;
   grid-area: header;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 71.5%;
+  background: #fff;
+  height: 7em;
+  z-index: 1;
 `;
 
 const ProductsDetails = () => {
   const location = useLocation();
   const [current, setCurrent] = React.useState('overview');
+  const [loading, setLoading] = React.useState(true);
+
   const handleClicked = (event: any) => {
     console.log('click', event);
     setCurrent(event.key);
   };
   console.log('current', current);
   const { toggleHandle } = React.useContext(ToggleContext);
-  const Body = styled(motion.div).attrs({
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
-    transition: { duration: 0.5, ease: 'easeIn' }
-  })`
-    grid-area: content;
-    display: flex;
-    justify-content: space-between;
-  `;
+
   // @ts-ignore
   const ids = location && location.state && location.state.row;
 

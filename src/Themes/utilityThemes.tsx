@@ -5,7 +5,10 @@ export const Item = styled.p<{
   height?: string;
   fontSize?: string;
   fontWeight?: string;
+  color?: string;
+  width?: string;
 }>`
+  width: ${({ width }) => width || '100%'};
   margin: 8px 0;
   height: ${({ height }) => height || '0%'};
   text-transform: capitalize;
@@ -14,7 +17,7 @@ export const Item = styled.p<{
   font-weight: ${({ fontWeight }) => fontWeight || '600'};
   font-size: ${({ fontSize }) => fontSize || 'var(--fSize-5)'};
   line-height: var(--spacing-18);
-  color: var(--color-primary-dark);
+  color: ${({ color }) => color || 'var(--color-primary-dark)'};
 `;
 
 export const Title = styled.p`
@@ -158,10 +161,11 @@ export const SmallIcon = styled(motion.img).attrs<{ color?: string }>({
   height: 14px;
 `;
 
-
-
-
-
+export const Loader = styled(motion.div).attrs({})`
+  position: absolute;
+  left: 50%;
+  top: 50%; ;
+`;
 
 
 

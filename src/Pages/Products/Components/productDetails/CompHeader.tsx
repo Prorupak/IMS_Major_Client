@@ -22,10 +22,14 @@ const HeaderWrapper = styled.div`
 
 const HeaderContent = styled.div`
   position: absolute;
-  top: 87px;
+  top: 28px;
   display: flex;
   align-items: center;
   gap: var(--spacing-5);
+  img {
+    width: 13px;
+    height: 13px;
+  }
 `;
 
 const IconWrapper = styled.div`
@@ -43,6 +47,9 @@ const StyledMenuAntd = styled(MenuAntd)`
       background-color: red;
     }
   }
+  position: relative;
+  left: -10px;
+  bottom: -3px;
 `;
 const CompHeader = ({ current, handleClicked }: any) => {
   const location = useLocation();
@@ -114,14 +121,18 @@ const CompHeader = ({ current, handleClicked }: any) => {
         </IconWrapper>
       </HeaderWrapper>
       <HeaderContent>
-        <Item fontSize="13px" fontWeight="500">
+        <Item fontSize="12px" fontWeight="500">
           SKU
         </Item>
-        <Item fontSize="13px" fontWeight="600">
+        <Item fontSize="12px" fontWeight="600">
           -
         </Item>
-        <Item fontSize="13px" fontWeight="500">
-          ReturnAble
+        <Item
+          fontSize="12px"
+          fontWeight="500"
+          style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <img alt="" src={Icon.Return} />
+          Returnable
         </Item>
       </HeaderContent>
       <StyledMenuAntd
@@ -147,6 +158,24 @@ const CompHeader = ({ current, handleClicked }: any) => {
 };
 
 export default CompHeader;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

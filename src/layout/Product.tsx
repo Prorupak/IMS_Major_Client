@@ -14,7 +14,7 @@ const Grid = styled(motion.div)<{ toggle: boolean }>`
     'main product '
     'main product';
   grid-template-rows: 45px auto;
-  grid-template-columns: auto ${({ toggle }) => (toggle ? '80em' : '0')};
+  grid-template-columns: auto ${({ toggle }) => (toggle ? '90em' : '0')};
   height: 100vh;
 `;
 
@@ -79,6 +79,9 @@ const Product: React.FC = ({ children }: any) => {
 };
 
 export default Product;
+
+
+
 
 
 
