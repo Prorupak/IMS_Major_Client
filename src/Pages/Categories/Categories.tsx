@@ -35,22 +35,12 @@ export default function Categories() {
 
   console.log('CategoryDetails=====>', categoryDetails);
 
-  const handleItem = (
-    id: string,
-    name: string,
-    attrs: string,
-    options: string,
-    mId: string
-  ) => {
+  const handleItem = (row?: string) => {
     navigate('', {
-      state: { catId: id, catName: name, mId, attrs, options }
+      state: { row }
     });
     setCategoryDetails({
-      id,
-      name,
-      attrs,
-      options,
-      mId
+      categoryDetails: row
     });
   };
 
@@ -89,14 +79,7 @@ export default function Categories() {
                 handleOpen();
                 console.log('eros', e.row);
 
-                handleItem(
-                  e.id,
-                  e.row.name,
-                  e.row.multipleItems.map((item: any) => item.attribute),
-                  e.row.multipleItems.map((item: any) => item.options),
-                  // eslint-disable-next-line no-underscore-dangle
-                  e.row.multipleItems.map((item: any) => item._id)
-                );
+                handleItem(e.row);
               }
             }
             onRowDoubleClick={toggleHandle}
@@ -110,4 +93,5 @@ export default function Categories() {
     </Items>
   );
 }
+
 

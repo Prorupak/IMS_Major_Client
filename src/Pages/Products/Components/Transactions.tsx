@@ -1,8 +1,9 @@
 import React from 'react';
 
 const Transactions = () => {
-  return <div>Transactions</div>;
+  return <div style={{ marginTop: '200px' }}>Transactions</div>;
 };
 
 export default Transactions;
+
 

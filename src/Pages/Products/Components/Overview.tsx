@@ -35,10 +35,12 @@ const RightDetails = styled(motion.div).attrs({})`
 const PrimaryDetails = styled(motion.div).attrs({})``;
 
 const SalesInfo = styled(motion.div).attrs({})`
-  margin: var(--spacing-30) 0;
+  /* margin: var(--spacing-30) 0; */
 `;
 
-const PurchaseInfo = styled(motion.div).attrs({})``;
+const PurchaseInfo = styled(motion.div).attrs({})`
+  margin: var(--spacing-30) 0;
+`;
 
 const Summary = styled(motion.div).attrs({})`
   grid-area: down;
@@ -137,7 +139,8 @@ const Wrapper = styled(motion.div).attrs({})`
   gap: var(--spacing-5);
 `;
 
-const Overview = () => {
+const Overview = ({ row }: any) => {
+  console.log('row', row?.PurchaseInformation[0]?.costPrice);
   return (
     <>
       <LeftDetails>
@@ -151,7 +154,7 @@ const Overview = () => {
                 Product Name
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                Fashion
+                {row.name}
               </Item>
             </Content>
             <Content gap="10px">
@@ -167,7 +170,7 @@ const Overview = () => {
                 SKU
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                RS-002
+                {row.sku}
               </Item>
             </Content>
             <Content gap="10px">
@@ -175,7 +178,7 @@ const Overview = () => {
                 Unit
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                Box
+                {row.unit}
               </Item>
             </Content>
             <Content gap="10px">
@@ -191,7 +194,7 @@ const Overview = () => {
                 Weight
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                45 kg
+                {row.weight} {row.wUnit}
               </Item>
             </Content>
             <Content gap="10px">
@@ -199,7 +202,7 @@ const Overview = () => {
                 Brand
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                Dell
+                {row.brand}
               </Item>
             </Content>
             <Content gap="10px">
@@ -222,7 +225,7 @@ const Overview = () => {
                 Selling Price
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                NPR 100
+                NPR {row?.SalesInformation[0]?.sellingPrice}
               </Item>
             </Content>
             <Content gap="10px">
@@ -238,7 +241,7 @@ const Overview = () => {
                 Description
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                This is Description
+                {row?.SalesInformation[0]?.description}
               </Item>
             </Content>
           </Wrapper>
@@ -253,7 +256,7 @@ const Overview = () => {
                 Cost Price
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                NPR 100
+                NPR {row?.PurchaseInformation[0]?.costPrice}
               </Item>
             </Content>
             <Content gap="10px">
@@ -594,4 +597,13 @@ const Overview = () => {
 };
 
 export default Overview;
+
+
+
+
+
+
+
+
+
 

@@ -96,19 +96,7 @@ const ProductDetails = () => {
   const location = useLocation();
   const [productDetails, setProductDetails] = React.useState<any>({});
   // @ts-ignore
-  const catId = location && location.state && location.state.catId;
-  // @ts-ignore
-  const catName = location && location.state && location.state.catName;
-  // @ts-ignore
-  const mId = location && location.state && location.state.mId;
-  // @ts-ignore
-  const attrs = location && location.state && location.state.attrs;
-  // @ts-ignore
-  const options = location && location.state && location.state.options;
-  console.log('ids', catId);
-  console.log('mId', mId);
-  console.log('arrts', attrs);
-  console.log('options', options);
+  const ids = location && location.state && location.state.row;
 
   const [chipData, setChipData] = React.useState<readonly ChipData[]>([]);
 
@@ -124,32 +112,35 @@ const ProductDetails = () => {
 
   const [unit, setUnit] = React.useState<any[]>([]);
 
-  const fetchData = async () => {
-    const response = await axios.get(
-      `http://localhost:9001/api/categories/${catId}/products`
-    );
-    console.log('response', response.data);
-    setProductDetails(response.data);
-    setUnit([response.data]);
-  };
-
   React.useEffect(() => {
-    fetchData();
-  }, [catId]);
+    setUnit([ids]);
+  }, [ids]);
 
-  const productDetailsData = productDetails.products;
-  const productDetailsSell = unit.map((item: any) => {
-    return item.products.map((item1: any) => {
-      return item1.SalesInformation.map((item2: any) => item2.SellingPrice);
-    });
-  });
-  const productDetailsChip = unit.map((item: any) =>
-    item.multipleItems.map((item1: any) => item1.options)
+  console.log('unit', unit);
+  console.log(
+    'idss',
+    ids.products.map((item: any) => item.SalesInformation)
   );
 
-  console.log('productDetailsChip', productDetailsChip);
-  console.log('productDetailsSell', productDetailsSell);
-  console.log('productDetailsData', productDetailsData);
+  const Sales = ids.products.map((item: any) => item.SalesInformation);
+
+  // loop through the sales and get the  sellingPrice
+  const sellingPrice = Sales.map((item: any) =>
+    item.filter((i: any) => i !== Boolean)
+  );
+  console.log('sellingPrice', sellingPrice);
+
+  // loop through the array
+  // for (let i = 0; i < unit.length; i++) {
+  //   // check if the item is already in the array
+  //   if (unit[i].id === ids.id) {
+  //     // item found, return true
+  //     return true;
+  //   }
+  // }
+
+  // item not found, return false
+  // return false;
 
   const columns = [
     {
@@ -183,23 +174,17 @@ const ProductDetails = () => {
     <ProductsContainer>
       <Grid>
         <Header>
-          <Heading>{catName}</Heading>
-          <Item height="1%">
-            {unit.map((item: any) => item.products)} Item(s)
-          </Item>
+          <Heading>{ids.name}</Heading>
+          <Item height="1%">{ids.name} Item(s)</Item>
         </Header>
         <Content>
           <Wrapper>
             <Headings>
               <Item height="1%">brand</Item>
-              <Item height="1%">{attrs}</Item>
+              <Item height="1%">{ids.name}</Item>
             </Headings>
             <Data>
-              <Item height="1%">
-                {unit.map((item: any) => (
-                  <p>{item.products.map((item2: any) => item2.brand)}</p>
-                ))}
-              </Item>
+              <Item height="1%">{ids.name}</Item>
               <Item height="1%">
                 <ColorWrapper>
                   <Colors>
@@ -243,7 +228,7 @@ const ProductDetails = () => {
                 // eslint-disable-next-line no-underscore-dangle
                 getRowId={(data: any) => data.id}
                 loading={false}
-                rows={productDetailsData}
+                rows={unit}
                 sx={{
                   border: 'none'
                 }}
@@ -257,6 +242,22 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

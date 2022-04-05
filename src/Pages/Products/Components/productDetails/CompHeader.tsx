@@ -51,7 +51,7 @@ const StyledMenuAntd = styled(MenuAntd)`
   left: -10px;
   bottom: -3px;
 `;
-const CompHeader = ({ current, handleClicked }: any) => {
+const CompHeader = ({ current, handleClicked, info }: any) => {
   const location = useLocation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -75,7 +75,7 @@ const CompHeader = ({ current, handleClicked }: any) => {
   return (
     <>
       <HeaderWrapper>
-        <Heading>name</Heading>
+        <Heading>{info?.name}</Heading>
         <IconWrapper>
           <TooltipMui title="Edit Product">
             <Button>
@@ -121,8 +121,8 @@ const CompHeader = ({ current, handleClicked }: any) => {
         </IconWrapper>
       </HeaderWrapper>
       <HeaderContent>
-        <Item fontSize="12px" fontWeight="500">
-          SKU
+        <Item fontSize="12px" fontWeight="500" width="fit-content">
+          {info?.sku}
         </Item>
         <Item fontSize="12px" fontWeight="600">
           -
@@ -158,6 +158,8 @@ const CompHeader = ({ current, handleClicked }: any) => {
 };
 
 export default CompHeader;
+
+
 
 
 

@@ -64,7 +64,7 @@ const ProductsDetails = () => {
   const tabs = ({ currents }: any) => {
     switch (currents) {
       case 'overview':
-        return <Overview />;
+        return <Overview row={ids} />;
       case 'transaction':
         return <Transactions />;
       case 'history':
@@ -77,7 +77,11 @@ const ProductsDetails = () => {
   return (
     <Grid>
       <Header>
-        <CompHeader current={current} handleClicked={handleClicked} />
+        <CompHeader
+          current={current}
+          handleClicked={handleClicked}
+          info={ids}
+        />
       </Header>
       <Body>
         {(current === 'overview' ||
@@ -89,6 +93,8 @@ const ProductsDetails = () => {
 };
 
 export default ProductsDetails;
+
+
 
 
 
