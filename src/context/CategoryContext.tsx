@@ -6,10 +6,10 @@ import React from 'react';
 import { toggleReducers } from '../reducers';
 
 export const CategoryData = React.createContext<{
-  categoryDetails: any[];
+  categoryDetails: any;
   setCategoryDetails: React.Dispatch<React.SetStateAction<any>>;
 }>({
-  categoryDetails: [],
+  categoryDetails: {},
   setCategoryDetails: () => {}
 });
 export const CategoryContext = React.createContext<any>({
@@ -79,4 +79,5 @@ export const CategoryProvider: React.FC<IProps> = ({ children }) => {
     </>
   );
 };
+
 

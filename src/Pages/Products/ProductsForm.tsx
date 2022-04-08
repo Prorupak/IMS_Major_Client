@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-indent-props */
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable quotes */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-curly-newline */
@@ -11,7 +13,7 @@
 import React from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { TiPlus } from 'react-icons/ti';
-import { Icon as Icons, SmallIcon, Text } from 'Themes/utilityThemes';
+import { Icon as Icons, Item, SmallIcon, Text } from 'Themes/utilityThemes';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import {
@@ -20,7 +22,9 @@ import {
   Chip,
   createFilterOptions,
   Divider,
+  FormControl,
   InputLabel,
+  ListSubheader,
   MenuItem,
   Select,
   TextareaAutosize,
@@ -29,7 +33,7 @@ import {
 
 import { useInput } from 'Hooks/useInput';
 import Icon from 'Assets/Icons/Icon';
-import { CustomSelect, StyledOption } from 'Themes/MaterialUI';
+import { CustomSelect, StyledOption, TooltipMui } from 'Themes/MaterialUI';
 import useFetch from 'Hooks/useFetch';
 import { IProductsDetails } from 'Interfaces/Interfaces';
 
@@ -69,7 +73,6 @@ const Middle = styled(motion.div).attrs({})`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  /* align-items: center; */
   margin-top: var(--spacing-20);
   gap: var(--spacing-10);
   padding: var(--spacing-15);
@@ -81,7 +84,18 @@ const Bottom = styled(motion.div).attrs({})`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  /* align-items: center; */
+  margin-top: var(--spacing-20);
+
+  gap: var(--spacing-10);
+  padding: var(--spacing-15);
+  padding-right: var(--spacing-40);
+`;
+
+const Track = styled(motion.div).attrs({})`
+  grid-area: bottom;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   margin-top: var(--spacing-20);
 
   gap: var(--spacing-10);
@@ -188,6 +202,7 @@ const CategoryForm = ({ postData }: any) => {
   const reorderRef = React.useRef({} as HTMLInputElement);
   const stockPerUnitRef = React.useRef({} as HTMLInputElement);
   const preferredVendorRef = React.useRef({} as HTMLInputElement);
+  const inventoryAcc = React.useRef({} as HTMLInputElement);
 
   const name = useInput('');
   const [validCategory, setValidCategory] = React.useState(false);
@@ -232,6 +247,9 @@ const CategoryForm = ({ postData }: any) => {
 
   const preferredVendor = useInput('');
 
+  const inventoryAccnt = useInput('');
+  console.log('inventoryAccnt', inventoryAccnt.value);
+
   React.useEffect(() => {
     nameRef.current.focus();
     desRef.current.focus();
@@ -242,13 +260,14 @@ const CategoryForm = ({ postData }: any) => {
     manufacturerRef.current.focus();
     brandRef.current.focus();
     sellingPriceRef.current.focus();
-    // sellAccountRef.current.focus();
+    sellAccountRef.current.focus();
     sellDescriptionRef.current.focus();
     sellTaxRef.current.focus();
     costPriceRef.current.focus();
-    // costAccountRef.current.focus();
+    costAccountRef.current.focus();
     costDescriptionRef.current.focus();
     costTaxRef.current.focus();
+    inventoryAcc.current.focus();
     // openingStockRef.current.focus();
     // reorderRef.current.focus();
     // stockPerUnitRef.current.focus();
@@ -274,7 +293,8 @@ const CategoryForm = ({ postData }: any) => {
     costPrice: costPrice.value,
     // costAccount: costAccount.value.title,
     costDescription: costDescription.value,
-    costTax: costTax.value.title
+    costTax: costTax.value.title,
+    inventoryAccount: inventoryAccnt.value
   };
 
   React.useEffect(() => {
@@ -297,7 +317,8 @@ const CategoryForm = ({ postData }: any) => {
     costPrice.value,
     // costAccount.value.title,
     costDescription.value.title,
-    costTax.value
+    costTax.value,
+    inventoryAccnt.value
   ]);
 
   return (
@@ -342,6 +363,14 @@ const CategoryForm = ({ postData }: any) => {
           <ItemWrapper gap="30px">
             <Text textColor="var(--color-primary-dark)" width="20%">
               SKU
+              <TooltipMui title="The Stock Keeping Unit of the item.">
+                <Icons
+                  src={Icon.Faq}
+                  style={{
+                    marginLeft: '5px'
+                  }}
+                />
+              </TooltipMui>
             </Text>
             <TextField
               ref={skuRef}
@@ -358,6 +387,14 @@ const CategoryForm = ({ postData }: any) => {
           <ItemWrapper gap="30px">
             <Text textColor="var(--color-required)" width="20%">
               Unit*
+              <TooltipMui title="The product will be measured in terms of this unit (e.g.: Kg, dozen)">
+                <Icons
+                  src={Icon.Faq}
+                  style={{
+                    marginLeft: '5px'
+                  }}
+                />
+              </TooltipMui>
             </Text>
             <TextField
               ref={unitRef}
@@ -589,9 +626,21 @@ const CategoryForm = ({ postData }: any) => {
             </CheckBoxWrapper>
             <Wrapper>
               <ItemWrapper gap="100px">
-                <Text textColor="var(--color-required)" width="20%">
-                  Selling Price*
-                </Text>
+                <TooltipMui title="The rate at which you're going to sell this product.">
+                  <Item
+                    color="var(--color-required)"
+                    fontSize="12px"
+                    fontWeight="medium"
+                    height="47%"
+                    margin="-2px 0"
+                    style={{
+                      borderBottom: '1px dashed #969696',
+                      paddingBottom: '2px'
+                    }}
+                    width="fit-content">
+                    Selling Price*
+                  </Item>
+                </TooltipMui>
                 <TextField
                   ref={sellingPriceRef}
                   disabled={!sales}
@@ -602,10 +651,22 @@ const CategoryForm = ({ postData }: any) => {
                 />
               </ItemWrapper>
             </Wrapper>
-            {/* <ItemWrapper gap="100px">
-              <Text textColor="var(--color-required)" width="20%">
-                Account*
-              </Text>
+            <ItemWrapper gap="100px">
+              <TooltipMui title="All sales transactions for this item will tracked under this account.">
+                <Item
+                  color="var(--color-required)"
+                  fontSize="12px"
+                  fontWeight="medium"
+                  height="47%"
+                  margin="-2px 0"
+                  style={{
+                    borderBottom: '1px dashed #969696',
+                    paddingBottom: '2px'
+                  }}
+                  width="fit-content">
+                  Account*
+                </Item>
+              </TooltipMui>
               <Autocomplete
                 ref={sellAccountRef}
                 clearOnBlur
@@ -666,7 +727,7 @@ const CategoryForm = ({ postData }: any) => {
                 sx={{ width: 300 }}
                 value={sellAccount.value.title}
               />
-            </ItemWrapper> */}
+            </ItemWrapper>
             <ItemWrapper gap="100px">
               <Text textColor="var(--color-primary-dark)" width="20%">
                 Description
@@ -684,6 +745,14 @@ const CategoryForm = ({ postData }: any) => {
             <ItemWrapper gap="100px">
               <Text textColor="var(--color-primary-dark)" width="20%">
                 Tax
+                <TooltipMui title="Add the sales tax that is applicable for this item. This tax will be auto-populated when you create transactions with this item.">
+                  <Icons
+                    src={Icon.Faq}
+                    style={{
+                      marginLeft: '5px'
+                    }}
+                  />
+                </TooltipMui>
               </Text>
               <Autocomplete
                 ref={sellTaxRef}
@@ -771,9 +840,21 @@ const CategoryForm = ({ postData }: any) => {
             </CheckBoxWrapper>
             <Wrapper>
               <ItemWrapper gap="70px">
-                <Text textColor="var(--color-required)" width="20%">
-                  Cost Price*
-                </Text>
+                <TooltipMui title="The rate at which you purchased this item.">
+                  <Item
+                    color="var(--color-required)"
+                    fontSize="12px"
+                    fontWeight="medium"
+                    height="47%"
+                    margin="-2px 0"
+                    style={{
+                      borderBottom: '1px dashed #969696',
+                      paddingBottom: '2px'
+                    }}
+                    width="fit-content">
+                    Cost Price*
+                  </Item>
+                </TooltipMui>
                 <TextField
                   ref={costPriceRef}
                   disabled={!purchase}
@@ -784,10 +865,22 @@ const CategoryForm = ({ postData }: any) => {
                 />
               </ItemWrapper>
             </Wrapper>
-            {/* <ItemWrapper gap="70px">
-              <Text textColor="var(--color-required)" width="20%">
-                Account*
-              </Text>
+            <ItemWrapper gap="70px">
+              <TooltipMui title="All the purchase transactions for this item will be tracked under this account.">
+                <Item
+                  color="var(--color-required)"
+                  fontSize="12px"
+                  fontWeight="medium"
+                  height="47%"
+                  margin="-2px 0"
+                  style={{
+                    borderBottom: '1px dashed #969696',
+                    paddingBottom: '2px'
+                  }}
+                  width="fit-content">
+                  Inventory Account*
+                </Item>
+              </TooltipMui>
               <Autocomplete
                 ref={costAccountRef}
                 clearOnBlur
@@ -849,7 +942,7 @@ const CategoryForm = ({ postData }: any) => {
                 sx={{ width: 300 }}
                 value={costAccount.value.title}
               />
-            </ItemWrapper> */}
+            </ItemWrapper>
             <ItemWrapper gap="70px">
               <Text textColor="var(--color-primary-dark)" width="20%">
                 Description
@@ -867,6 +960,14 @@ const CategoryForm = ({ postData }: any) => {
             <ItemWrapper gap="70px">
               <Text textColor="var(--color-primary-dark)" width="20%">
                 Tax
+                <TooltipMui title="Add the purchase tax that is applicable for this item. This tax will be auto-populated when you create transactions with this item.">
+                  <Icons
+                    src={Icon.Faq}
+                    style={{
+                      marginLeft: '5px'
+                    }}
+                  />
+                </TooltipMui>
               </Text>
               <Autocomplete
                 ref={costTaxRef}
@@ -929,13 +1030,86 @@ const CategoryForm = ({ postData }: any) => {
                 value={costTax.value.title}
               />
             </ItemWrapper>
+            <Divider />
           </RightSection>
         </Bottom>
+        <Track>
+          <LeftSection>
+            <CheckBoxWrapper
+              style={{
+                margin: '0'
+              }}>
+              <Checkbox
+                aria-describedby="cNote"
+                checked={purchase}
+                onChange={(e: any) => {
+                  setPurchase(!purchase);
+                }}
+                size="small"
+                value={purchase}
+              />
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}>
+                <p
+                  className="terms-content"
+                  style={{
+                    fontSize: '16px'
+                  }}>
+                  Track Inventory for this product
+                </p>
+                <Item
+                  color="#777777"
+                  fontSize="11px"
+                  fontWeight="400"
+                  margin="0px">
+                  You cannot enable/disable inventory tracking once you've
+                  created transactions for this item.
+                </Item>
+              </div>
+            </CheckBoxWrapper>
+            <ItemWrapper
+              gap="70px"
+              style={{
+                marginTop: '20px'
+              }}>
+              <TooltipMui title="The account which tracks the inventory of this item.">
+                <Item
+                  color="var(--color-required)"
+                  fontSize="12px"
+                  fontWeight="medium"
+                  height="47%"
+                  margin="-2px 0"
+                  style={{
+                    borderBottom: '1px dashed #969696',
+                    paddingBottom: '2px'
+                  }}
+                  width="fit-content">
+                  Inventory Account*
+                </Item>
+              </TooltipMui>
+              <FormControl sx={{ m: 5, minWidth: 300 }}>
+                <InputLabel htmlFor="grouped-select">Select Account</InputLabel>
+                <Select
+                  ref={inventoryAcc}
+                  // {...inventoryAccnt.inputAttrs}
+                  id="grouped-select"
+                  label="Select Account"
+                  size="small"
+                  value={inventoryAccnt.value}>
+                  <ListSubheader>Stocks</ListSubheader>
+                  <MenuItem value="stock">Inventory Assets</MenuItem>
+                </Select>
+              </FormControl>
+            </ItemWrapper>
+          </LeftSection>
+        </Track>
       </Grid>
     </>
   );
 };
 
 export default CategoryForm;
-
 

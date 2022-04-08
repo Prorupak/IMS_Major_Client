@@ -351,6 +351,7 @@ const FormSection = () => {
                   </InputAdornment>
                 )
               }}
+              label={null}
               onBlur={() => setEmailFocus(false)}
               onChange={(e: any) => setEmail(e.target.value)}
               onFocus={() => setEmailFocus(true)}
@@ -386,6 +387,7 @@ const FormSection = () => {
                   </InputAdornment>
                 )
               }}
+              label={null}
               onBlur={() => setPasswordFocus(false)}
               onChange={(e: any) => setPassword(e.target.value)}
               onFocus={() => setPasswordFocus(true)}
@@ -435,6 +437,7 @@ const FormSection = () => {
                   </InputAdornment>
                 )
               }}
+              label={null}
               onChange={(e: any) => setCountries(e.target.value)}
               placeholder="Country"
               // add placeholder
@@ -473,6 +476,7 @@ const FormSection = () => {
                   </InputAdornment>
                 )
               }}
+              label={null}
               onBlur={() => setPhoneFocus(false)}
               onChange={(e: any) => setPhone(e.target.value)}
               onFocus={() => setPhoneFocus(true)}
@@ -559,3 +563,6 @@ const FormSection = () => {
 };
 
 export default FormSection;
+
+
+

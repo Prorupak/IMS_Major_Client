@@ -8,9 +8,10 @@ import Icon from 'Assets/Icons/Icon';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import usePost from 'Hooks/usePost';
-import { useLocation } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { ICategories, IProductsDetails } from 'Interfaces/Interfaces';
 import { QuickCreate } from 'Components/main/Navbar/QuickCreate/Elements.QuickCreate';
+import { CategoryData } from 'context/CategoryContext';
 import ProductsForm from './ProductsForm';
 
 const Form = styled.form`
@@ -73,21 +74,13 @@ const Footer = styled(motion.div).attrs({})`
 `;
 
 const AddCategories = () => {
-  const location = useLocation();
-  // @ts-ignore
-  const ids = location && location.state && location.state.catId;
-  // @ts-ignore
-  const catName = location && location.state && location.state.catName;
-
+  const { id } = useParams();
   const [data, setData] = React.useState<IProductsDetails>(
     {} as IProductsDetails
   );
   const postData = (post: any) => {
     setData(post);
-    console.log('postData', post);
   };
-
-  console.log('sales', data.salesInformation);
 
   const PData = {
     name: data.name,
@@ -119,7 +112,7 @@ const AddCategories = () => {
   };
 
   const { handleSubmit } = usePost(
-    `http://localhost:9001/api/categories/${ids}/products`,
+    `http://localhost:9001/api/categories/${id}/products`,
     PData,
     '/products'
   );
@@ -129,7 +122,6 @@ const AddCategories = () => {
       <Grid>
         <Header>
           <Title>New Product</Title>
-          {catName}
           <div className="rightSection">
             <PageTips />
             <Hr />
@@ -183,4 +175,10 @@ const AddCategories = () => {
 };
 
 export default AddCategories;
+
+
+
+
+
+
 

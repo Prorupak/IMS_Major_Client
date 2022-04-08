@@ -12,43 +12,29 @@
 
 import React from 'react';
 // import Close from '../../../../Assets/Icons/Close.svg';
-import { Chip } from '@mui/material';
 import { Item, Divider, Heading } from '../../Themes/utilityThemes';
-import { DataGrid } from '@mui/x-data-grid';
-import Icon from 'Assets/Icons/Icon';
-import { motion } from 'framer-motion';
-import axios from 'axios';
+import {
+  DataGrid,
+  GridValueGetterParams,
+} from '@mui/x-data-grid';
 import { useLocation } from 'react-router';
-
 import styled from 'styled-components';
 import ProductsContainer from 'Components/shared/ProductsContainer';
+import { CustomToolbar } from 'Themes/MaterialUI';
+import { CategoryData } from 'context/CategoryContext';
 
-interface ChipData {
-  key: any;
-  label: any;
-}
+
 
 export const Grid = styled.div`
   overflow-x: hidden;
   display: grid;
   grid-template-areas:
     'header'
-    'content'
     'body';
 
   grid-template-rows: auto auto fill-content;
 
   margin: var(--spacing-15) var(--spacing-15);
-`;
-
-const Wrapper = styled.div`
-  /* overflow: hidden; */
-  display: flex;
-  gap: 55px;
-  width: 100%;
-  /* max-width: 400px; */
-  max-width: 500px;
-  min-height: fit-content;
 `;
 
 const Header = styled.header`
@@ -57,90 +43,15 @@ const Header = styled.header`
   margin: var(--spacing-5) 0;
 `;
 
-const Content = styled.section`
-  grid-area: content;
-`;
-
 const Body = styled.section`
   grid-area: body;
   margin: var(--spacing-5) 0;
 `;
 
-const Headings = styled(motion.div).attrs({})`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Data = styled(motion.div).attrs({})`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ColorWrapper = styled.div`
-  /* display: flex; */
-`;
-
-const Colors = styled(motion.div).attrs({})`
-  scroll-behavior: smooth;
-  scroll-snap-type: proximity;
-  display: flex;
-  flex-flow: row wrap;
-  gap: 10px;
-  min-height: 0px;
-  max-height: 70px;
-  min-width: 47rem;
-  max-width: 65rem;
-`;
-
 const ProductDetails = () => {
-  const location = useLocation();
-  const [productDetails, setProductDetails] = React.useState<any>({});
-  // @ts-ignore
-  const ids = location && location.state && location.state.row;
+  const { categoryDetails } = React.useContext(CategoryData);
+  console.log('categoryDetails', categoryDetails.id);
 
-  const [chipData, setChipData] = React.useState<readonly ChipData[]>([]);
-
-  const handleDelete = (chipToDelete: ChipData) => {
-    return () => {
-      setChipData((chips) => {
-        return chips.filter((chip) => {
-          return chip.key !== chipToDelete.key;
-        });
-      });
-    };
-  };
-
-  const [unit, setUnit] = React.useState<any[]>([]);
-
-  React.useEffect(() => {
-    setUnit([ids]);
-  }, [ids]);
-
-  console.log('unit', unit);
-  console.log(
-    'idss',
-    ids.products.map((item: any) => item.SalesInformation)
-  );
-
-  const Sales = ids.products.map((item: any) => item.SalesInformation);
-
-  // loop through the sales and get the  sellingPrice
-  const sellingPrice = Sales.map((item: any) =>
-    item.filter((i: any) => i !== Boolean)
-  );
-  console.log('sellingPrice', sellingPrice);
-
-  // loop through the array
-  // for (let i = 0; i < unit.length; i++) {
-  //   // check if the item is already in the array
-  //   if (unit[i].id === ids.id) {
-  //     // item found, return true
-  //     return true;
-  //   }
-  // }
-
-  // item not found, return false
-  // return false;
 
   const columns = [
     {
@@ -156,12 +67,18 @@ const ProductDetails = () => {
     {
       field: 'sellingPrice',
       headerName: 'SELLING PRICE',
-      width: 200
+      width: 200,
+      valueGetter: (params: GridValueGetterParams) => {
+        return params.row.SalesInformation.map((item: any) => item.sellingPrice);
+      }
     },
     {
       field: 'costPrice',
       headerName: ' COST PRICE',
-      width: 200
+      width: 200,
+      valueGetter: (params: GridValueGetterParams) => {
+        return params.row.PurchaseInformation.map((item: any) => item.costPrice);
+      }
     },
     {
       field: 'date',
@@ -174,61 +91,23 @@ const ProductDetails = () => {
     <ProductsContainer>
       <Grid>
         <Header>
-          <Heading>{ids.name}</Heading>
-          <Item height="1%">{ids.name} Item(s)</Item>
+          <Heading>{categoryDetails.name}</Heading>
+          <Item fontWeight="500" height="1%">
+            {categoryDetails.products.length} Item(s) Available
+          </Item>
         </Header>
-        <Content>
-          <Wrapper>
-            <Headings>
-              <Item height="1%">brand</Item>
-              <Item height="1%">{ids.name}</Item>
-            </Headings>
-            <Data>
-              <Item height="1%">{ids.name}</Item>
-              <Item height="1%">
-                <ColorWrapper>
-                  <Colors>
-                    {chipData.map((data) => {
-                      // let icon;
-                      return (
-                        <motion.div
-                          whileHover={{ scale: 1.1, rotate: 0.5 }}
-                          whileTap={{ scale: 0.9 }}>
-                          <Chip
-                            color="primary"
-                            icon={Icon.Close}
-                            label={data.label}
-                            onDelete={
-                              data.label === 'React'
-                                ? undefined
-                                : handleDelete(data)
-                            }
-                            size="small"
-                            sx={{
-                              backgroundColor: 'var(--color-secondary)',
-                              borderRadius: '7px'
-                            }}
-                          />
-                        </motion.div>
-                      );
-                    })}
-                  </Colors>
-                </ColorWrapper>
-              </Item>
-            </Data>
-          </Wrapper>
-          <Divider />
-        </Content>
+        <Divider />
         <Body>
           <div style={{ margin: '10px 0', height: '66vh', width: '100%' }}>
             <div style={{ height: '66vh', width: '100%' }}>
               <DataGrid
                 columns={columns}
+                components={{
+                  Toolbar: CustomToolbar,
+                }}
                 density="compact"
-                // eslint-disable-next-line no-underscore-dangle
-                getRowId={(data: any) => data.id}
                 loading={false}
-                rows={unit}
+                rows={categoryDetails.products}
                 sx={{
                   border: 'none'
                 }}
@@ -242,6 +121,38 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

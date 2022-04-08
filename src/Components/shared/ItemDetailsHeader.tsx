@@ -12,6 +12,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { Fade, Menu, MenuItem, Tooltip } from '@mui/material';
 import useDelete from 'Hooks/useDelete';
 import { Link } from 'react-router-dom';
+import { CategoryData } from 'context/CategoryContext';
 import Icon from '../../Assets/Icons/Icon';
 
 const Nav = styled.nav``;
@@ -41,28 +42,22 @@ interface Props {
 
 const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const { categoryDetails } = React.useContext(CategoryData);
   const open = Boolean(anchorEl);
+
+  console.log('categoryDetails', categoryDetails.id);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const location = useLocation();
-  const navigate = useNavigate();
-  // @ts-ignore
-  const ids = location && location.state && location.state.catId;
-  // @ts-ignore
-  const catName = location && location.state && location.state.catName;
-  console.log('ids', ids);
 
   const { handleDelete } = useDelete(
-    `http://localhost:9001/api/categories/${ids}`
+    `http://localhost:9001/api/categories/${categoryDetails.id}`
   );
 
-  const onNavigate = () => {
-    navigate('/add/:id', { state: { catId: ids, catName } });
-  };
   return (
     <>
       <Nav>
@@ -71,17 +66,17 @@ const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
             <ButtonWrapper>
               <Tooltip title="Edit Category">
                 <Button>
-                  <Link to={`/category/edit/${ids}`}>
+                  <Link to={`/category/edit/${categoryDetails.id}`}>
                     <IconButton src={Icon.Edit} />
                   </Link>
                 </Button>
               </Tooltip>
-              <Button
-                onClick={onNavigate}
-                style={{ background: 'var(--color-secondary)' }}>
-                <IconButton src={Icon.BPlus} />
-                <p>Add Item</p>
-              </Button>
+              <Link to={`/add/${categoryDetails.id}`}>
+                <Button style={{ background: 'var(--color-secondary)' }}>
+                  <IconButton src={Icon.BPlus} />
+                  <p>Add Item</p>
+                </Button>
+              </Link>
               <Menu
                 anchorEl={anchorEl}
                 id="fade-menu"
@@ -117,6 +112,14 @@ const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
 };
 
 export default ItemDetailsHeader;
+
+
+
+
+
+
+
+
 
 
 

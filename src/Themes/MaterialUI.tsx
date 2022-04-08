@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable object-curly-newline */
 /* eslint-disable react/jsx-one-expression-per-line */
@@ -5,6 +6,13 @@
 import style from 'styled-components';
 
 import * as React from 'react';
+import {
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarExport,
+  GridToolbarDensitySelector
+} from '@mui/x-data-grid';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
@@ -166,5 +174,19 @@ export function CustomSelect(props: SelectUnstyledProps<number>) {
   };
 
   return <SelectUnstyled {...props} components={components} />;
+}
+
+export function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      {/* @ts-ignore */}
+      <GridToolbarColumnsButton />
+      <GridToolbarFilterButton />
+      {/* @ts-ignore */}
+      <GridToolbarDensitySelector />
+      {/* @ts-ignore */}
+      <GridToolbarExport />
+    </GridToolbarContainer>
+  );
 }
 

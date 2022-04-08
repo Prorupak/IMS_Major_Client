@@ -11,6 +11,7 @@ import { CategoryProvider } from 'context/CategoryContext';
 import { ProductProvider } from 'context/ProductContext';
 import { Alert, Spin } from 'antd';
 import { Loader } from 'Themes/utilityThemes';
+import MatxProgressBar from './Components/shared/ProgressBar';
 
 const App = () => {
   const [loading, setLoading] = React.useState(true);
@@ -25,6 +26,7 @@ const App = () => {
       {loading ? (
         <Loader>
           <Spin size="large" tip="Please Wait....." />
+          {/* <MatxProgressBar color="primary" text="Google (102k)" value={75} /> */}
         </Loader>
       ) : (
         <SnackbarProvider maxSnack={3}>
@@ -46,6 +48,8 @@ const App = () => {
   );
 };
 export default App;
+
+
 
 
 

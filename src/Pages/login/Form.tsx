@@ -111,6 +111,7 @@ const Form = () => {
                   </InputAdornment>
                 )
               }}
+              label={null}
               {...email.inputAttrs}
               placeholder="Email or Mobile Number"
               size="small"
@@ -143,6 +144,7 @@ const Form = () => {
                   </InputAdornment>
                 )
               }}
+              label={null}
               {...password.inputAttrs}
               placeholder="Password"
               size="small"
@@ -182,6 +184,7 @@ const Form = () => {
 };
 
 export default Form;
+
 
 
 

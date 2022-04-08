@@ -39,9 +39,7 @@ export default function Categories() {
     navigate('', {
       state: { row }
     });
-    setCategoryDetails({
-      categoryDetails: row
-    });
+    setCategoryDetails(row);
   };
 
   const columns = [
@@ -93,5 +91,6 @@ export default function Categories() {
     </Items>
   );
 }
+
 
 

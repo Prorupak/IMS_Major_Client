@@ -114,6 +114,10 @@ export default createGlobalStyle`
         text-decoration: none;
     }
 
+    p {
+        margin: 0;
+    }
+
     body {
         /* overflow: -moz-hidden-unscrollable; */
         scroll-behavior: smooth;
