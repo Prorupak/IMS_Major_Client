@@ -8,6 +8,7 @@ import CompHeader from './Components/productDetails/CompHeader';
 import Overview from './Components/Overview';
 import History from './Components/History';
 import Transactions from './Components/Transactions';
+import { ProductData } from 'context/ProductContext';
 
 const Grid = styled(motion.div).attrs({})`
   display: grid;
@@ -43,9 +44,10 @@ const Header = styled(motion.nav).attrs({})`
 `;
 
 const ProductsDetails = () => {
-  const location = useLocation();
   const [current, setCurrent] = React.useState('overview');
   const [loading, setLoading] = React.useState(true);
+
+  const { product: ids } = React.useContext(ProductData);
 
   const handleClicked = (event: any) => {
     console.log('click', event);
@@ -54,12 +56,7 @@ const ProductsDetails = () => {
   console.log('current', current);
   const { toggleHandle } = React.useContext(ToggleContext);
 
-  // @ts-ignore
-  const ids = location && location.state && location.state.row;
 
-  console.log('row=>>>>', ids);
-  // @ts-ignore
-  const catName = location && location.state && location.state.catName;
 
   const tabs = ({ currents }: any) => {
     switch (currents) {

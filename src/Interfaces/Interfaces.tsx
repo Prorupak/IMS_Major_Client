@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 export interface IAuth {
   token: string | null;
   user: IUser | null;
@@ -63,6 +62,11 @@ export interface IProductsDetails {
   images?: Record<string, any>[];
   date?: Date;
   isbn?: string;
+  inventoryAccount?: string;
+  openingStock?: number;
+  openingStockPerUnit?: number;
+  preferredVendor?: string;
+  reorderPoint?: string
   salesInformation?: {
     sellingPrice?: number;
     account?: string;
@@ -74,6 +78,13 @@ export interface IProductsDetails {
     account?: string;
     description?: string;
     tax?: number;
+  };
+  inventoryTracking?: {
+    inventoryAccount?: string;
+    openingStock?: number;
+    openingStockPerUnit?: number;
+    preferredVendor?: string;
+    reorderPoint?: string
   };
 }
 

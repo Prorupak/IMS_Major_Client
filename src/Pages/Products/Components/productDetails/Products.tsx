@@ -7,9 +7,10 @@ import useToggle, { ToggleContext } from 'Hooks/useToggle';
 import { Outlet, useNavigate } from 'react-router';
 import Items from 'layout/Items';
 import useFetch from 'Hooks/useFetch';
-import { CategoryContext } from 'context/CategoryContext';
+import { CategoryContext, CategoryData } from 'context/CategoryContext';
 import { ProductContext, ProductData } from 'context/ProductContext';
 import Product from 'layout/Product';
+import { CustomToolbar } from 'Themes/MaterialUI';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 5 },
@@ -41,19 +42,32 @@ const columns = [
 
 // eslint-disable-next-line react/no-multi-comp
 export default function Products() {
-  const navigate = useNavigate();
+  const [productDetails, setProductDetails] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string>('');
 
-  const handleItem = (row: any) => {
-    navigate('', {
-      state: { row }
-    });
+  const navigate = useNavigate();
+  const { setProduct } = React.useContext(ProductData);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get('http://localhost:9001/api/products');
+      setProductDetails(res.data);
+      setLoading(false);
+      console.log('productDetails', productDetails);
+    } catch (err: any) {
+      console.log('err===>', err);
+      setError(err.message);
+    }
   };
 
-  const { handleOpen, toggleHandle } = React.useContext(ToggleContext);
-  const [productDetails] = React.useContext(ProductData);
-  const { error, loading } = React.useContext(ProductContext);
+  React.useEffect(() => {
+    fetchData();
+  }, []);
 
-  // setCategoryDetails(tableData);
+  const { handleOpen, toggleHandle } = React.useContext(ToggleContext);
+
 
   return (
     <Product>
@@ -66,12 +80,15 @@ export default function Products() {
             error={!productDetails ? error : null}
             getRowId={(row) => row.id}
             loading={productDetails ? loading : true}
+            components={{
+              Toolbar: CustomToolbar,
+            }}
             onRowClick={
               // eslint-disable-next-line operator-linebreak
               (e: any) => {
                 handleOpen();
                 console.log('e.row=====>', e.row);
-                handleItem(e.row);
+                setProduct(e.row);
               }
             }
             onRowDoubleClick={toggleHandle}

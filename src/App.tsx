@@ -12,25 +12,14 @@ import { ProductProvider } from 'context/ProductContext';
 import { Alert, Spin } from 'antd';
 import { Loader } from 'Themes/utilityThemes';
 import MatxProgressBar from './Components/shared/ProgressBar';
+import { ReactFormProvider } from 'context/ReactHookForms';
 
 const App = () => {
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
   return (
     <>
-      {loading ? (
-        <Loader>
-          <Spin size="large" tip="Please Wait....." />
-          {/* <MatxProgressBar color="primary" text="Google (102k)" value={75} /> */}
-        </Loader>
-      ) : (
         <SnackbarProvider maxSnack={3}>
           <AuthProvider>
+          <ReactFormProvider>
             <CategoryProvider>
               <ProductProvider>
                 <ToggleProvider>
@@ -41,9 +30,9 @@ const App = () => {
                 </ToggleProvider>
               </ProductProvider>
             </CategoryProvider>
+          </ReactFormProvider>
           </AuthProvider>
-        </SnackbarProvider>
-      )}
+      </SnackbarProvider>
     </>
   );
 };

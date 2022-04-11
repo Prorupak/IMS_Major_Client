@@ -1,14 +1,3 @@
-/* eslint-disable no-multiple-empty-lines */
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
-/* eslint-disable no-plusplus */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable react/display-name */
-/* eslint-disable react/no-multi-comp */
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/order */
-// import svg icon form ../../../../Assets/Icons/Close.svg
 
 import React from 'react';
 // import Close from '../../../../Assets/Icons/Close.svg';

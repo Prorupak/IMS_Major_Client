@@ -16,6 +16,10 @@ import UpdateCategories from 'Pages/Categories/UpdateCategories';
 import { ItemWrapper } from 'Themes/utilityThemes';
 import CategoryForm from 'Pages/Categories/CategoryForm';
 import RequireAuth from './RequireAuth';
+import UpdateProducts from 'Pages/Products/UpdateProducts';
+import ProductsForm from 'Pages/Products/ProductsForm';
+import ProductContainer from 'Pages/Products/ProductContainer';
+import Update from 'Pages/Products/Update';
 
 const PublicRoutes = () => {
   const location = useLocation();
@@ -27,14 +31,18 @@ const PublicRoutes = () => {
             {/* <Route element={<CategoryContainer />} path="/category">
               <Route element={<Categories />} path="details" />
             </Route> */}
+            <Route element={<ProductContainer />} path="/product">
+              <Route element={<ProductsForm />} path="add/:id" />
+              <Route element={<UpdateProducts />} path="edit/:id" />
+            </Route>
             <Route element={<CreateProducts />} path="/create" />
-            <Route element={<AddProducts />} path="/add/:id" />
             <Route element={<CategoryContainer />} path="/category">
               <Route element={<CategoryForm />} path="add" />
               <Route element={<UpdateCategories />} path="edit/:id" />
             </Route>
-            <Route element={<ItemWrapper />} path="/category/details" />
+            {/* <Route element={<ItemWrapper />} path="/category/details" /> */}
             <Route element={<Categories />} path="/details" />
+            <Route element={<Update />} path="/up" />
             <Route element={<Products />} path="/products" />
           </Route>
         </Routes>

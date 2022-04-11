@@ -306,8 +306,8 @@ const FormSection = () => {
               aria-describedby="uidNote"
               aria-invalid={validName ? 'false' : 'true'}
               autoComplete="off"
-              // error={nameFocus ? Boolean(!validName) : true}
               id="input-with-sx"
+              // error={nameFocus ? Boolean(!validName) : true}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -315,6 +315,7 @@ const FormSection = () => {
                   </InputAdornment>
                 )
               }}
+              label={null}
               {...name.inputAttrs}
               // onBlur={() => setNameFocus(false)}
               // onChange={(e: any) => setName(e.target.value)}
@@ -563,6 +564,7 @@ const FormSection = () => {
 };
 
 export default FormSection;
+
 
 
 

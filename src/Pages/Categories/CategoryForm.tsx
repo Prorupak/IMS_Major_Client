@@ -116,6 +116,7 @@ const CategoryForm = () => {
             </Text>
             <TextField
               ref={catRef}
+              label={null}
               {...category.inputAttrs}
               size="small"
               sx={{ width: '820px' }}
@@ -128,6 +129,7 @@ const CategoryForm = () => {
             </Text>
             <TextField
               ref={desRef}
+              label={null}
               {...description.inputAttrs}
               aria-label="minimum height"
               minRows={2}
@@ -144,6 +146,7 @@ const CategoryForm = () => {
 };
 
 export default CategoryForm;
+
 
 
 

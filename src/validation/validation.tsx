@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+
 const validation = (regex: any, value: string) => {
   const [valid, setValid] = React.useState(false);
 
@@ -21,6 +23,8 @@ const validation = (regex: any, value: string) => {
 };
 
 export default validation;
+
+
 
 export const loginVal = (value: string) => {
   const [valid, setValid] = React.useState(false);

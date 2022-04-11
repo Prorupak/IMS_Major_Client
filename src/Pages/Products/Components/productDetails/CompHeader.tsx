@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { TooltipMui } from 'Themes/MaterialUI';
 import { Button, Heading, Icon as Icons, Item } from 'Themes/utilityThemes';
 import useDelete from 'Hooks/useDelete';
+import { CategoryContext, CategoryData } from 'context/CategoryContext';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -56,9 +57,13 @@ const CompHeader = ({ current, handleClicked, info }: any) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { toggleHandle } = React.useContext(ToggleContext);
+  const { product } = React.useContext(CategoryContext);
 
-  // @ts-ignore
-  const ids = location && location.state && location.state.row;
+  console.log('product', product);
+
+  // console.log('compheader', info)
+
+  const { id } = info
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -69,7 +74,7 @@ const CompHeader = ({ current, handleClicked, info }: any) => {
   };
 
   const { handleDelete } = useDelete(
-    `http://localhost:9001/api/categories/${ids}`
+    `http://localhost:9001/api/categories/${id}`
   );
 
   return (
@@ -79,7 +84,7 @@ const CompHeader = ({ current, handleClicked, info }: any) => {
         <IconWrapper>
           <TooltipMui title="Edit Product">
             <Button>
-              <Link to={`/product/edit/${ids}`}>
+              <Link to={`/product/edit/${id}`}>
                 <Icons src={Icon.Edit} />
               </Link>
             </Button>

@@ -8,11 +8,12 @@ import Icon from 'Assets/Icons/Icon';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import usePost from 'Hooks/usePost';
-import { useLocation, useParams } from 'react-router';
-import { ICategories, IProductsDetails } from 'Interfaces/Interfaces';
-import { QuickCreate } from 'Components/main/Navbar/QuickCreate/Elements.QuickCreate';
-import { CategoryData } from 'context/CategoryContext';
+import { useParams } from 'react-router';
+import { IProductsDetails } from 'Interfaces/Interfaces';
+
 import ProductsForm from './ProductsForm';
+import usePut from 'Hooks/usePut';
+import { ReactHookForm } from 'context/ReactHookForms';
 
 const Form = styled.form`
   height: 100vh;
@@ -73,52 +74,122 @@ const Footer = styled(motion.div).attrs({})`
   border-top: 1px solid rgba(0, 0, 0, 0.07);
 `;
 
-const AddCategories = () => {
+const AddProducts = ({ children }: any) => {
   const { id } = useParams();
   const [data, setData] = React.useState<IProductsDetails>(
     {} as IProductsDetails
   );
+  const { handleSubmit } = React.useContext(ReactHookForm)
+
+
+  const defaultValues = {
+    name: "",
+    description: "",
+    sku: "",
+    unit: "",
+    select: "",
+    autoComplete: "",
+    checkbox: false,
+  }
+
+  // const { handleSubmit } = useReactHook(defaultValues);
+  // const 
+
+
+
   const postData = (post: any) => {
     setData(post);
   };
 
-  const PData = {
-    name: data.name,
-    sku: data.sku,
-    unit: data.unit,
-    description: data.description,
-    manufacturer: data.manufacturer,
-    brand: data.brand,
-    dimensions: data.dimensions,
-    dUnit: data.dUnit,
-    weight: data.weight,
-    wUnit: data.wUnit,
-    SalesInformation: [
-      {
-        sellingPrice: data.sellingPrice,
-        account: data.saleAccount,
-        description: data.sellDescription,
-        tax: data.sellTax
-      }
-    ],
-    PurchaseInformation: [
-      {
-        costPrice: data.costPrice,
-        account: data.costAccount,
-        description: data.costDescription,
-        tax: data.costTax
-      }
-    ]
-  };
+  // const PData = {
+  //   name: data.name,
+  //   sku: data.sku,
+  //   unit: data.unit,
+  //   description: data.description,
+  //   manufacturer: data.manufacturer,
+  //   brand: data.brand,
+  //   dimensions: data.dimensions,
+  //   dUnit: data.dUnit,
+  //   weight: data.weight,
+  //   wUnit: data.wUnit,
+  //   SalesInformation: [
+  //     {
+  //       sellingPrice: data.sellingPrice,
+  //       account: data.saleAccount,
+  //       description: data.sellDescription,
+  //       tax: data.sellTax
+  //     }
+  //   ],
+  //   PurchaseInformation: [
+  //     {
+  //       costPrice: data.costPrice,
+  //       account: data.costAccount,
+  //       description: data.costDescription,
+  //       tax: data.costTax
+  //     }
+  //   ],
+  //   inventoryTracking: [{
+  //     inventoryAccount: data.inventoryAccount,
+  //     openingStock: data.openingStock,
+  //     reorderPoint: data.reorderPoint,
+  //     openingStockRate: data.openingStockPerUnit,
+  //     preferredVendor: data.preferredVendor
+  //   }]
+  // };
+  // const UData = {
+  //   name: data.name,
+  //   sku: data.sku,
+  //   unit: data.unit,
+  //   description: data.description,
+  //   manufacturer: data.manufacturer,
+  //   brand: data.brand,
+  //   dimensions: data.dimensions,
+  //   dUnit: data.dUnit,
+  //   weight: data.weight,
+  //   wUnit: data.wUnit,
+  //   SalesInformation: [
+  //     {
+  //       sellingPrice: data.sellingPrice,
+  //       account: data.saleAccount,
+  //       description: data.sellDescription,
+  //       tax: data.sellTax
+  //     }
+  //   ],
+  //   PurchaseInformation: [
+  //     {
+  //       costPrice: data.costPrice,
+  //       account: data.costAccount,
+  //       description: data.costDescription,
+  //       tax: data.costTax
+  //     }
+  //   ],
+  //   inventoryTracking: [{
+  //     inventoryAccount: data.inventoryAccount,
+  //     openingStock: data.openingStock,
+  //     reorderPoint: data.reorderPoint,
+  //     openingStockRate: data.openingStockPerUnit,
+  //     preferredVendor: data.preferredVendor
+  //   }]
+  // };
 
-  const { handleSubmit } = usePost(
-    `http://localhost:9001/api/categories/${id}/products`,
-    PData,
-    '/products'
-  );
+  // console.log('PData', PData.inventoryTracking);
+
+  // const { handleSubmit: onSubmit } = usePost(
+  //   `http://localhost:9001/api/categories/${id}/products`,
+  //   PData,
+  //   '/products'
+  // );
+
+  // const { handleSubmit: handlePut } = usePut(
+  //   `http://localhost:9001/api/categories/${id}`,
+  //   UData,
+  //   '/details'
+  // );
+
+
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit((e: any) => console.log('e', e))}>
       <Grid>
         <Header>
           <Title>New Product</Title>
@@ -132,7 +203,8 @@ const AddCategories = () => {
         </Header>
         <ContentWrapper>
           <Content>
-            <ProductsForm postData={postData} />
+            {children}
+            {/* <ProductsForm postData={postData} /> */}
           </Content>
         </ContentWrapper>
         <Footer>
@@ -150,8 +222,11 @@ const AddCategories = () => {
             }}
             type="submit"
             variant="contained">
-            Save
+            {
+              id ? 'Update' : 'Add'
+            }
           </Button>
+          <Link to="/products">
           <Button
             color="primary"
             size="small"
@@ -168,13 +243,14 @@ const AddCategories = () => {
             variant="contained">
             Cancel
           </Button>
+          </Link>
         </Footer>
       </Grid>
     </Form>
   );
 };
 
-export default AddCategories;
+export default AddProducts;
 
 
 

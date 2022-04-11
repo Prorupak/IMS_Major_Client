@@ -210,7 +210,7 @@ const Overview = ({ row }: any) => {
                 Inventory Account
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                Inventory Account
+                {row.inventoryTracking[0]?.inventoryAccount}
               </Item>
             </Content>
           </Wrapper>
@@ -275,7 +275,7 @@ const Overview = ({ row }: any) => {
                 color="var(--color-secondary)"
                 fontSize="12px"
                 fontWeight="500">
-                zyx company
+                {row.inventoryTracking[0]?.preferredVendor}
               </Item>
             </Content>
           </Wrapper>
@@ -345,7 +345,7 @@ const Overview = ({ row }: any) => {
               </Item>
             </TooltipMui>
             <Item fontWeight="bold" height="40%" style={{ margin: '0 30px' }}>
-              : 20.00
+              : {row.inventoryTracking[0]?.openingStock}.00
             </Item>
           </StkGroup>
           <Item fontSize="16px" fontWeight="medium">
@@ -377,7 +377,7 @@ const Overview = ({ row }: any) => {
               height="40%"
               margin="-2px 0"
               style={{ margin: '0 30px' }}>
-              : 20.00
+              : {row.inventoryTracking[0]?.openingStock}.00
             </Item>
           </StkGroup>
           <StkGroup>
@@ -458,7 +458,7 @@ const Overview = ({ row }: any) => {
               height="40%"
               margin="-2px 0"
               style={{ margin: '0 30px' }}>
-              : 20.00
+              : {row.inventoryTracking[0]?.openingStock}.00
             </Item>
           </StkGroup>
           <StkGroup>
@@ -504,7 +504,7 @@ const Overview = ({ row }: any) => {
               height="40%"
               margin="-2px 0"
               style={{ margin: '0 30px' }}>
-              : 20.00
+              : {row.inventoryTracking[0]?.openingStock}.00
             </Item>
           </StkGroup>
           <Divider />
@@ -586,7 +586,7 @@ const Overview = ({ row }: any) => {
               fontWeight="bold"
               height="40%"
               margin="-2px 0">
-              0.00
+              {row.inventoryTracking[0]?.reorderPoint}
             </Item>
           </StkGroup>
         </StockSummary>

@@ -29,27 +29,9 @@ type IProps = {
 export const CategoryProvider: React.FC<IProps> = ({ children }) => {
   const [open, setOpen] = React.useState(false);
   const [categoryDetails, setCategoryDetails] = React.useState<any[]>([]);
-  const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
   const [data, setData] = React.useState<ICategories>({} as ICategories);
   const [update, setUpdate] = React.useState<ICategories>({} as ICategories);
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get('http://localhost:9001/api/categories');
-      setCategoryDetails(res.data);
-      setLoading(false);
-      console.log('categoryDetails', categoryDetails);
-    } catch (err: any) {
-      console.log('err===>', err);
-      setError(err.message);
-    }
-  };
-
-  React.useEffect(() => {
-    fetchData();
-  }, []);
 
   const postData = (post: any) => {
     setData(post);
@@ -67,7 +49,6 @@ export const CategoryProvider: React.FC<IProps> = ({ children }) => {
             updateData,
             data,
             update,
-            loading,
             error
           }}>
           <CategoryData.Provider

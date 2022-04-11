@@ -74,11 +74,11 @@ export const Wrapper = styled.div`
   justify-content: center;
 `;
 
-export const ItemWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+// export const ItemWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;
 
 export const InputIcon = styled(motion.img).attrs({})`
   height: 16px;
@@ -168,22 +168,21 @@ export const Loader = styled(motion.div).attrs({})`
   top: 50%; ;
 `;
 
+export const CheckBoxWrapper = styled.div`
+display: flex;
+align-items: center;
+margin: 0 235px;
+.terms-content {
+ font-size: var(--fSize-8);
+ color: var(--color-placeholder);
+}
+`;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const ItemWrapper = styled(motion.div).attrs({}) <{ gap: any }>`
+position: relative;
+display: flex;
+align-items: center;
+min-height: 10px;
+grid-area: left;
+gap: ${({ gap }) => gap};
+`;
