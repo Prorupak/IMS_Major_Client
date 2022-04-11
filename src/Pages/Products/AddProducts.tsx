@@ -7,13 +7,12 @@ import { Icon as Icons, Title } from 'Themes/utilityThemes';
 import Icon from 'Assets/Icons/Icon';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-import usePost from 'Hooks/usePost';
-import { useParams } from 'react-router';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router';
 import { IProductsDetails } from 'Interfaces/Interfaces';
 
-import ProductsForm from './ProductsForm';
-import usePut from 'Hooks/usePut';
 import { ReactHookForm } from 'context/ReactHookForms';
+import { useSnackbar } from 'notistack';
 
 const Form = styled.form`
   height: 100vh;
@@ -185,11 +184,81 @@ const AddProducts = ({ children }: any) => {
   //   UData,
   //   '/details'
   // );
+  const navigate = useNavigate();
+
+
+  const { enqueueSnackbar } = useSnackbar();
+  const [error, setError] = React.useState<string>('');
+
+
+  const onSubmit = (data: IProductsDetails) => {
+    console.log('data', data);
+    const PData = {
+      name: data.name,
+      sku: data.sku,
+      unit: data.unit,
+      description: data.description,
+      manufacturer: data.manufacturer,
+      brand: data.brand,
+      dimensions: data.dimensions,
+      dUnit: data.dUnit,
+      weight: data.weight,
+      wUnit: data.wUnit,
+      SalesInformation: [
+        {
+          sellingPrice: data.sellingPrice,
+          account: data.saleAccount,
+          description: data.sellDescription,
+          tax: data.sellTax
+        }
+      ],
+      PurchaseInformation: [
+        {
+          costPrice: data.costPrice,
+          account: data.costAccount,
+          description: data.costDescription,
+          tax: data.costTax
+        }
+      ],
+      inventoryTracking: [{
+        inventoryAccount: data.inventoryAccount,
+        openingStock: data.openingStock,
+        reorderPoint: data.reorderPoint,
+        openingStockRate: data.openingStockPerUnit,
+        preferredVendor: data.preferredVendor
+      }]
+    };
+    console.log('PData', PData);
+
+    const postData = async () => {
+      try {
+        const res = await axios.post(`http://localhost:9001/api/categories/${id}/products`, PData);
+        enqueueSnackbar(res.data.success, {
+          variant: 'success'
+        });
+        navigate('/products');
+      } catch (error) {
+        console.log('error', error);
+        enqueueSnackbar("errors", {
+          variant: 'error'
+        });
+      }
+    }
+
+    return postData();
+
+  }
+
+  // const {handleSubmit: onSubmit} = usePost(
+  //   `http://localhost:9001/api/categories/${id}/products`,
+  //   PData,
+  //   '/products'
+  // );
 
 
 
   return (
-    <Form onSubmit={handleSubmit((e: any) => console.log('e', e))}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Grid>
         <Header>
           <Title>New Product</Title>
@@ -223,12 +292,13 @@ const AddProducts = ({ children }: any) => {
             type="submit"
             variant="contained">
             {
-              id ? 'Update' : 'Add'
+              'Add'
             }
           </Button>
           <Link to="/products">
           <Button
             color="primary"
+              onClick={handleSubmit((e: any) => console.log('e', e))}
             size="small"
             sx={{
               boxShadow: 'none',

@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import { FormHelperText, TextField } from '@mui/material';
 import { Select, Divider, Input, Typography, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
@@ -6,6 +6,8 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import { CustomSelect, StyledOption, TooltipMui } from 'Themes/MaterialUI';
 import { Item, ItemWrapper, Text } from 'Themes/utilityThemes';
+import { ReactHookForm } from 'context/ReactHookForms';
+import { ErrorMessage } from '@hookform/error-message';
 
 
 const LeftSection = styled(motion.div).attrs({})`
@@ -34,10 +36,7 @@ const SelectWrapper = styled(motion.div).attrs({})`
 `;
 
 type IProps = {
-     register: any;
-     errors: any;
-     setValue: any;
-     getValues: any
+     track: boolean;
 }
 
 let index = 0;
@@ -45,7 +44,9 @@ let index = 0;
 const { Option } = Select;
 
 
-const TrackSection: React.FC<IProps> = ({ register, errors, setValue, getValues }) => {
+const TrackSection: React.FC<IProps> = ({ track }) => {
+     const { register, setValues, setValue, Controller, errors, control, watch, test, resetField } = React.useContext(ReactHookForm);
+
      const [items, setItems] = useState(['jack', 'lucy']);
      const [name, setName] = useState('');
      const addItem = (e: any) => {
@@ -90,21 +91,44 @@ const TrackSection: React.FC<IProps> = ({ register, errors, setValue, getValues 
                                    Inventory Account*
                               </Item>
                          </TooltipMui>
-                         <Select
-                              showSearch
-                              placeholder="Select a person"
-                              optionFilterProp="children"
-                              onChange={onChange}
-                              onSearch={onSearch}
-                              filterOption={(input, option) =>
-                                   // @ts-ignore
-                                   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                         <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+                              <Controller
+                                   control={control}
+                                   name={!track ? "" : "inventoryAccount"}
+                                   // if track is true, then we need to set rules
+                                   rules={track && {
+                                        required: "This is required field.",
+                                   }}
+                                   render={({ field }: any) => (
+                                        <>
+                                             <Select
+                                                  disabled={!track}
+                                                  showSearch
+                                                  status={track === true && errors.inventoryAccount ? "error" : ""}
+                                                  placeholder="Select a unit"
+                                                  optionFilterProp="children"
+                                                  filterOption={(input, option) =>
+                                                       //@ts-ignore
+                                                       option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                                  }
+                                                  defaultValue=""
+                                                  {...field}
+                                                  style={{
+                                                       width: "300px",
+                                                  }}>
+                                                  <Option value="kg">Inventory Assets</Option>
+                                             </Select>
+                                        </>
+                                   )}
+                              />
+                              {
+                                   track === true && (
+                                        <FormHelperText error={track && errors.inventoryAccount ? true : false} style={{ marginLeft: '10px' }}>
+                                             <ErrorMessage errors={errors} name="inventoryAccount" />
+                                        </FormHelperText>
+                                   )
                               }
-                         >
-                              <Option value="jack">Jack</Option>
-                              <Option value="lucy">Lucy</Option>
-                              <Option value="tom">Tom</Option>
-                         </Select>
+                         </div>
                     </ItemWrapper>
                     <ItemWrapper gap="100px">
                          <TooltipMui title="The account which tracks the inventory of this item.">
@@ -123,13 +147,39 @@ const TrackSection: React.FC<IProps> = ({ register, errors, setValue, getValues 
                                    Opening Stock
                               </Item>
                          </TooltipMui>
-                         <TextField
-                              autoComplete="false"
-                              label={null}
-                              size="small"
-                              sx={{ width: "300px" }}
-                              variant="outlined"
-                         />
+                         <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+                              <Controller
+                                   render={({ field }: any) => (
+                                        <Input
+                                             autoComplete='off'
+                                             disabled={!track}
+                                             status={track === true && errors.openingStock ? "error" : ""}
+                                             {...field}
+                                             defaultValue=""
+                                             style={{ width: "300px" }}
+                                        />
+
+
+                                   )}
+                                   name={!track ? "" : "openingStock"}
+                                   control={control}
+                                   rules={{
+                                        pattern: {
+                                             value: /^[0-9]*$/,
+                                             message: "only Numbers are allowed",
+                                        }
+                                   }}
+                                   defaultValue=""
+                              />
+                              {
+                                   track === true && (
+                                        <FormHelperText error={errors.openingStock ? true : false} style={{ marginLeft: "10px" }}>
+                                             <ErrorMessage errors={errors} name="openingStock" />
+                                        </FormHelperText>
+                                   )
+                              }
+                         </div>
                     </ItemWrapper>
                     <ItemWrapper gap="100px">
                          <TooltipMui title="The account which tracks the inventory of this item.">
@@ -148,13 +198,39 @@ const TrackSection: React.FC<IProps> = ({ register, errors, setValue, getValues 
                                    Reorder Point
                               </Item>
                          </TooltipMui>
-                         <TextField
-                              autoComplete="false"
-                              label={null}
-                              size="small"
-                              sx={{ width: "300px" }}
-                              variant="outlined"
-                         />
+                         <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+                              <Controller
+                                   render={({ field }: any) => (
+                                        <Input
+                                             autoComplete='off'
+                                             disabled={!track}
+                                             status={track === true && errors.reorderPoint ? "error" : ""}
+                                             {...field}
+                                             defaultValue=""
+                                             style={{ width: "300px" }}
+                                        />
+
+
+                                   )}
+                                   name={!track ? "" : "reorderPoint"}
+                                   control={control}
+                                   rules={{
+                                        pattern: {
+                                             value: /^[0-9]*$/,
+                                             message: "only Numbers are allowed",
+                                        }
+                                   }}
+                                   defaultValue=""
+                              />
+                              {
+                                   track === true && (
+                                        <FormHelperText error={errors.reorderPoint ? true : false} style={{ marginLeft: "10px" }}>
+                                             <ErrorMessage errors={errors} name="reorderPoint" />
+                                        </FormHelperText>
+                                   )
+                              }
+                         </div>
                     </ItemWrapper>
                </LeftSection>
                <RightSection style={{
@@ -179,12 +255,39 @@ const TrackSection: React.FC<IProps> = ({ register, errors, setValue, getValues 
                                    Opening Stock Rate per Unit
                               </Item>
                          </TooltipMui>
-                         <TextField
-                              label={null}
-                              size="small"
-                              sx={{ width: "300px" }}
-                              variant="outlined"
-                         />
+                         <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+                              <Controller
+                                   render={({ field }: any) => (
+                                        <Input
+                                             autoComplete='off'
+                                             disabled={!track}
+                                             status={track === true && errors.openingStockRate ? "error" : ""}
+                                             {...field}
+                                             defaultValue=""
+                                             style={{ width: "300px" }}
+                                        />
+
+
+                                   )}
+                                   name={!track ? "" : "openingStockRate"}
+                                   control={control}
+                                   rules={{
+                                        pattern: {
+                                             value: /^[0-9]*$/,
+                                             message: "only Numbers are allowed",
+                                        }
+                                   }}
+                                   defaultValue=""
+                              />
+                              {
+                                   track === true && (
+                                        <FormHelperText error={errors.openingStockRate ? true : false} style={{ marginLeft: "10px" }}>
+                                             <ErrorMessage errors={errors} name="openingStockRate" />
+                                        </FormHelperText>
+                                   )
+                              }
+                         </div>
                     </ItemWrapper>
                     <ItemWrapper gap="70px">
                          <TooltipMui title="The account which tracks the inventory of this item.">
@@ -203,21 +306,44 @@ const TrackSection: React.FC<IProps> = ({ register, errors, setValue, getValues 
                                    Preferred Vendor
                               </Item>
                          </TooltipMui>
-                         <Select
-                              showSearch
-                              placeholder="Select a person"
-                              optionFilterProp="children"
-                              onChange={onChange}
-                              onSearch={onSearch}
-                              filterOption={(input, option) =>
-                                   // @ts-ignore
-                                   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                              }
-                         >
-                              <Option value="jack">Jack</Option>
-                              <Option value="lucy">Lucy</Option>
-                              <Option value="tom">Tom</Option>
-                         </Select>
+                         <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+                              <Controller
+                                   control={control}
+                                   name={!track ? "" : "preferredVendor"}
+                                   rules={{
+                                        required: "This field is required",
+                                   }}
+                                   render={({ field }: any) => (
+                                        <>
+                                             <Select
+                                                  disabled={!track}
+                                                  showSearch
+                                                  status={errors.preferredVendor ? "error" : ""}
+                                                  placeholder="Select a preferredVendor"
+                                                  optionFilterProp="children"
+                                                  filterOption={(input, option) =>
+                                                       //@ts-ignore
+                                                       option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                                  }
+                                                  defaultValue=""
+                                                  size='middle'
+                                                  {...field}
+                                                  style={{
+                                                       width: "300px",
+                                                  }}>
+                                                  <Option value="kg">kg</Option>
+                                                  <Option value="dozen">dozen</Option>
+                                                  <Option value="piece">piece</Option>
+                                                  <Option value="litre">litre</Option>
+                                                  <Option value="bottle">bottle</Option>
+                                             </Select>
+                                        </>
+                                   )}
+                              />
+                              <FormHelperText error={errors.preferredVendor ? true : false} style={{ marginLeft: '10px' }}>
+                                   <ErrorMessage errors={errors} name="preferredVendor" />
+                              </FormHelperText>
+                         </div>
                     </ItemWrapper>
                </RightSection>
           </>

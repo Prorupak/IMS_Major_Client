@@ -2,16 +2,16 @@ import { motion } from 'framer-motion';
 import React from 'react'
 import styled from 'styled-components';
 import { Text, Icon as Icons, CheckBoxWrapper } from 'Themes/utilityThemes';
-import { useForm } from 'react-hook-form';
 import { TooltipMui } from 'Themes/MaterialUI';
 import Icon from 'Assets/Icons/Icon';
-import { Checkbox, FormHelperText, TextareaAutosize, TextField } from '@mui/material';
+import { Checkbox, FormHelperText } from '@mui/material';
 import { ProductValidation } from 'validation/Val';
 import { ErrorMessage } from '@hookform/error-message';
-import { Select } from 'antd';
+import { Input, Select } from 'antd';
 import { ReactHookForm } from 'context/ReactHookForms';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 const ItemWrapper = styled(motion.div).attrs({}) <{ gap: any }>`
  position: relative;
@@ -37,57 +37,70 @@ const ItemWrapper = styled(motion.div).attrs({}) <{ gap: any }>`
 
 const TopSection: React.FC = () => {
      const [returnable, setReturnable] = React.useState(false);
-     const { register, setValues, setValue, Controller, errors, control, watch } = React.useContext(ReactHookForm);
+     const { register, setValues, setValue, Controller, errors, control, watch, test } = React.useContext(ReactHookForm);
 
-     const select = watch('select');
+     // const select = watch('select');
 
-     console.log('select', select)
+     // console.log('select', select)
+
 
 
      React.useEffect(() => {
-          setValues({
-               select: [],
-          });
-          register("select", {
-               validate: (value: any) => !!value.length || "This is required."
-          });
-     }, [register, setValues]);
+
+     }, [register]);
      return (
           <>
                <ItemWrapper gap="30px">
                     <Text textColor="var(--color-required)" width="20%">
                          Name*
                     </Text>
-                    <TextField
-                         label={null}
-                         {...register("name", ProductValidation.name)}
-                         size="small"
-                         sx={{ width: "600px" }}
-                         error={errors.name ? true : false}
-                         variant="outlined"
-                         helperText={<ErrorMessage errors={errors} render={({ message }: any) => {
-                              console.log('message', message)
-                              return message
+                    <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
 
-                         }} name="name" />}
-                    />
+                         <Controller
+                              render={({ field }: any) => (
+                                   <Input autoComplete='off' status={errors.name ? "error" : ""} allowClear {...field} defaultValue="" style={{ width: "600px" }} />
+
+                              )}
+                              name="name"
+                              control={control}
+                              rules={{
+                                   required: "This is required field.",
+                                   pattern: {
+                                        value: /^[a-zA-Z]*$/,
+                                        message: "only letters"
+                                   }
+                              }}
+                              defaultValue=""
+                         />
+                         <FormHelperText error={errors.name ? true : false} style={{ marginLeft: "10px" }}>
+                              <ErrorMessage errors={errors} name="name" />
+                         </FormHelperText>
+                    </div>
                </ItemWrapper>
                <ItemWrapper gap="30px">
                     <Text textColor="var(--color-primary-dark)" width="20%">
                          Description
                     </Text>
                     <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
-                         <TextareaAutosize
-                              {...register("description", ProductValidation.description)}
-                              aria-label="minimum height"
-                              minRows={3}
-                              style={{ width: "600px" }}
-                              className={errors.description ? "textarea" : ""}
-                         />
-                         {
-                              errors.description && <FormHelperText error={errors.description ? true : false} style={{ marginLeft: '5px' }}>{errors.description.message}</FormHelperText>
-                         }
 
+                         <Controller
+                              render={({ field }: any) => (
+                                   <TextArea autoComplete='off' status={errors.description ? "error" : ""} allowClear {...field} style={{ width: "600px" }} />
+
+                              )}
+                              name="description"
+                              control={control}
+                              rules={{
+                                   minLength: {
+                                        value: 10,
+                                        message: "minimum length must be 10"
+                                   }
+                              }}
+                              defaultValue=""
+                         />
+                         <FormHelperText error={errors.description ? true : false} style={{ marginLeft: "10px" }}>
+                              <ErrorMessage errors={errors} name="description" />
+                         </FormHelperText>
                     </div>
                </ItemWrapper>
                <ItemWrapper gap="30px">
@@ -102,21 +115,27 @@ const TopSection: React.FC = () => {
                               />
                          </TooltipMui>
                     </Text>
-                    <TextField
-                         label={null}
-                         {...register("sku", ProductValidation.sku)}
-                         aria-label="minimum height"
-                         error={errors.sku ? true : false}
-                         size="small"
-                         helperText={<ErrorMessage errors={errors} render={({ message }: any) => {
-                              console.log('message', message)
-                              return message
-                         }} name="sku" />}
-                         style={{
-                              width: "600px",
-                         }}
-                         variant="outlined"
-                    />
+                    <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+                         <Controller
+                              render={({ field }: any) => (
+                                   <Input autoComplete='off' status={errors.sku ? "error" : ""} allowClear {...field} defaultValue="" style={{ width: "600px" }} />
+
+                              )}
+                              name="sku"
+                              control={control}
+                              rules={{
+                                   minLength: {
+                                        value: 3,
+                                        message: "minimum length must be 3"
+                                   }
+                              }}
+                              defaultValue=""
+                         />
+                         <FormHelperText error={errors.sku ? true : false} style={{ marginLeft: "10px" }}>
+                              <ErrorMessage errors={errors} name="sku" />
+                         </FormHelperText>
+                    </div>
                </ItemWrapper>
                <ItemWrapper gap="30px">
                     <Text textColor="var(--color-required)" width="20%">
@@ -132,42 +151,40 @@ const TopSection: React.FC = () => {
                     </Text>
                     <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
                          <Controller
-                              name={"unit"}
                               control={control}
-                              render={({ field: { onChange, onBlur, value } }: any) => {
-                                   return (
+                              name='unit'
+                              rules={{
+                                   required: "This field is required",
+                              }}
+                              render={({ field }: any) => (
+                                   <>
                                         <Select
                                              showSearch
-                                             style={{ width: 200 }}
+                                             status={errors.unit ? "error" : ""}
                                              placeholder="Select a unit"
-                                             onChange={(e: any) => {
-                                                  setValue('select', value as string[])
-                                             }}
-                                             onBlur={onBlur}
-                                             value={select}
                                              optionFilterProp="children"
                                              filterOption={(input, option) =>
-                                                  // @ts-ignore
+                                                  //@ts-ignore
                                                   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                              }
-                                             filterSort={(optionA, optionB) =>
-                                                  // @ts-ignore
-                                                  optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-                                             }
-                                        >
-                                             <Option value="box">box</Option>
+                                             defaultValue=""
+                                             size='middle'
+                                             {...field}
+                                             style={{
+                                                  width: "600px",
+                                             }}>
                                              <Option value="kg">kg</Option>
-                                             <Option value="gm">gm</Option>
-                                             <Option value="in">in</Option>
-                                             <Option value="cm">cm</Option>
-                                             <Option value="m">m</Option>
+                                             <Option value="dozen">dozen</Option>
+                                             <Option value="piece">piece</Option>
+                                             <Option value="litre">litre</Option>
+                                             <Option value="bottle">bottle</Option>
                                         </Select>
-                                   )
-                              }}
+                                   </>
+                              )}
                          />
-                         {
-                              errors.unit && <FormHelperText error={errors.unit ? true : false} style={{ marginLeft: '5px' }}>{errors.description.message}</FormHelperText>
-                         }
+                         <FormHelperText error={errors.unit ? true : false} style={{ marginLeft: '10px' }}>
+                              <ErrorMessage errors={errors} name="unit" />
+                         </FormHelperText>
                     </div>
 
                </ItemWrapper>

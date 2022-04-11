@@ -8,24 +8,21 @@ type IProps = {
      children: React.ReactNode;
 };
 
-type FormValues = {
-     // autocomplete: NestedValue<Option[]>;
-     select: NestedValue<number[]>;
-};
+
 
 const useReactHook = ({ initValue }: any) => {
-     const [value, setValues] = React.useState([initValue]);
-     console.log('value===>', value);
-     const { register, handleSubmit, formState: { errors }, setValue, getValues, control, watch } = useForm<FormValues | any>({
-          defaultValues: value
+     const [value, setValues] = React.useState(initValue);
+     const { register, handleSubmit, formState: { errors }, setValue, getValues, control, watch, resetField } = useForm<any>({
+          mode: 'onChange',
      });
-     return { register, handleSubmit, errors, setValue, getValues, control, setValues, watch };
+     const test = "test";
+     return { register, handleSubmit, errors, setValue, getValues, control, setValues, watch, test, resetField };
 }
 
 export default useReactHook;
 
 export const ReactFormProvider: React.FC<IProps> = ({ children }) => {
-     const { register, handleSubmit, errors, setValue, getValues, setValues, control, watch } = useReactHook({});
+     const { register, handleSubmit, errors, setValue, getValues, setValues, control, watch, test, resetField } = useReactHook({});
      return (
           <>
                <ReactHookForm.Provider value={{
@@ -37,7 +34,8 @@ export const ReactFormProvider: React.FC<IProps> = ({ children }) => {
                     Controller,
                     control,
                     setValues,
-                    watch
+                    watch,
+                    test
 
                }}>
                     {children}

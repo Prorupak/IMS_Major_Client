@@ -33,7 +33,7 @@
     "@types/react-router": "^5.1.17",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.17",
-    "antd": "^4.17.3",
+    "antd": "^4.19.5",
     "axios": "^0.24.0",
     "chart.js": "^3.7.1",
     "framer-motion": "^4.1.17",

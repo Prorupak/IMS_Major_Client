@@ -26,6 +26,7 @@ import { IProductsDetails } from "Interfaces/Interfaces";
 import TopSection from "./Components/TopSection";
 import MiddleSection from "./Components/MiddleSection";
 import TrackSection from "./Components/TrackSection";
+import BottomSection from "./Components/BottomSection";
 
 const Wrapper = styled(motion.div).attrs({})`
  position: relative;
@@ -152,7 +153,7 @@ const ProductsForm = () => {
   const { register, handleSubmit, errors, setValue, getValues } = React.useContext(ReactHookForm);
 
   const [sales, setSales] = React.useState(true);
-  const [purchase, setPurchase] = React.useState(true);
+  const [track, setTrack] = React.useState(true);
 
 
  // setValue(brand as typeof brandName);
@@ -175,7 +176,8 @@ const ProductsForm = () => {
         </Top>
         <Divider />
         <Middle>
-          <MiddleSection register={register} errors={errors} setValue={setValue} getValues={getValues} />
+
+          <MiddleSection />
         </Middle>
         <Divider
           sx={{
@@ -183,7 +185,7 @@ const ProductsForm = () => {
           }}
         />
         <Bottom>
-
+          <BottomSection />
         </Bottom>
         <CheckBoxWrapper
           style={{
@@ -192,12 +194,12 @@ const ProductsForm = () => {
         >
           <Checkbox
             aria-describedby="cNote"
-            checked={purchase}
+            checked={track}
             onChange={(e: any) => {
-              setPurchase(!purchase);
+              setTrack(!track);
             }}
             size="small"
-            value={purchase}
+            value={track}
           />
           <div
             style={{
@@ -220,7 +222,7 @@ const ProductsForm = () => {
           </div>
         </CheckBoxWrapper>
         <Track>
-          <TrackSection register={register} errors={errors} setValue={setValue} getValues={getValues} />
+          <TrackSection track={track} />
         </Track>
       </Grid>
     </>

@@ -1,4 +1,4 @@
-import { Checkbox, TextareaAutosize, TextField } from '@mui/material';
+import { Checkbox, FormHelperText, TextareaAutosize, TextField } from '@mui/material';
 import { Select, Divider, Input, Typography, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
@@ -7,6 +7,9 @@ import styled from 'styled-components';
 import { CustomSelect, StyledOption, TooltipMui } from 'Themes/MaterialUI';
 import { CheckBoxWrapper, Item, ItemWrapper, Text, Icon as Icons } from 'Themes/utilityThemes';
 import Icon from 'Assets/Icons/Icon';
+import { ErrorMessage } from '@hookform/error-message';
+import { ReactHookForm } from 'context/ReactHookForms';
+import TextArea from 'antd/lib/input/TextArea';
 
 const LeftSection = styled(motion.div).attrs({})`
  display: flex;
@@ -33,19 +36,19 @@ const SelectWrapper = styled(motion.div).attrs({})`
  right: 0.5px;
 `;
 
-type IProps = {
-     register: any;
-     errors: any;
-     setValue: any;
-     getValues: any
-}
-
 let index = 0;
 
 const { Option } = Select;
 
 
-const BottomSection: React.FC<IProps> = ({ register, errors, setValue, getValues }) => {
+const BottomSection: React.FC = () => {
+
+     const { register, setValues, setValue, Controller, errors, control, watch, test, resetField } = React.useContext(ReactHookForm);
+
+     // React.useEffect(() => {
+     //      removeItem();
+     // }, []);
+
      const [sales, setSales] = React.useState(true);
      const [purchase, setPurchase] = React.useState(true);
 
@@ -60,6 +63,10 @@ const BottomSection: React.FC<IProps> = ({ register, errors, setValue, getValues
      const onNameChange = (event: any) => {
           setName(event.target.value);
      };
+
+     const removeItem = (index?: string) => {
+          resetField(index);
+     }
      return (
           <>
                <LeftSection>
@@ -104,13 +111,40 @@ const BottomSection: React.FC<IProps> = ({ register, errors, setValue, getValues
                                         Selling Price*
                                    </Item>
                               </TooltipMui>
-                              <TextField
-                                   disabled={!sales}
-                                   label={null}
-                                   size="small"
-                                   sx={{ width: "300px" }}
-                                   variant="outlined"
-                              />
+                              <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+                                   <Controller
+                                        render={({ field }: any) => (
+                                             <Input
+                                                  autoComplete='off'
+                                                  disabled={!sales}
+                                                  status={sales === true && errors.sellingPrice ? "error" : ""}
+                                                  {...field}
+                                                  defaultValue=""
+                                                  style={{ width: "300px" }}
+                                             />
+
+
+                                        )}
+                                        name={!sales ? "" : "sellingPrice"}
+                                        control={control}
+                                        rules={sales ? {
+                                             required: "This is required field.",
+                                             pattern: {
+                                                  value: /^[0-9]*$/,
+                                                  message: "only Numbers are allowed",
+                                             }
+                                        } : {}}
+                                        defaultValue=""
+                                   />
+                                   {
+                                        sales === true && (
+                                             <FormHelperText error={errors.sellingPrice ? true : false} style={{ marginLeft: "10px" }}>
+                                                  <ErrorMessage errors={errors} name="sellingPrice" />
+                                             </FormHelperText>
+                                        )
+                                   }
+                              </div>
                          </ItemWrapper>
                     </Wrapper>
                     <ItemWrapper gap="125px">
@@ -130,37 +164,79 @@ const BottomSection: React.FC<IProps> = ({ register, errors, setValue, getValues
                                    Account*
                               </Item>
                          </TooltipMui>
-                         <Select
-                              style={{ width: 300 }}
-                              placeholder="custom dropdown render"
-                              dropdownRender={(menu: any) => (
-                                   <>
-                                        {menu}
-                                        <Divider style={{ margin: '8px 0' }} />
-                                        <Space align="center" style={{ padding: '0 8px 4px' }}>
-                                             <Input placeholder="Please enter item" value={name} onChange={onNameChange} />
-                                             <Typography.Link onClick={addItem} style={{ whiteSpace: 'nowrap' }}>
-                                                  <PlusOutlined /> Add item
-                                             </Typography.Link>
-                                        </Space>
-                                   </>
-                              )}
-                         >
-                              {items.map(item => (
-                                   <Option key={item}>{item}</Option>
-                              ))}
-                         </Select>
+                         <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+                              <Controller
+                                   render={({ field }: any) => (
+
+                                        <Select
+                                             showSearch
+                                             disabled={!sales}
+                                             status={sales === true && errors.salesAccount ? "error" : ""}
+                                             {...field}
+                                             style={{ width: "300px" }}
+                                             placeholder="Select a account"
+                                             optionFilterProp="children"
+                                             filterOption={(input, option) =>
+                                                  //@ts-ignore
+                                                  option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                             }
+                                             defaultValue=""
+                                             size='middle'
+                                        >
+                                             <Option value="kg">kg</Option>
+                                             <Option value="dozen">dozen</Option>
+                                             <Option value="piece">piece</Option>
+                                             <Option value="litre">litre</Option>
+                                             <Option value="bottle">bottle</Option>
+                                        </Select>
+
+                                   )}
+                                   name={!sales ? "" : "salesAccount"}
+                                   control={control}
+                                   rules={sales ? {
+                                        required: "This is required field.",
+                                   } : {}}
+                                   defaultValue=""
+                              />
+                              {
+                                   sales === true && (
+                                        <FormHelperText error={errors.salesAccount ? true : false} style={{ marginLeft: "10px" }}>
+                                             <ErrorMessage errors={errors} name="salesAccount" />
+                                        </FormHelperText>
+                                   )
+                              }
+                         </div>
                     </ItemWrapper>
                     <ItemWrapper gap="100px">
                          <Text textColor="var(--color-primary-dark)" width="20%">
                               Description
                          </Text>
-                         <TextareaAutosize
-                              disabled={!sales}
-                              aria-label="minimum height"
-                              minRows={3}
-                              style={{ width: 300 }}
-                         />
+                         <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+                              <Controller
+                                   render={({ field }: any) => (
+                                        <TextArea disabled={!sales} autoComplete='off' status={sales === true && errors.salesDescription ? "error" : ""} allowClear {...field} style={{ width: "300px" }} />
+
+                                   )}
+                                   name={!sales ? "" : "salesDescription"}
+                                   control={control}
+                                   rules={{
+                                        minLength: {
+                                             value: 5,
+                                             message: "minimum length must be 5"
+                                        }
+                                   }}
+                                   defaultValue=""
+                              />
+                              {
+                                   sales === true && (
+                                        <FormHelperText error={errors.salesDescription ? true : false} style={{ marginLeft: "10px" }}>
+                                             <ErrorMessage errors={errors} name="salesDescription" />
+                                        </FormHelperText>
+                                   )
+                              }
+                         </div>
                     </ItemWrapper>
                     <ItemWrapper gap="100px">
                          <Text textColor="var(--color-primary-dark)" width="20%">
@@ -174,26 +250,36 @@ const BottomSection: React.FC<IProps> = ({ register, errors, setValue, getValues
                                    />
                               </TooltipMui>
                          </Text>
-                         <Select
-                              style={{ width: 300 }}
-                              placeholder="custom dropdown render"
-                              dropdownRender={(menu: any) => (
-                                   <>
-                                        {menu}
-                                        <Divider style={{ margin: '8px 0' }} />
-                                        <Space align="center" style={{ padding: '0 8px 4px' }}>
-                                             <Input placeholder="Please enter item" value={name} onChange={onNameChange} />
-                                             <Typography.Link onClick={addItem} style={{ whiteSpace: 'nowrap' }}>
-                                                  <PlusOutlined /> Add item
-                                             </Typography.Link>
-                                        </Space>
-                                   </>
+                         <Controller
+                              render={({ field }: any) => (
+                                   <Select
+                                        showSearch
+                                        disabled={!sales}
+                                        style={{ width: 300 }}
+                                        {...field}
+                                        placeholder="Tax"
+                                        dropdownRender={(menu: any) => (
+                                             <>
+                                                  {menu}
+                                                  <Divider style={{ margin: '8px 0' }} />
+                                                  <Space align="center" style={{ padding: '0 8px 4px' }}>
+                                                       <Input placeholder="Please enter item" value={name} onChange={onNameChange} />
+                                                       <Typography.Link onClick={addItem} style={{ whiteSpace: 'nowrap' }}>
+                                                            <PlusOutlined /> Add item
+                                                       </Typography.Link>
+                                                  </Space>
+                                             </>
+                                        )}
+                                   >
+                                        {items.map(item => (
+                                             <Option key={item}>{item}</Option>
+                                        ))}
+                                   </Select>
                               )}
-                         >
-                              {items.map(item => (
-                                   <Option key={item}>{item}</Option>
-                              ))}
-                         </Select>
+                              name={!sales ? "" : "salesTax"}
+                              control={control}
+                              defaultValue=""
+                         />
                     </ItemWrapper>
                </LeftSection>
                <RightSection>
@@ -238,13 +324,32 @@ const BottomSection: React.FC<IProps> = ({ register, errors, setValue, getValues
                                         Cost Price*
                                    </Item>
                               </TooltipMui>
-                              <TextField
-                                   label={null}
-                                   disabled={!purchase}
-                                   size="small"
-                                   sx={{ width: "300px" }}
-                                   variant="outlined"
-                              />
+                              <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+                                   <Controller
+                                        render={({ field }: any) => (
+                                             <Input autoComplete='off' disabled={!purchase} status={purchase === true && errors.costPrice ? "error" : ""} allowClear {...field} defaultValue="" style={{ width: "300px" }} />
+
+                                        )}
+                                        name={!purchase ? "" : "costPrice"}
+                                        control={control}
+                                        rules={purchase ? {
+                                             required: "This is required field.",
+                                             pattern: {
+                                                  value: /^[0-9]*$/,
+                                                  message: "only numbers are allowed"
+                                             }
+                                        } : {}}
+                                        defaultValue=""
+                                   />
+                                   {
+                                        purchase === true && (
+                                             <FormHelperText error={errors.costPrice ? true : false} style={{ marginLeft: "10px" }}>
+                                                  <ErrorMessage errors={errors} name="costPrice" />
+                                             </FormHelperText>
+                                        )
+                                   }
+                              </div>
                          </ItemWrapper>
                     </Wrapper>
                     <ItemWrapper gap="90px">
@@ -264,37 +369,77 @@ const BottomSection: React.FC<IProps> = ({ register, errors, setValue, getValues
                                    Account*
                               </Item>
                          </TooltipMui>
-                         <Select
-                              style={{ width: 300 }}
-                              placeholder="custom dropdown render"
-                              dropdownRender={(menu: any) => (
-                                   <>
-                                        {menu}
-                                        <Divider style={{ margin: '8px 0' }} />
-                                        <Space align="center" style={{ padding: '0 8px 4px' }}>
-                                             <Input placeholder="Please enter item" value={name} onChange={onNameChange} />
-                                             <Typography.Link onClick={addItem} style={{ whiteSpace: 'nowrap' }}>
-                                                  <PlusOutlined /> Add item
-                                             </Typography.Link>
-                                        </Space>
-                                   </>
-                              )}
-                         >
-                              {items.map(item => (
-                                   <Option key={item}>{item}</Option>
-                              ))}
-                         </Select>
+                         <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+                              <Controller
+                                   render={({ field }: any) => (
+                                        <Select
+                                             showSearch
+                                             disabled={!purchase}
+                                             status={purchase === true && errors.costAccount ? "error" : ""}
+                                             {...field}
+                                             style={{ width: "300px" }}
+                                             placeholder="Select a account"
+                                             optionFilterProp="children"
+                                             filterOption={(input, option) =>
+                                                  //@ts-ignore
+                                                  option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                             }
+                                             defaultValue=""
+                                             size='middle'
+                                        >
+                                             <Option value="kg">kg</Option>
+                                             <Option value="dozen">dozen</Option>
+                                             <Option value="piece">piece</Option>
+                                             <Option value="litre">litre</Option>
+                                             <Option value="bottle">bottle</Option>
+                                        </Select>
+                                   )}
+                                   name={!purchase ? "" : "costAccount"}
+                                   control={control}
+                                   rules={purchase ? {
+                                        required: "This is required field.",
+                                   } : {}}
+                                   defaultValue=""
+                              />
+                              {
+                                   purchase === true && (
+                                        <FormHelperText error={errors.costAccount ? true : false} style={{ marginLeft: "10px" }}>
+                                             <ErrorMessage errors={errors} name="costAccount" />
+                                        </FormHelperText>
+                                   )
+                              }
+                         </div>
                     </ItemWrapper>
                     <ItemWrapper gap="70px">
                          <Text textColor="var(--color-primary-dark)" width="20%">
                               Description
                          </Text>
-                         <TextareaAutosize
-                              disabled={!purchase}
-                              aria-label="minimum height"
-                              minRows={3}
-                              style={{ width: 300 }}
-                         />
+                         <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+                              <Controller
+                                   render={({ field }: any) => (
+                                        <TextArea disabled={!purchase} autoComplete='off' status={purchase === true && errors.costDescription ? "error" : ""} allowClear {...field} style={{ width: "300px" }} />
+
+                                   )}
+                                   name={!purchase ? "" : "costDescription"}
+                                   control={control}
+                                   rules={{
+                                        minLength: {
+                                             value: 5,
+                                             message: "minimum length must be 5"
+                                        }
+                                   }}
+                                   defaultValue=""
+                              />
+                              {
+                                   purchase === true && (
+                                        <FormHelperText error={errors.costDescription ? true : false} style={{ marginLeft: "10px" }}>
+                                             <ErrorMessage errors={errors} name="costDescription" />
+                                        </FormHelperText>
+                                   )
+                              }
+                         </div>
                     </ItemWrapper>
                     <ItemWrapper gap="70px">
                          <Text textColor="var(--color-primary-dark)" width="20%">
@@ -308,26 +453,37 @@ const BottomSection: React.FC<IProps> = ({ register, errors, setValue, getValues
                                    />
                               </TooltipMui>
                          </Text>
-                         <Select
-                              style={{ width: 300 }}
-                              placeholder="custom dropdown render"
-                              dropdownRender={(menu: any) => (
-                                   <>
-                                        {menu}
-                                        <Divider style={{ margin: '8px 0' }} />
-                                        <Space align="center" style={{ padding: '0 8px 4px' }}>
-                                             <Input placeholder="Please enter item" value={name} onChange={onNameChange} />
-                                             <Typography.Link onClick={addItem} style={{ whiteSpace: 'nowrap' }}>
-                                                  <PlusOutlined /> Add item
-                                             </Typography.Link>
-                                        </Space>
-                                   </>
+
+                         <Controller
+                              render={({ field }: any) => (
+                                   <Select
+                                        showSearch
+                                        disabled={!purchase}
+                                        style={{ width: 300 }}
+                                        {...field}
+                                        placeholder="Tax"
+                                        dropdownRender={(menu: any) => (
+                                             <>
+                                                  {menu}
+                                                  <Divider style={{ margin: '8px 0' }} />
+                                                  <Space align="center" style={{ padding: '0 8px 4px' }}>
+                                                       <Input placeholder="Please enter item" value={name} onChange={onNameChange} />
+                                                       <Typography.Link onClick={addItem} style={{ whiteSpace: 'nowrap' }}>
+                                                            <PlusOutlined /> Add item
+                                                       </Typography.Link>
+                                                  </Space>
+                                             </>
+                                        )}
+                                   >
+                                        {items.map(item => (
+                                             <Option key={item}>{item}</Option>
+                                        ))}
+                                   </Select>
                               )}
-                         >
-                              {items.map(item => (
-                                   <Option key={item}>{item}</Option>
-                              ))}
-                         </Select>
+                              name={!purchase ? "" : "costTax"}
+                              control={control}
+                              defaultValue=""
+                         />
                     </ItemWrapper>
                     <Divider />
                </RightSection>
