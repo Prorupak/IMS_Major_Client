@@ -43,6 +43,9 @@ export interface IProductsDetails {
   name?: string;
   brand?: string;
   quantity?: number;
+  length?: number;
+  breadth?: number;
+  height?: number;
   description?: string;
   manufacturer?: string;
   sku?: string;

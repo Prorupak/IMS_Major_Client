@@ -8,6 +8,7 @@ export const Item = styled.span<{
   color?: string;
   width?: string;
   margin?: string;
+  lineHigh?: string;
 }>`
   width: ${({ width }) => width || '100%'};
   margin: ${({ margin }) => margin || '8px 0'};
@@ -17,7 +18,7 @@ export const Item = styled.span<{
   font-style: normal;
   font-weight: ${({ fontWeight }) => fontWeight || '600'};
   font-size: ${({ fontSize }) => fontSize || 'var(--fSize-5)'};
-  line-height: var(--spacing-18);
+  line-height: ${({ lineHigh }) => lineHigh || '18px'};
   color: ${({ color }) => color || 'var(--color-primary-dark)'};
 `;
 

@@ -11,6 +11,7 @@ import Transactions from './Components/Transactions';
 import { ProductData } from 'context/ProductContext';
 
 const Grid = styled(motion.div).attrs({})`
+overflow: hidden;
   display: grid;
   width: 100%;
 `;
@@ -41,6 +42,7 @@ const Header = styled(motion.nav).attrs({})`
   background: #fff;
   height: 7em;
   z-index: 1;
+  gap: 10px;
 `;
 
 const ProductsDetails = () => {

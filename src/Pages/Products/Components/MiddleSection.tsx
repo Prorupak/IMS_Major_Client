@@ -223,7 +223,7 @@ const MiddleSection: React.FC = () => {
                                         render={({ field }: any) => (
                                              <InputNumber addonAfter={selectWeight} defaultValue="" {...field} />
                                         )}
-                                        name="Weight"
+                                        name="weight"
                                         control={control}
                                         rules={{
                                              pattern: {

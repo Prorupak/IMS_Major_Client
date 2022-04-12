@@ -75,115 +75,9 @@ const Footer = styled(motion.div).attrs({})`
 
 const AddProducts = ({ children }: any) => {
   const { id } = useParams();
-  const [data, setData] = React.useState<IProductsDetails>(
-    {} as IProductsDetails
-  );
   const { handleSubmit } = React.useContext(ReactHookForm)
 
 
-  const defaultValues = {
-    name: "",
-    description: "",
-    sku: "",
-    unit: "",
-    select: "",
-    autoComplete: "",
-    checkbox: false,
-  }
-
-  // const { handleSubmit } = useReactHook(defaultValues);
-  // const 
-
-
-
-  const postData = (post: any) => {
-    setData(post);
-  };
-
-  // const PData = {
-  //   name: data.name,
-  //   sku: data.sku,
-  //   unit: data.unit,
-  //   description: data.description,
-  //   manufacturer: data.manufacturer,
-  //   brand: data.brand,
-  //   dimensions: data.dimensions,
-  //   dUnit: data.dUnit,
-  //   weight: data.weight,
-  //   wUnit: data.wUnit,
-  //   SalesInformation: [
-  //     {
-  //       sellingPrice: data.sellingPrice,
-  //       account: data.saleAccount,
-  //       description: data.sellDescription,
-  //       tax: data.sellTax
-  //     }
-  //   ],
-  //   PurchaseInformation: [
-  //     {
-  //       costPrice: data.costPrice,
-  //       account: data.costAccount,
-  //       description: data.costDescription,
-  //       tax: data.costTax
-  //     }
-  //   ],
-  //   inventoryTracking: [{
-  //     inventoryAccount: data.inventoryAccount,
-  //     openingStock: data.openingStock,
-  //     reorderPoint: data.reorderPoint,
-  //     openingStockRate: data.openingStockPerUnit,
-  //     preferredVendor: data.preferredVendor
-  //   }]
-  // };
-  // const UData = {
-  //   name: data.name,
-  //   sku: data.sku,
-  //   unit: data.unit,
-  //   description: data.description,
-  //   manufacturer: data.manufacturer,
-  //   brand: data.brand,
-  //   dimensions: data.dimensions,
-  //   dUnit: data.dUnit,
-  //   weight: data.weight,
-  //   wUnit: data.wUnit,
-  //   SalesInformation: [
-  //     {
-  //       sellingPrice: data.sellingPrice,
-  //       account: data.saleAccount,
-  //       description: data.sellDescription,
-  //       tax: data.sellTax
-  //     }
-  //   ],
-  //   PurchaseInformation: [
-  //     {
-  //       costPrice: data.costPrice,
-  //       account: data.costAccount,
-  //       description: data.costDescription,
-  //       tax: data.costTax
-  //     }
-  //   ],
-  //   inventoryTracking: [{
-  //     inventoryAccount: data.inventoryAccount,
-  //     openingStock: data.openingStock,
-  //     reorderPoint: data.reorderPoint,
-  //     openingStockRate: data.openingStockPerUnit,
-  //     preferredVendor: data.preferredVendor
-  //   }]
-  // };
-
-  // console.log('PData', PData.inventoryTracking);
-
-  // const { handleSubmit: onSubmit } = usePost(
-  //   `http://localhost:9001/api/categories/${id}/products`,
-  //   PData,
-  //   '/products'
-  // );
-
-  // const { handleSubmit: handlePut } = usePut(
-  //   `http://localhost:9001/api/categories/${id}`,
-  //   UData,
-  //   '/details'
-  // );
   const navigate = useNavigate();
 
 
@@ -200,10 +94,18 @@ const AddProducts = ({ children }: any) => {
       description: data.description,
       manufacturer: data.manufacturer,
       brand: data.brand,
-      dimensions: data.dimensions,
-      dUnit: data.dUnit,
-      weight: data.weight,
-      wUnit: data.wUnit,
+      weight: [{
+        amount: data.weight,
+        wUnit: data.wUnit
+      }],
+      dimensions: [
+        {
+          length: data.length,
+          breadth: data.breadth,
+          height: data.height,
+          dUnit: data.dUnit,
+        }
+      ],
       SalesInformation: [
         {
           sellingPrice: data.sellingPrice,
@@ -233,9 +135,10 @@ const AddProducts = ({ children }: any) => {
     const postData = async () => {
       try {
         const res = await axios.post(`http://localhost:9001/api/categories/${id}/products`, PData);
-        enqueueSnackbar(res.data.success, {
-          variant: 'success'
-        });
+        console.log('res', res);
+        if (res.status === 200) {
+          enqueueSnackbar('Product Added Successfully', { variant: 'success' });
+        }
         navigate('/products');
       } catch (error) {
         console.log('error', error);
@@ -248,12 +151,6 @@ const AddProducts = ({ children }: any) => {
     return postData();
 
   }
-
-  // const {handleSubmit: onSubmit} = usePost(
-  //   `http://localhost:9001/api/categories/${id}/products`,
-  //   PData,
-  //   '/products'
-  // );
 
 
 

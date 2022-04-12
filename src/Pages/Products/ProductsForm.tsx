@@ -27,6 +27,12 @@ import TopSection from "./Components/TopSection";
 import MiddleSection from "./Components/MiddleSection";
 import TrackSection from "./Components/TrackSection";
 import BottomSection from "./Components/BottomSection";
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+
+import { Upload, message, Button, Modal } from 'antd';
+
+const { Dragger } = Upload;
+
 
 const Wrapper = styled(motion.div).attrs({})`
  position: relative;
@@ -51,10 +57,7 @@ const Grid = styled(motion.div).attrs({})`
 
 const Top = styled(motion.div).attrs({})`
  display: flex;
- flex-flow: column;
- /* align-items: center; */
- gap: var(--spacing-10);
-
+ gap: 100px;
  padding: var(--spacing-15);
  padding-right: var(--spacing-40);
 `;
@@ -150,13 +153,61 @@ const filter = createFilterOptions();
 
 const ProductsForm = () => {
 
-  const { register, handleSubmit, errors, setValue, getValues } = React.useContext(ReactHookForm);
+  const { register, handleSubmit, errors, setValue, getValues, Controller, control } = React.useContext(ReactHookForm);
 
-  const [sales, setSales] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
+
   const [track, setTrack] = React.useState(true);
 
 
  // setValue(brand as typeof brandName);
+
+  function getBase64({ file }: any) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  function beforeUpload({ file }: any) {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('You can only upload JPG/PNG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('Image must smaller than 2MB!');
+    }
+    return isJpgOrPng && isLt2M;
+  }
+
+  const onChange = (info: any) => {
+    console.log('info', info);
+    const { status } = info.file;
+    if (status === 'uploading') {
+      setLoading(true);
+      console.log(info.file, info.fileList);
+      return;
+    }
+    if (status === 'done') {
+      setLoading(false);
+      message.success(`${info.file.name} file uploaded successfully.`);
+    } else if (status === 'error') {
+      setLoading(false);
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  }
+
+  const props = {
+    name: 'file',
+    multiple: true,
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    onDrop({ e }: any) {
+      console.log('Dropped files', e.dataTransfer.files);
+    },
+  };
 
   return (
     <>
@@ -172,7 +223,49 @@ const ProductsForm = () => {
           </Error>
         ) : null} */}
         <Top>
+          <LeftSection>
           <TopSection />
+          </LeftSection>
+          <RightSection>
+            <Controller
+              control={control}
+              name="image"
+              render={({ field }: any) => (
+                <Dragger {...props}
+                  defaultFileList={[]}
+                  {...field}
+                  maxCount={5}
+                  showUploadList={{ removeIcon: true }}
+                  listType="picture-card"
+                  style={{
+                    width: "300px",
+                    height: "30px",
+                  }}
+                  className="upload-list-inline" beforeUpload={beforeUpload}>
+                  <p className="ant-upload-drag-icon">
+                    {loading ? (
+                      <LoadingOutlined />) : (
+                      <img src={Icon.Drag} alt="" style={{
+                        width: "60px",
+                        height: "60px",
+                      }} />
+                    )}
+                  </p>
+                  <Item fontSize="12px" fontWeight="300" >Drag Image(s)</Item> <br />
+                  <Item fontSize="12px" fontWeight="300" >or</Item> <br />
+                  <Item fontSize="12px" fontWeight="300" color="var(--color-secondary)">Browse Images</Item>
+                  <br />
+                  <Item fontSize="12px" fontWeight="300" color="var(--color-placeholder)" lineHigh="0px"  >
+                    <Icons src={Icon.Iicn} style={{
+                      marginRight: "3px",
+                    }} />
+                    You can add up to 5 images, each not exceeding 2MB.
+                  </Item>
+                </Dragger>
+
+              )}
+            />
+          </RightSection>
         </Top>
         <Divider />
         <Middle>

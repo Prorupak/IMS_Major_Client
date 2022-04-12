@@ -3,7 +3,7 @@
 
 import { ToggleContext } from 'Hooks/useToggle';
 import React from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Fade, IconButton, Menu, MenuItem } from '@mui/material';
 import { Menu as MenuAntd } from 'antd';
@@ -18,7 +18,7 @@ const HeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-5);
+  gap: var(--spacing-15);
 `;
 
 const HeaderContent = styled.div`
@@ -26,7 +26,7 @@ const HeaderContent = styled.div`
   top: 28px;
   display: flex;
   align-items: center;
-  gap: var(--spacing-5);
+  gap: var(--spacing-15);
   img {
     width: 13px;
     height: 13px;
@@ -53,6 +53,7 @@ const StyledMenuAntd = styled(MenuAntd)`
   bottom: -3px;
 `;
 const CompHeader = ({ current, handleClicked, info }: any) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -77,16 +78,20 @@ const CompHeader = ({ current, handleClicked, info }: any) => {
     `http://localhost:9001/api/categories/${id}`
   );
 
+  const onNavigate = () => {
+    navigate(`/product/edit/${id}`, { state: { from: location.pathname } });
+  }
+
   return (
     <>
       <HeaderWrapper>
-        <Heading>{info?.name}</Heading>
+        <Heading style={{
+          textTransform: 'capitalize',
+        }}>{info?.name}</Heading>
         <IconWrapper>
           <TooltipMui title="Edit Product">
-            <Button>
-              <Link to={`/product/edit/${id}`}>
-                <Icons src={Icon.Edit} />
-              </Link>
+            <Button onClick={onNavigate}>
+              <Icons src={Icon.Edit} />
             </Button>
           </TooltipMui>
           <Button
@@ -126,7 +131,10 @@ const CompHeader = ({ current, handleClicked, info }: any) => {
         </IconWrapper>
       </HeaderWrapper>
       <HeaderContent>
-        <Item fontSize="12px" fontWeight="500" width="fit-content">
+        <Item fontSize="12px" fontWeight="500" width="0px" style={{
+          minWidth: '46px',
+          maxWidth: '60px'
+        }}>
           {info?.sku}
         </Item>
         <Item fontSize="12px" fontWeight="600">

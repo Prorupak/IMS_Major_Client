@@ -43,6 +43,7 @@ const Icon = {
   Phone: require('./Phone.svg').default,
   SmallFaq: require('./SmallFaq.svg').default,
   Return: require('./Return.svg').default,
-  Iicn: require('./Iicn.svg').default
+  Iicn: require('./Iicn.svg').default,
+  Drag: require('./drag.png').default,
 };
 export default Icon;

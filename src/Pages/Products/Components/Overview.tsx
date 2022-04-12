@@ -140,7 +140,7 @@ const Wrapper = styled(motion.div).attrs({})`
 `;
 
 const Overview = ({ row }: any) => {
-  console.log('row', row?.PurchaseInformation[0]?.costPrice);
+  console.log('row', row?.PurchaseInformation?.map((item: any) => item.costPrice));
   return (
     <>
       <LeftDetails>
@@ -186,7 +186,16 @@ const Overview = ({ row }: any) => {
                 Dimensions
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                10 &#215; 10 &#215; 10 cm
+                {
+                  row.dimensions.map((item: any, index: number) => {
+                    return (
+                      <span key={index}>
+                        {item.length} &#215; {item.breadth} &#215; {item.height} {item.dUnit}
+
+                      </span>
+                    )
+                  })
+                }
               </Item>
             </Content>
             <Content gap="10px">
@@ -194,7 +203,16 @@ const Overview = ({ row }: any) => {
                 Weight
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row.weight} {row.wUnit}
+                {
+                  row.weight.map((item: any, index: number) => {
+                    return (
+                      <span key={index}>
+                        {item.amount} {item.wUnit}
+                      </span>
+                    )
+                  }
+                  )
+                }
               </Item>
             </Content>
             <Content gap="10px">
@@ -504,7 +522,7 @@ const Overview = ({ row }: any) => {
               height="40%"
               margin="-2px 0"
               style={{ margin: '0 30px' }}>
-              : {row.inventoryTracking[0]?.openingStock}.00
+              {/* : {row.inventoryTracking[0]?.openingStock}.00 */}
             </Item>
           </StkGroup>
           <Divider />
