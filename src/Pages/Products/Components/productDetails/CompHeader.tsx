@@ -78,8 +78,10 @@ const CompHeader = ({ current, handleClicked, info }: any) => {
     `http://localhost:9001/api/categories/${id}`
   );
 
+
+
   const onNavigate = () => {
-    navigate(`/product/edit/${id}`, { state: { from: location.pathname } });
+    navigate(`/product/add/${id}`, { state: { info } });
   }
 
   return (

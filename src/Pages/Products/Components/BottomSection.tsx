@@ -52,16 +52,26 @@ const BottomSection: React.FC = () => {
      const [sales, setSales] = React.useState(true);
      const [purchase, setPurchase] = React.useState(true);
 
-     const [items, setItems] = useState(['jack', 'lucy']);
-     const [name, setName] = useState('');
-     const addItem = (e: any) => {
+     const [cItems, setCItems] = useState(['']);
+     const [sItems, setSItems] = useState(['']);
+     const [cTax, setCTax] = useState('');
+     const [sTax, setSTax] = useState('');
+     const addCTax = (e: any) => {
           e.preventDefault();
-          setItems([...items, name || `New item ${index++}`]);
-          setName('');
+          setCItems([...cItems, cTax || `New item ${index++}`]);
+          setCTax('');
+     };
+     const addSTax = (e: any) => {
+          e.preventDefault();
+          setSItems([...sItems, sTax || `New item ${index++}`]);
+          setSTax('');
      };
 
+     const onNameCChange = (event: any) => {
+          setCTax(event.target.value);
+     };
      const onNameChange = (event: any) => {
-          setName(event.target.value);
+          setSTax(event.target.value);
      };
 
      const removeItem = (index?: string) => {
@@ -263,20 +273,20 @@ const BottomSection: React.FC = () => {
                                                   {menu}
                                                   <Divider style={{ margin: '8px 0' }} />
                                                   <Space align="center" style={{ padding: '0 8px 4px' }}>
-                                                       <Input placeholder="Please enter item" value={name} onChange={onNameChange} />
-                                                       <Typography.Link onClick={addItem} style={{ whiteSpace: 'nowrap' }}>
+                                                       <Input placeholder="Please enter item" value={sTax} onChange={onNameChange} />
+                                                       <Typography.Link onClick={addSTax} style={{ whiteSpace: 'nowrap' }}>
                                                             <PlusOutlined /> Add item
                                                        </Typography.Link>
                                                   </Space>
                                              </>
                                         )}
                                    >
-                                        {items.map(item => (
+                                        {sItems.map((item: any) => (
                                              <Option key={item}>{item}</Option>
                                         ))}
                                    </Select>
                               )}
-                              name={!sales ? "" : "salesTax"}
+                              name={!sales ? "" : "sellTax"}
                               control={control}
                               defaultValue=""
                          />
@@ -467,15 +477,15 @@ const BottomSection: React.FC = () => {
                                                   {menu}
                                                   <Divider style={{ margin: '8px 0' }} />
                                                   <Space align="center" style={{ padding: '0 8px 4px' }}>
-                                                       <Input placeholder="Please enter item" value={name} onChange={onNameChange} />
-                                                       <Typography.Link onClick={addItem} style={{ whiteSpace: 'nowrap' }}>
+                                                       <Input placeholder="Please enter item" value={cTax} onChange={onNameCChange} />
+                                                       <Typography.Link onClick={addCTax} style={{ whiteSpace: 'nowrap' }}>
                                                             <PlusOutlined /> Add item
                                                        </Typography.Link>
                                                   </Space>
                                              </>
                                         )}
                                    >
-                                        {items.map(item => (
+                                        {cItems.map((item: any) => (
                                              <Option key={item}>{item}</Option>
                                         ))}
                                    </Select>

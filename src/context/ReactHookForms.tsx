@@ -11,24 +11,29 @@ type IProps = {
 
 
 const useReactHook = ({ initValue }: any) => {
-     const [value, setValues] = React.useState(initValue);
-     const { register, handleSubmit, formState: { errors }, setValue, getValues, control, watch, resetField } = useForm<any>({
-          mode: 'onChange',
+     const [value, setValues] = React.useState();
+
+     const [modeS, setMode] = React.useState();
+     console.log('value', value);
+     const { register, handleSubmit, formState: { errors }, setValue, getValues, control, watch, resetField, reset } = useForm<any>({
+          mode: 'onBlur',
      });
      const test = "test";
-     return { register, handleSubmit, errors, setValue, getValues, control, setValues, watch, test, resetField };
+     return { register, handleSubmit, setMode, errors, reset, setValue, getValues, control, setValues, watch, test, resetField };
 }
 
 export default useReactHook;
 
 export const ReactFormProvider: React.FC<IProps> = ({ children }) => {
-     const { register, handleSubmit, errors, setValue, getValues, setValues, control, watch, test, resetField } = useReactHook({});
+     const { register, handleSubmit, errors, reset, setValue, setMode, getValues, setValues, control, watch, test, resetField } = useReactHook({});
      return (
           <>
                <ReactHookForm.Provider value={{
                     register,
                     handleSubmit,
+                    setMode,
                     errors,
+                    reset,
                     setValue,
                     getValues,
                     Controller,

@@ -160,6 +160,8 @@ const ProductsForm = () => {
   const [track, setTrack] = React.useState(true);
 
 
+
+
  // setValue(brand as typeof brandName);
 
   function getBase64({ file }: any) {
@@ -212,16 +214,6 @@ const ProductsForm = () => {
   return (
     <>
       <Grid>
-        {/* {error ? (
-          <Error error={error}>
-            <p>error</p>
-            <Icons
-              onClick={() => setError(!error)}
-              src={Icon.Close}
-              style={{ height: "10px", width: "10px" }}
-            />
-          </Error>
-        ) : null} */}
         <Top>
           <LeftSection>
           <TopSection />

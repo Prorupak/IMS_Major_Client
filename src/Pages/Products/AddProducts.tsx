@@ -3,16 +3,17 @@ import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Icon as Icons, Title } from 'Themes/utilityThemes';
-
+import { Button as MuiButton } from '@mui/material';
 import Icon from 'Assets/Icons/Icon';
 import { Link } from 'react-router-dom';
-import { Button } from '@mui/material';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { IProductsDetails } from 'Interfaces/Interfaces';
 
 import { ReactHookForm } from 'context/ReactHookForms';
 import { useSnackbar } from 'notistack';
+import { Button, notification } from 'antd';
+import { ProductData } from 'context/ProductContext';
 
 const Form = styled.form`
   height: 100vh;
@@ -73,12 +74,65 @@ const Footer = styled(motion.div).attrs({})`
   border-top: 1px solid rgba(0, 0, 0, 0.07);
 `;
 
+
+
+
+
 const AddProducts = ({ children }: any) => {
   const { id } = useParams();
+  const location = useLocation();
   const { handleSubmit } = React.useContext(ReactHookForm)
+  const { setProduct } = React.useContext(ProductData)
+  // @ts-ignore
+  const updateData = location?.state?.info;
+
+  React.useEffect(() => {
+    if (updateData) {
+      setProduct(updateData)
+    }
+  }, [updateData]);
 
 
   const navigate = useNavigate();
+
+
+  const close = () => {
+    // navigate('/products')
+  };
+
+  const onNavigate = (res: any) => {
+    navigate('/products', { state: res })
+  }
+
+  const openNotification = (res: any, error?: any) => {
+    console.log('productNae', res)
+    if (error) {
+      notification.error({
+        message: 'Error',
+        description: res,
+        placement: 'bottomRight',
+        duration: 2,
+      });
+    } else {
+      const key = `open${Date.now()}`;
+      const btn = (
+        <Button type="primary" size="small" onClick={onNavigate}>
+          View Details
+        </Button>
+      );
+      notification.open({
+        type: 'success',
+        message: res ? res.data.name + ' added successfully' : error,
+        description:
+          `If you wish to view details about ${res.data.name} , tap on 'View Details'`,
+        btn,
+        key,
+        duration: 10,
+        onClose: close,
+      });
+    }
+  }
+
 
 
   const { enqueueSnackbar } = useSnackbar();
@@ -132,19 +186,20 @@ const AddProducts = ({ children }: any) => {
     };
     console.log('PData', PData);
 
+
     const postData = async () => {
       try {
         const res = await axios.post(`http://localhost:9001/api/categories/${id}/products`, PData);
         console.log('res', res);
+
         if (res.status === 200) {
-          enqueueSnackbar('Product Added Successfully', { variant: 'success' });
+          const productName = res.data.name
+          console.log('resdata', res.data.name);
+          openNotification(res);
         }
-        navigate('/products');
       } catch (error) {
         console.log('error', error);
-        enqueueSnackbar("errors", {
-          variant: 'error'
-        });
+        openNotification(null, error);
       }
     }
 
@@ -158,7 +213,9 @@ const AddProducts = ({ children }: any) => {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Grid>
         <Header>
-          <Title>New Product</Title>
+          <Title>
+            {updateData ? 'Update Product' : 'Add Product'}
+          </Title>
           <div className="rightSection">
             <PageTips />
             <Hr />
@@ -174,7 +231,7 @@ const AddProducts = ({ children }: any) => {
           </Content>
         </ContentWrapper>
         <Footer>
-          <Button
+          <MuiButton
             color="primary"
             // disabled={!postData.name}
             size="small"
@@ -187,15 +244,15 @@ const AddProducts = ({ children }: any) => {
               }
             }}
             type="submit"
+
             variant="contained">
             {
               'Add'
             }
-          </Button>
+          </MuiButton>
           <Link to="/products">
-          <Button
-            color="primary"
-              onClick={handleSubmit((e: any) => console.log('e', e))}
+            <MuiButton
+              color="primary"
             size="small"
             sx={{
               boxShadow: 'none',
@@ -209,7 +266,7 @@ const AddProducts = ({ children }: any) => {
             }}
             variant="contained">
             Cancel
-          </Button>
+            </MuiButton>
           </Link>
         </Footer>
       </Grid>
@@ -218,10 +275,3 @@ const AddProducts = ({ children }: any) => {
 };
 
 export default AddProducts;
-
-
-
-
-
-
-

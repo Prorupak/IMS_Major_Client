@@ -13,34 +13,43 @@ type IProps = {
 };
 
 export const ProductProvider: React.FC<IProps> = ({ children }) => {
+  const [data, setData] = React.useState<any[]>(
+    []
+  );
+
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string>('');
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get('http://localhost:9001/api/products');
+      setData(res.data);
+      setLoading(false);
+    } catch (e: any) {
+      setLoading(false);
+      setError(e);
+      console.log('product error', e);
+    }
+
+  }
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
 
   const [product, setProduct] = React.useState<any>({});
 
-  const [data, setData] = React.useState<IProductsDetails>(
-    {} as IProductsDetails
-  );
-  const [update, setUpdate] = React.useState<IProductsDetails>(
-    {} as IProductsDetails
-  );
 
   const { toggleHandle, value, handleOpen } = useToggle('toggle', false);
 
-  const postData = (post: any) => {
-    setData(post);
-  };
 
-  const updateData = (post: any) => {
-    setUpdate(post);
-  };
   return (
     <>
       <ProductToggle.Provider value={{ toggleHandle, value, handleOpen }}>
         <ProductContext.Provider
           value={{
-            postData,
-            updateData,
             data,
-            update,
           }}>
           <ProductData.Provider value={{ product, setProduct }}>
             {children}

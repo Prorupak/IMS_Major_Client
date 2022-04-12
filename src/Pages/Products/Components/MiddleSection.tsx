@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import { ItemWrapper, Text } from 'Themes/utilityThemes';
 import { ErrorMessage } from '@hookform/error-message';
 import { ReactHookForm } from 'context/ReactHookForms';
+import { ProductContext, ProductData } from 'context/ProductContext';
+import { IProductsDetails } from 'Interfaces/Interfaces';
 
 
 const LeftSection = styled(motion.div).attrs({})`
@@ -34,7 +36,12 @@ const SelectWrapper = styled(motion.div).attrs({})`
  right: 0.5px;
 `;
 
-let index = 0;
+let BrandIndex = {
+     brand: 'hello'
+};
+let ManuIndex = {
+     manufacturer: 'hi'
+};
 
 const { Option } = Select;
 
@@ -48,7 +55,10 @@ const selectAfter = (
 
 
 const MiddleSection: React.FC = () => {
-     const { register, setValues, setValue, Controller, errors, control, watch, test } = React.useContext(ReactHookForm);
+     const { register, setValues, reset, setValue, Controller, errors, control, watch, test } = React.useContext(ReactHookForm);
+     const { data } = React.useContext(ProductContext)
+     const { product } = React.useContext(ProductData);
+
 
      const selectWeight = (
           <Controller
@@ -79,17 +89,54 @@ const MiddleSection: React.FC = () => {
           />
      )
 
-     const [items, setItems] = useState(['jack', 'lucy']);
-     const [name, setName] = useState('');
-     const addItem = (e: any) => {
+
+     const filteredBrandName = data.filter((item: any) => {
+          return
+     })
+
+     console.log('brand', data.map((item: any) => item.brand))
+
+     const brandS = data.map((item: any) => item.brand)
+
+     const Mans = data.map((item: any) => item.manufacturer)
+     console.log('brand', brandS)
+     console.log('mans', Mans)
+
+
+
+     const [itemsBrand, setItemsBrand] = useState(brandS);
+     const [itemsManu, setItemsManu] = useState(Mans);
+     console.log('mansnns', itemsManu);
+     const [nameBrand, setNameBrand] = useState('');
+     const [nameManu, setNameManu] = useState('');
+     const addItemBrand = (e: any) => {
           e.preventDefault();
-          setItems([...items, name || `New item ${index++}`]);
-          setName('');
+          setItemsBrand([...itemsBrand, nameBrand || `New Item ${BrandIndex}`]);
+          setNameBrand('');
+     };
+     const addItemManu = (e: any) => {
+          e.preventDefault();
+          setItemsManu([...itemsManu, nameManu || `New item ${ManuIndex}`]);
+          setNameManu('');
      };
 
-     const onNameChange = (event: any) => {
-          setName(event.target.value);
+     const onNameBrandChange = (event: any) => {
+          setNameBrand(event.target.value);
+          console.log(nameBrand)
      };
+     const onNameManuChange = (event: any) => {
+          setNameManu(event.target.value);
+     };
+
+     console.log('product', product)
+
+     React.useEffect(() => {
+          reset({
+               brand: product.brand,
+               manufacturer: product.manufacturer,
+               // weight: product.weight[0].amount,
+          })
+     }, [product])
      return (
           <>
                <LeftSection>
@@ -189,16 +236,16 @@ const MiddleSection: React.FC = () => {
                                                        {menu}
                                                        <Divider style={{ margin: '8px 0' }} />
                                                        <Space align="center" style={{ padding: '0 8px 4px' }}>
-                                                            <Input placeholder="Please enter item" value={name} onChange={onNameChange} />
-                                                            <Typography.Link onClick={addItem} style={{ whiteSpace: 'nowrap' }}>
+                                                            <Input placeholder="Please enter item" value={nameManu} onChange={onNameManuChange} />
+                                                            <Typography.Link onClick={addItemManu} style={{ whiteSpace: 'nowrap' }}>
                                                                  <PlusOutlined /> Add item
                                                             </Typography.Link>
                                                        </Space>
                                                   </>
                                              )}
                                         >
-                                             {items.map(item => (
-                                                  <Option key={item}>{item}</Option>
+                                             {itemsManu.map((items: any, idx: number) => (
+                                                  <Option key={idx}>{items}</Option>
                                              ))}
                                         </Select>
 
@@ -249,23 +296,22 @@ const MiddleSection: React.FC = () => {
                                    render={({ field }: any) => (
                                         <Select
                                              style={{ width: 300 }}
-                                             {...field}
                                              placeholder="Select a Brand"
                                              dropdownRender={(menu: any) => (
                                                   <>
                                                        {menu}
                                                        <Divider style={{ margin: '8px 0' }} />
                                                        <Space align="center" style={{ padding: '0 8px 4px' }}>
-                                                            <Input placeholder="Please enter item" value={name} onChange={onNameChange} />
-                                                            <Typography.Link onClick={addItem} style={{ whiteSpace: 'nowrap' }}>
+                                                            <Input  {...field} placeholder="Please enter item" value={nameBrand} onChange={onNameBrandChange} />
+                                                            <Typography.Link onClick={addItemBrand} style={{ whiteSpace: 'nowrap' }}>
                                                                  <PlusOutlined /> Add item
                                                             </Typography.Link>
                                                        </Space>
                                                   </>
                                              )}
                                         >
-                                             {items.map(item => (
-                                                  <Option key={item}>{item}</Option>
+                                             {itemsBrand.map((item: any, idx: number) => (
+                                                  <Option key={idx}>{item}</Option>
                                              ))}
                                         </Select>
                                    )}

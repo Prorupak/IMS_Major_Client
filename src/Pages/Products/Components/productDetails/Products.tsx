@@ -1,7 +1,7 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridValueGetterParams } from '@mui/x-data-grid';
 import axios from 'axios';
 import useToggle, { ToggleContext } from 'Hooks/useToggle';
 import { Outlet, useNavigate } from 'react-router';
@@ -17,26 +17,32 @@ const columns = [
   {
     field: 'name',
     headerName: 'ITEMS SUMMARY',
-    width: 500,
+    width: 450,
     editable: false
   },
   {
     field: 'sku',
     headerName: 'SKU',
-    width: 500,
-    editable: true
+    width: 450,
+    editable: false
   },
   {
-    field: 'stock',
+    field: 'openingStock',
     headerName: 'STOCK IN HAND',
-    width: 500,
-    editable: true
+    width: 450,
+    editable: false,
+    valueGetter: (params: GridValueGetterParams) => {
+      return params.row.inventoryTracking.map((item: any) => item.openingStock)
+    } 
   },
   {
     field: 'reorder',
     headerName: 'REORDER POINT',
-    width: 500,
-    editable: true
+    width: 450,
+    editable: false,
+    valueGetter: (params: GridValueGetterParams) => {
+      return params.row.inventoryTracking.map((item: any) => item.reorderPoint)
+    } 
   }
 ];
 
@@ -79,7 +85,7 @@ export default function Products() {
             // eslint-disable-next-line no-underscore-dangle
             error={!productDetails ? error : null}
             getRowId={(row) => row.id}
-            loading={productDetails ? loading : true}
+            loading={productDetails ? false : true}
             components={{
               Toolbar: CustomToolbar,
             }}
