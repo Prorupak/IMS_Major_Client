@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useForm, Controller, NestedValue } from 'react-hook-form';
 import React from 'react';
+import { ProductData } from './ProductContext';
 
 export const ReactHookForm = React.createContext<any>({});
 
@@ -11,28 +12,32 @@ type IProps = {
 
 
 const useReactHook = ({ initValue }: any) => {
-     const [value, setValues] = React.useState();
+     console.log('initValue', initValue);
+     const [value, setValues] = React.useState(initValue);
+     const { product: products } = React.useContext(ProductData);
 
      const [modeS, setMode] = React.useState();
-     console.log('value', value);
-     const { register, handleSubmit, formState: { errors }, setValue, getValues, control, watch, resetField, reset } = useForm<any>({
-          mode: 'onBlur',
+     console.log('form', products);
+     const { register, handleSubmit, formState: { errors }, setValue, getValues, control, watch, resetField, reset, setFocus, formState } = useForm<any>({
+          mode: 'onChange',
      });
      const test = "test";
-     return { register, handleSubmit, setMode, errors, reset, setValue, getValues, control, setValues, watch, test, resetField };
+     return { register, handleSubmit, setMode, formState, setFocus, errors, reset, setValue, getValues, control, setValues, watch, test, resetField };
 }
 
 export default useReactHook;
 
 export const ReactFormProvider: React.FC<IProps> = ({ children }) => {
-     const { register, handleSubmit, errors, reset, setValue, setMode, getValues, setValues, control, watch, test, resetField } = useReactHook({});
+     const { register, handleSubmit, formState, errors, setFocus, reset, setValue, setMode, getValues, setValues, control, watch, test, resetField } = useReactHook({});
      return (
           <>
                <ReactHookForm.Provider value={{
                     register,
+                    formState,
                     handleSubmit,
                     setMode,
                     errors,
+                    setFocus,
                     reset,
                     setValue,
                     getValues,

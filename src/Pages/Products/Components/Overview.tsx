@@ -140,7 +140,7 @@ const Wrapper = styled(motion.div).attrs({})`
 `;
 
 const Overview = ({ row }: any) => {
-  console.log('row', row?.PurchaseInformation?.map((item: any) => item.costPrice));
+  console.log('row', row[0]?.name);
   return (
     <>
       <LeftDetails>
@@ -170,7 +170,7 @@ const Overview = ({ row }: any) => {
                 SKU
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row.sku}
+                {row[0].sku}
               </Item>
             </Content>
             <Content gap="10px">
@@ -178,7 +178,7 @@ const Overview = ({ row }: any) => {
                 Unit
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row.unit}
+                {row[0].unit}
               </Item>
             </Content>
             <Content gap="10px">
@@ -186,16 +186,8 @@ const Overview = ({ row }: any) => {
                 Dimensions
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {
-                  row.dimensions.map((item: any, index: number) => {
-                    return (
-                      <span key={index}>
-                        {item.length} &#215; {item.breadth} &#215; {item.height} {item.dUnit}
 
-                      </span>
-                    )
-                  })
-                }
+                {row[0]?.dimensions[0]?.length} &#215; {row[0]?.dimensions[0]?.breadth} &#215; {row[0]?.dimensions[0]?.height} {row[0]?.dimensions[0]?.dUnit}
               </Item>
             </Content>
             <Content gap="10px">
@@ -203,16 +195,7 @@ const Overview = ({ row }: any) => {
                 Weight
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {
-                  row.weight.map((item: any, index: number) => {
-                    return (
-                      <span key={index}>
-                        {item.amount} {item.wUnit}
-                      </span>
-                    )
-                  }
-                  )
-                }
+                {row[0].weight[0].amount} {row[0].weight[0].wUnit}
               </Item>
             </Content>
             <Content gap="10px">
@@ -220,7 +203,7 @@ const Overview = ({ row }: any) => {
                 Brand
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row.brand}
+                {row[0].brand}
               </Item>
             </Content>
             <Content gap="10px">
@@ -228,7 +211,7 @@ const Overview = ({ row }: any) => {
                 Inventory Account
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row.inventoryTracking[0]?.inventoryAccount}
+                {row[0].inventoryTracking[0]?.inventoryAccount}
               </Item>
             </Content>
           </Wrapper>
@@ -243,7 +226,7 @@ const Overview = ({ row }: any) => {
                 Selling Price
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                NPR {row?.SalesInformation[0]?.sellingPrice}
+                NPR {row[0]?.SalesInformation[0]?.sellingPrice}
               </Item>
             </Content>
             <Content gap="10px">
@@ -259,7 +242,7 @@ const Overview = ({ row }: any) => {
                 Description
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row?.SalesInformation[0]?.description}
+                {row[0]?.SalesInformation[0]?.description}
               </Item>
             </Content>
           </Wrapper>
@@ -274,7 +257,7 @@ const Overview = ({ row }: any) => {
                 Cost Price
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                NPR {row?.PurchaseInformation[0]?.costPrice}
+                NPR {row[0]?.PurchaseInformation[0]?.costPrice}
               </Item>
             </Content>
             <Content gap="10px">
@@ -293,7 +276,7 @@ const Overview = ({ row }: any) => {
                 color="var(--color-secondary)"
                 fontSize="12px"
                 fontWeight="500">
-                {row.inventoryTracking[0]?.preferredVendor}
+                {row[0].inventoryTracking[0]?.preferredVendor}
               </Item>
             </Content>
           </Wrapper>
@@ -363,7 +346,7 @@ const Overview = ({ row }: any) => {
               </Item>
             </TooltipMui>
             <Item fontWeight="bold" height="40%" style={{ margin: '0 30px' }}>
-              : {row.inventoryTracking[0]?.openingStock}.00
+              : {row[0].inventoryTracking[0]?.openingStock}.00
             </Item>
           </StkGroup>
           <Item fontSize="16px" fontWeight="medium">
@@ -395,7 +378,7 @@ const Overview = ({ row }: any) => {
               height="40%"
               margin="-2px 0"
               style={{ margin: '0 30px' }}>
-              : {row.inventoryTracking[0]?.openingStock}.00
+              : {row[0].inventoryTracking[0]?.openingStock}.00
             </Item>
           </StkGroup>
           <StkGroup>
@@ -476,7 +459,7 @@ const Overview = ({ row }: any) => {
               height="40%"
               margin="-2px 0"
               style={{ margin: '0 30px' }}>
-              : {row.inventoryTracking[0]?.openingStock}.00
+              : {row[0].inventoryTracking[0]?.openingStock}.00
             </Item>
           </StkGroup>
           <StkGroup>
@@ -522,7 +505,7 @@ const Overview = ({ row }: any) => {
               height="40%"
               margin="-2px 0"
               style={{ margin: '0 30px' }}>
-              {/* : {row.inventoryTracking[0]?.openingStock}.00 */}
+              {/* : {row[0].inventoryTracking[0]?.openingStock}.00 */}
             </Item>
           </StkGroup>
           <Divider />
@@ -604,7 +587,7 @@ const Overview = ({ row }: any) => {
               fontWeight="bold"
               height="40%"
               margin="-2px 0">
-              {row.inventoryTracking[0]?.reorderPoint}
+              {row[0].inventoryTracking[0]?.reorderPoint}
             </Item>
           </StkGroup>
         </StockSummary>

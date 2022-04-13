@@ -51,6 +51,8 @@ const ProductsDetails = () => {
 
   const { product: ids } = React.useContext(ProductData);
 
+  console.log('ids', ids);
+
   const handleClicked = (event: any) => {
     console.log('click', event);
     setCurrent(event.key);

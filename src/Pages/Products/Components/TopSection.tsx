@@ -8,8 +8,9 @@ import { Checkbox, FormHelperText } from '@mui/material';
 import { ProductValidation } from 'validation/Val';
 import { ErrorMessage } from '@hookform/error-message';
 import { Input, Select } from 'antd';
-import { ReactHookForm } from 'context/ReactHookForms';
+import useReactHook, { ReactHookForm } from 'context/ReactHookForms';
 import { ProductContext, ProductData } from 'context/ProductContext';
+import { IProductsDetails } from 'Interfaces/Interfaces';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -41,17 +42,20 @@ const TopSection: React.FC = () => {
      const { register, setMode, setValue, Controller, errors, control, reset, watch, test } = React.useContext(ReactHookForm);
      const { product } = React.useContext(ProductData);
 
-     React.useEffect(() => {
-          reset({
-               name: product.name,
-               description: product.description,
-               sku: product.sku,
-               unit: product.unit,
-               returnable: product.returnable,
-          });
-     }, [product]);
+     console.log(product);
 
-     console.log('product', product.name);
+     const initValue = {
+          name: "nod",
+          description: "nod",
+
+     }
+
+     React.useMemo(() => {
+          reset(product);
+     }, [reset]);
+
+
+     console.log('productYP', product);
      return (
           <>
 
@@ -63,7 +67,7 @@ const TopSection: React.FC = () => {
 
                          <Controller
                               render={({ field }: any) => (
-                                   <Input autoComplete='off' status={errors.name ? "error" : ""} allowClear {...field} defaultValue={product.name} style={{ width: "600px" }} />
+                                   <Input autoComplete='off' status={errors.name ? "error" : ""} allowClear {...field} style={{ width: "600px" }} />
 
                               )}
                               name="name"

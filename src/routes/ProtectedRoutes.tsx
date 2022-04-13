@@ -13,10 +13,8 @@ import AddProducts from 'Pages/Products/AddProducts';
 import CreateProducts from 'Pages/Products/CreateProducts';
 import Products from 'Pages/Products/Components/productDetails/Products';
 import UpdateCategories from 'Pages/Categories/UpdateCategories';
-import { ItemWrapper } from 'Themes/utilityThemes';
 import CategoryForm from 'Pages/Categories/CategoryForm';
 import RequireAuth from './RequireAuth';
-import UpdateProducts from 'Pages/Products/UpdateProducts';
 import ProductsForm from 'Pages/Products/ProductsForm';
 import ProductContainer from 'Pages/Products/ProductContainer';
 import Update from 'Pages/Products/Update';
@@ -33,7 +31,6 @@ const PublicRoutes = () => {
             </Route> */}
             <Route element={<ProductContainer />} path="/product">
               <Route element={<ProductsForm />} path="add/:id" />
-              <Route element={<UpdateProducts />} path="edit/:id" />
             </Route>
             <Route element={<CreateProducts />} path="/create" />
             <Route element={<CategoryContainer />} path="/category">

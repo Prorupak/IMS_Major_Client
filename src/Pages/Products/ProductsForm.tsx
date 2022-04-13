@@ -162,6 +162,7 @@ const ProductsForm = () => {
 
 
 
+
  // setValue(brand as typeof brandName);
 
   function getBase64({ file }: any) {

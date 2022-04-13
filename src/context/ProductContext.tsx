@@ -4,8 +4,19 @@ import { useLocalStorage } from 'usehooks-ts';
 import { ICategories, IProductsDetails } from 'Interfaces/Interfaces';
 import React from 'react';
 
-export const ProductData = React.createContext<any>({});
-export const ProductContext = React.createContext<any>({});
+
+
+export const ProductData = React.createContext<any>({
+  product: {},
+  setProduct: () => { },
+});
+export const ProductContext = React.createContext<{
+  data: IProductsDetails[];
+  setData: (data: IProductsDetails[]) => void;
+}>({
+  data: [],
+  setData: () => { }
+});
 export const ProductToggle = React.createContext<any>({});
 
 type IProps = {
@@ -13,7 +24,7 @@ type IProps = {
 };
 
 export const ProductProvider: React.FC<IProps> = ({ children }) => {
-  const [data, setData] = React.useState<any[]>(
+  const [data, setData] = React.useState<IProductsDetails[]>(
     []
   );
 
@@ -50,6 +61,7 @@ export const ProductProvider: React.FC<IProps> = ({ children }) => {
         <ProductContext.Provider
           value={{
             data,
+            setData
           }}>
           <ProductData.Provider value={{ product, setProduct }}>
             {children}

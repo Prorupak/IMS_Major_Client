@@ -89,7 +89,7 @@ const CompHeader = ({ current, handleClicked, info }: any) => {
       <HeaderWrapper>
         <Heading style={{
           textTransform: 'capitalize',
-        }}>{info?.name}</Heading>
+        }}>{info[0].name}</Heading>
         <IconWrapper>
           <TooltipMui title="Edit Product">
             <Button onClick={onNavigate}>
@@ -137,7 +137,7 @@ const CompHeader = ({ current, handleClicked, info }: any) => {
           minWidth: '46px',
           maxWidth: '60px'
         }}>
-          {info?.sku}
+          {info[0]?.sku}
         </Item>
         <Item fontSize="12px" fontWeight="600">
           -

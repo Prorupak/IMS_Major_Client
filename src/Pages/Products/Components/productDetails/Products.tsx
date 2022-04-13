@@ -1,5 +1,3 @@
-/* eslint-disable guard-for-in */
-/* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
 import { DataGrid, GridValueGetterParams } from '@mui/x-data-grid';
 import axios from 'axios';
@@ -46,7 +44,6 @@ const columns = [
   }
 ];
 
-// eslint-disable-next-line react/no-multi-comp
 export default function Products() {
   const [productDetails, setProductDetails] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -82,7 +79,6 @@ export default function Products() {
           {/* @ts-ignore */}
           <DataGrid
             columns={columns}
-            // eslint-disable-next-line no-underscore-dangle
             error={!productDetails ? error : null}
             getRowId={(row) => row.id}
             loading={productDetails ? false : true}
@@ -90,11 +86,11 @@ export default function Products() {
               Toolbar: CustomToolbar,
             }}
             onRowClick={
-              // eslint-disable-next-line operator-linebreak
               (e: any) => {
                 handleOpen();
                 console.log('e.row=====>', e.row);
-                setProduct(e.row);
+                const { row } = e;
+                setProduct({ row });
               }
             }
             onRowDoubleClick={toggleHandle}

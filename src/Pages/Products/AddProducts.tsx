@@ -81,7 +81,10 @@ const Footer = styled(motion.div).attrs({})`
 const AddProducts = ({ children }: any) => {
   const { id } = useParams();
   const location = useLocation();
-  const { handleSubmit } = React.useContext(ReactHookForm)
+  const { handleSubmit, reset, setFocus, formState: { isSubmitSuccessful } } = React.useContext(ReactHookForm);
+
+  // const {} = formState;
+
   const { setProduct } = React.useContext(ProductData)
   // @ts-ignore
   const updateData = location?.state?.info;
@@ -104,6 +107,36 @@ const AddProducts = ({ children }: any) => {
     navigate('/products', { state: res })
   }
 
+
+  // React.useEffect(() => {
+  //   if (isSubmitSuccessful) {
+  //     reset({
+  //       name: '',
+  //       description: '',
+  //       sku: '',
+  //       unit: '',
+  //       dimensions: '',
+  //       weight: '',
+  //       manufacturer: '',
+  //       brand: '',
+  //       sellingPrice: '',
+  //       costPrice: '',
+  //       salesAccount: '',
+  //       costAccount: '',
+  //       costDescription: '',
+  //       salesDescription: '',
+  //       salesTax: '',
+  //       costTax: '',
+  //       inventoryAccount: '',
+  //       openingStock: '',
+  //       openingStockRate: '',
+  //       reorderPoint: '',
+  //       preferredVendor: '',
+  //     })
+  //     setFocus('name', { shouldSelect: true })
+  //   }
+  // }, [setFocus]);
+
   const openNotification = (res: any, error?: any) => {
     console.log('productNae', res)
     if (error) {
@@ -116,9 +149,14 @@ const AddProducts = ({ children }: any) => {
     } else {
       const key = `open${Date.now()}`;
       const btn = (
+        <div style={{ display: "flex", alignItems: 'center', gap: '5px' }}>
         <Button type="primary" size="small" onClick={onNavigate}>
           View Details
         </Button>
+          <Button type="primary" size="small">
+            Add More
+          </Button>
+        </div>
       );
       notification.open({
         type: 'success',
@@ -127,7 +165,7 @@ const AddProducts = ({ children }: any) => {
           `If you wish to view details about ${res.data.name} , tap on 'View Details'`,
         btn,
         key,
-        duration: 10,
+        duration: 5,
         onClose: close,
       });
     }
