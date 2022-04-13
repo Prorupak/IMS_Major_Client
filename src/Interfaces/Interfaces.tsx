@@ -50,6 +50,7 @@ export interface IProductsDetails {
   manufacturer?: string;
   sku?: string;
   unit?: string;
+  returnable?: boolean;
   sellingPrice?: string;
   saleAccount?: string;
   sellDescription?: string;

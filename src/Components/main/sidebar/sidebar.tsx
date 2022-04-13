@@ -1,10 +1,16 @@
 import { motion } from 'framer-motion';
-import useToggle from 'Hooks/useToggle';
+import useToggle, { ToggleContext } from 'Hooks/useToggle';
 import React from 'react';
+import Icon from 'Assets/Icons/Icon';
+import Sider from 'antd/lib/layout/Sider';
+
 import styled from 'styled-components';
 import Footer from './Footer';
 import Logo from './logo';
-import MainData from './Main';
+import { Layout, Menu } from 'antd';
+
+const { SubMenu } = Menu;
+
 
 const Grid = styled(motion.div).attrs({})<{ toggle: boolean }>`
   /* position: relative; */
@@ -54,19 +60,35 @@ interface Props {
   toggleHandle: (action: any) => void;
 }
 
+
 const Sidebar: React.FC<Props> = ({ toggle, toggleHandle }) => {
+  // const { toggle, toggleHandle } = React.useContext(ToggleContext)
   return (
-    <Grid toggle={toggle}>
-      <Header>
-        <Logo />
-      </Header>
-      <Main>
-        <MainData toggle={toggle} toggleHandle={toggleHandle} />
-      </Main>
-      <FooterGrid>
-        <Footer toggle={toggle} toggleHandle={toggleHandle} />
-      </FooterGrid>
-    </Grid>
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider collapsible collapsed={toggle} onCollapse={toggleHandle}>
+        <div className="logo" />
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+          <Menu.Item key="1" >
+            Option 1
+          </Menu.Item>
+          <Menu.Item key="2" >
+            Option 2
+          </Menu.Item>
+          <SubMenu key="sub1" title="User">
+            <Menu.Item key="3">Tom</Menu.Item>
+            <Menu.Item key="4">Bill</Menu.Item>
+            <Menu.Item key="5">Alex</Menu.Item>
+          </SubMenu>
+          <SubMenu key="sub2" title="Team">
+            <Menu.Item key="6">Team 1</Menu.Item>
+            <Menu.Item key="8">Team 2</Menu.Item>
+          </SubMenu>
+          <Menu.Item key="9" icon={Icon.Documents}>
+            Files
+          </Menu.Item>
+        </Menu>
+      </Sider>
+    </Layout>
   );
 };
 

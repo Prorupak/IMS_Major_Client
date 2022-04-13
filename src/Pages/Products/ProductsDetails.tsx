@@ -9,17 +9,19 @@ import Overview from './Components/Overview';
 import History from './Components/History';
 import Transactions from './Components/Transactions';
 import { ProductData } from 'context/ProductContext';
+import { Drawer, Skeleton, Space, Spin } from 'antd';
 
 const Grid = styled(motion.div).attrs({})`
 overflow: hidden;
   display: grid;
   width: 100%;
+  
 `;
 const Body = styled(motion.div).attrs({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-  transition: { duration: 0.5, ease: 'easeIn' }
+  // initial: { opacity: 0 },
+  // animate: { opacity: 1 },
+  // exit: { opacity: 0 },
+  // transition: { duration: 0.5, ease: 'easeIn' }
 })`
   /* padding: var(--spacing-15) var(--spacing-15); */
   grid-area: content;
@@ -49,9 +51,9 @@ const ProductsDetails = () => {
   const [current, setCurrent] = React.useState('overview');
   const [loading, setLoading] = React.useState(true);
 
-  const { product: ids } = React.useContext(ProductData);
+  const { product } = React.useContext(ProductData);
 
-  console.log('ids', ids);
+  console.log('ids', product);
 
   const handleClicked = (event: any) => {
     console.log('click', event);
@@ -60,12 +62,16 @@ const ProductsDetails = () => {
   console.log('current', current);
   const { toggleHandle } = React.useContext(ToggleContext);
 
-
+  React.useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   const tabs = ({ currents }: any) => {
     switch (currents) {
       case 'overview':
-        return <Overview row={ids} />;
+        return <Overview row={product} />;
       case 'transaction':
         return <Transactions />;
       case 'history':
@@ -76,12 +82,33 @@ const ProductsDetails = () => {
   };
 
   return (
-    <Grid>
+
+    <Drawer
+      title={() => {
+        return (
+          <CompHeader row={product} handleClicked={handleClicked} info={product} />
+        )
+      }
+      }
+    >
+      {/* {loading ? (
+        <Space size="middle" style={{
+          position: 'relative',
+          top: '50%',
+          // left: '50%',
+          // transform: 'translate(-50%, -50%)',
+          display: 'grid',
+          placeItems: 'center',
+        }}>
+          <Spin />
+        </Space>
+      ) : ( */}
+      {/* <> */}
       <Header>
         <CompHeader
           current={current}
           handleClicked={handleClicked}
-          info={ids}
+          info={product}
         />
       </Header>
       <Body>
@@ -89,7 +116,10 @@ const ProductsDetails = () => {
           current === 'transaction' ||
           current === 'history') && <>{tabs({ currents: current })}</>}
       </Body>
-    </Grid>
+      {/* </>
+      )} */}
+
+    </Drawer>
   );
 };
 

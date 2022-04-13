@@ -140,7 +140,7 @@ const Wrapper = styled(motion.div).attrs({})`
 `;
 
 const Overview = ({ row }: any) => {
-  console.log('row', row[0]?.name);
+  console.log('row', row?.name);
   return (
     <>
       <LeftDetails>
@@ -170,7 +170,7 @@ const Overview = ({ row }: any) => {
                 SKU
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row[0].sku}
+                {row.sku}
               </Item>
             </Content>
             <Content gap="10px">
@@ -178,7 +178,7 @@ const Overview = ({ row }: any) => {
                 Unit
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row[0].unit}
+                {row.unit}
               </Item>
             </Content>
             <Content gap="10px">
@@ -187,7 +187,7 @@ const Overview = ({ row }: any) => {
               </Item>
               <Item fontSize="12px" fontWeight="500">
 
-                {row[0]?.dimensions[0]?.length} &#215; {row[0]?.dimensions[0]?.breadth} &#215; {row[0]?.dimensions[0]?.height} {row[0]?.dimensions[0]?.dUnit}
+                {row?.dimensions[0]?.length} &#215; {row?.dimensions[0]?.breadth} &#215; {row?.dimensions[0]?.height} {row?.dimensions[0]?.dUnit}
               </Item>
             </Content>
             <Content gap="10px">
@@ -195,7 +195,7 @@ const Overview = ({ row }: any) => {
                 Weight
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row[0].weight[0].amount} {row[0].weight[0].wUnit}
+                {row.weight[0].amount} {row.weight[0].wUnit}
               </Item>
             </Content>
             <Content gap="10px">
@@ -203,7 +203,7 @@ const Overview = ({ row }: any) => {
                 Brand
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row[0].brand}
+                {row.brand}
               </Item>
             </Content>
             <Content gap="10px">
@@ -211,7 +211,7 @@ const Overview = ({ row }: any) => {
                 Inventory Account
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row[0].inventoryTracking[0]?.inventoryAccount}
+                {row.inventoryTracking[0]?.inventoryAccount}
               </Item>
             </Content>
           </Wrapper>
@@ -226,7 +226,7 @@ const Overview = ({ row }: any) => {
                 Selling Price
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                NPR {row[0]?.SalesInformation[0]?.sellingPrice}
+                NPR {row?.SalesInformation[0]?.sellingPrice}
               </Item>
             </Content>
             <Content gap="10px">
@@ -242,7 +242,7 @@ const Overview = ({ row }: any) => {
                 Description
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                {row[0]?.SalesInformation[0]?.description}
+                {row?.SalesInformation[0]?.description}
               </Item>
             </Content>
           </Wrapper>
@@ -257,7 +257,7 @@ const Overview = ({ row }: any) => {
                 Cost Price
               </Item>
               <Item fontSize="12px" fontWeight="500">
-                NPR {row[0]?.PurchaseInformation[0]?.costPrice}
+                NPR {row?.PurchaseInformation[0]?.costPrice}
               </Item>
             </Content>
             <Content gap="10px">
@@ -276,7 +276,7 @@ const Overview = ({ row }: any) => {
                 color="var(--color-secondary)"
                 fontSize="12px"
                 fontWeight="500">
-                {row[0].inventoryTracking[0]?.preferredVendor}
+                {row.inventoryTracking[0]?.preferredVendor}
               </Item>
             </Content>
           </Wrapper>
@@ -346,7 +346,7 @@ const Overview = ({ row }: any) => {
               </Item>
             </TooltipMui>
             <Item fontWeight="bold" height="40%" style={{ margin: '0 30px' }}>
-              : {row[0].inventoryTracking[0]?.openingStock}.00
+              : {row.inventoryTracking[0]?.openingStock}.00
             </Item>
           </StkGroup>
           <Item fontSize="16px" fontWeight="medium">
@@ -378,7 +378,7 @@ const Overview = ({ row }: any) => {
               height="40%"
               margin="-2px 0"
               style={{ margin: '0 30px' }}>
-              : {row[0].inventoryTracking[0]?.openingStock}.00
+              : {row.inventoryTracking[0]?.openingStock}.00
             </Item>
           </StkGroup>
           <StkGroup>
@@ -459,7 +459,7 @@ const Overview = ({ row }: any) => {
               height="40%"
               margin="-2px 0"
               style={{ margin: '0 30px' }}>
-              : {row[0].inventoryTracking[0]?.openingStock}.00
+              : {row.inventoryTracking[0]?.openingStock}.00
             </Item>
           </StkGroup>
           <StkGroup>
@@ -505,7 +505,7 @@ const Overview = ({ row }: any) => {
               height="40%"
               margin="-2px 0"
               style={{ margin: '0 30px' }}>
-              {/* : {row[0].inventoryTracking[0]?.openingStock}.00 */}
+              {/* : {row.inventoryTracking[0]?.openingStock}.00 */}
             </Item>
           </StkGroup>
           <Divider />
@@ -587,7 +587,7 @@ const Overview = ({ row }: any) => {
               fontWeight="bold"
               height="40%"
               margin="-2px 0">
-              {row[0].inventoryTracking[0]?.reorderPoint}
+              {row.inventoryTracking[0]?.reorderPoint}
             </Item>
           </StkGroup>
         </StockSummary>

@@ -82,6 +82,9 @@ export default function Products() {
             error={!productDetails ? error : null}
             getRowId={(row) => row.id}
             loading={productDetails ? false : true}
+            style={{
+              fontWeight: '500',
+            }}
             components={{
               Toolbar: CustomToolbar,
             }}
@@ -90,7 +93,7 @@ export default function Products() {
                 handleOpen();
                 console.log('e.row=====>', e.row);
                 const { row } = e;
-                setProduct({ row });
+                setProduct(row);
               }
             }
             onRowDoubleClick={toggleHandle}
@@ -104,13 +107,3 @@ export default function Products() {
     </Product>
   );
 }
-
-
-
-
-
-
-
-
-
-

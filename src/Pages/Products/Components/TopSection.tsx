@@ -40,22 +40,79 @@ const ItemWrapper = styled(motion.div).attrs({}) <{ gap: any }>`
 const TopSection: React.FC = () => {
      const [returnable, setReturnable] = React.useState(false);
      const { register, setMode, setValue, Controller, errors, control, reset, watch, test } = React.useContext(ReactHookForm);
-     const { product } = React.useContext(ProductData);
+     const { local } = React.useContext(ProductData);
 
-     console.log(product);
+     console.log(local);
 
-     const initValue = {
-          name: "nod",
-          description: "nod",
+     const [initialValues, setInitialValues] = React.useState<any>({
+          name: '',
+          description: '',
+          sku: '',
+          unit: '',
+          returnable: '',
+          length: '',
+          breadth: '',
+          height: '',
+          dUnit: '',
+          weight: '',
+          wUnit: '',
+          manufacturer: '',
+          brand: '',
+          sellingPrice: '',
+          salesAccount: '',
+          salesDescription: '',
+          salesTax: '',
+          costPrice: '',
+          costAccount: '',
+          costDescription: '',
+          costTax: '',
+          inventoryAccount: '',
+          openingStock: '',
+          reorderPoint: '',
+          openingStockRate: '',
+          preferredVendor: '',
+     })
 
-     }
 
-     React.useMemo(() => {
-          reset(product);
-     }, [reset]);
+     React.useEffect(() => {
+          const initValue = {
+               name: local.name,
+               description: local.description,
+               sku: local.sku,
+               unit: local.unit,
+               returnable: local.returnable,
+               length: local.dimensions[0]?.length,
+               breadth: local.dimensions[0]?.breadth,
+               height: local.dimensions[0]?.height,
+               dUnit: local.dimensions[0]?.unit,
+               weight: local.weight[0]?.weight,
+               wUnit: local.weight[0]?.unit,
+               manufacturer: local.manufacturer,
+               brand: local.brand,
+               sellingPrice: local.SalesInformation[0]?.sellingPrice,
+               salesAccount: local.SalesInformation[0]?.salesAccount,
+               salesDescription: local.SalesInformation[0]?.salesDescription,
+               salesTax: local.SalesInformation[0]?.salesTax,
+               costPrice: local.SalesInformation[0]?.costPrice,
+               costAccount: local.SalesInformation[0]?.costAccount,
+               costDescription: local.SalesInformation[0]?.costDescription,
+               costTax: local.SalesInformation[0]?.costTax,
+               inventoryAccount: local.inventoryTracking[0]?.inventoryAccount,
+               openingStock: local.inventoryTracking[0]?.openingStock,
+               reorderPoint: local.inventoryTracking[0]?.reorderPoint,
+               openingStockRate: local.inventoryTracking[0]?.openingStockRate,
+               preferredVendor: local.inventoryTracking[0]?.preferredVendor,
+
+          }
+
+          setInitialValues(initValue);
+          console.log('on', initialValues)
+
+          reset(initValue);
+     }, [local]);
 
 
-     console.log('productYP', product);
+     console.log('local', initialValues);
      return (
           <>
 

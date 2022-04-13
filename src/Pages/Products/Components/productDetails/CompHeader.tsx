@@ -58,9 +58,8 @@ const CompHeader = ({ current, handleClicked, info }: any) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { toggleHandle } = React.useContext(ToggleContext);
-  const { product } = React.useContext(CategoryContext);
 
-  console.log('product', product);
+  console.log('product', info);
 
   // console.log('compheader', info)
 
@@ -89,7 +88,7 @@ const CompHeader = ({ current, handleClicked, info }: any) => {
       <HeaderWrapper>
         <Heading style={{
           textTransform: 'capitalize',
-        }}>{info[0].name}</Heading>
+        }}>{info.name}</Heading>
         <IconWrapper>
           <TooltipMui title="Edit Product">
             <Button onClick={onNavigate}>
@@ -137,7 +136,7 @@ const CompHeader = ({ current, handleClicked, info }: any) => {
           minWidth: '46px',
           maxWidth: '60px'
         }}>
-          {info[0]?.sku}
+          {info?.sku}
         </Item>
         <Item fontSize="12px" fontWeight="600">
           -

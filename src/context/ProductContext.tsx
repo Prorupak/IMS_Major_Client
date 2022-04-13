@@ -50,7 +50,17 @@ export const ProductProvider: React.FC<IProps> = ({ children }) => {
   }, []);
 
   const [product, setProduct] = React.useState<any>({});
+  const [local, setLocal] = React.useState<any>({});
 
+  // store product in local storage
+
+  React.useEffect(() => {
+    localStorage.setItem('productman', JSON.stringify(product));
+  });
+  React.useMemo(() => {
+    const products = JSON.parse(localStorage.getItem('productman') || '{}');
+    setLocal(products);
+  }, []);
 
   const { toggleHandle, value, handleOpen } = useToggle('toggle', false);
 
@@ -63,7 +73,7 @@ export const ProductProvider: React.FC<IProps> = ({ children }) => {
             data,
             setData
           }}>
-          <ProductData.Provider value={{ product, setProduct }}>
+          <ProductData.Provider value={{ product, setProduct, local }}>
             {children}
           </ProductData.Provider>
         </ProductContext.Provider>
