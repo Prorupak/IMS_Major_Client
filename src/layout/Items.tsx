@@ -25,9 +25,10 @@ const Grid = styled(motion.div)<{ toggle: boolean }>`
 `;
 
 const Nav = styled(motion.div).attrs({
-  initial: { x: -100, opacity: 0 },
-  animate: { x: 0, opacity: 1 },
-  exit: { x: -100, opacity: 0 }
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.5, ease: 'easeIn' }
 })`
   display: grid;
   align-items: center;
@@ -37,9 +38,11 @@ const Nav = styled(motion.div).attrs({
 `;
 
 const Main = styled(motion.div).attrs({
-  initial: { x: -100, opacity: 0 },
-  animate: { x: 0, opacity: 1 },
-  exit: { x: -100, opacity: 0 }
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.5, ease: 'easeIn' }
+
 })`
   position: relative;
   grid-area: main;
@@ -71,6 +74,8 @@ const Items: React.FC<IProps> = ({ children }) => {
   const location = useLocation();
   console.log('location===', location && location.state);
 
+  const id = sessionStorage.getItem('saveId')
+
   return (
     <>
       <Grid toggle={value}>
@@ -86,7 +91,7 @@ const Items: React.FC<IProps> = ({ children }) => {
               <Button
                 size='small'
                 type='primary'
-                onClick={() => navigate('/category/add')}
+                onClick={() => navigate(`${id ? '' : '/category/add'}`, { state: { cate: location.pathname } })}
                 style={{
                   borderRadius: '5px',
                   marginLeft: '3px',

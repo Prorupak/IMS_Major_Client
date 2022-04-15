@@ -54,8 +54,12 @@ const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
     setAnchorEl(null);
   };
 
+  const ProID = localStorage.getItem('CateID');
+
+  console.log('ProID', ProID);
+
   const { handleDelete } = useDelete(
-    `http://localhost:9001/api/categories/${categoryDetails.id}`
+    `http://localhost:9001/api/categories/${ProID}`,
   );
 
   return (
@@ -66,12 +70,12 @@ const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
             <ButtonWrapper>
               <Tooltip title="Edit Category">
                 <Button>
-                  <Link to={`/category/edit/${categoryDetails.id}`}>
+                  <Link to={`/category/add/${ProID}`}>
                     <IconButton src={Icon.Edit} />
                   </Link>
                 </Button>
               </Tooltip>
-              <Link to={`/product/${categoryDetails.id}`}>
+              <Link to={`/product/${ProID}`}>
                 <Button style={{ background: 'var(--color-secondary)' }}>
                   <IconButton src={Icon.BPlus} />
                   <p>Add Item</p>

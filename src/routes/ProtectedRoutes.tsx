@@ -20,6 +20,20 @@ import { ProductData } from 'context/ProductContext';
 const PublicRoutes = () => {
   const { product } = React.useContext(ProductData)
   const location = useLocation();
+  const id = localStorage.getItem('saveId');
+  React.useEffect(() => {
+    if (id) {
+      sessionStorage.setItem('saveId', id);
+    }
+  }, [id]);
+
+  setTimeout(() => {
+    if (id) {
+      sessionStorage.removeItem('saveId');
+    }
+  }, 1000);
+
+  const ids = sessionStorage.getItem('saveId');
   return (
     <>
       <AnimatePresence exitBeforeEnter initial>
@@ -33,7 +47,9 @@ const PublicRoutes = () => {
             </Route>
             <Route element={<CreateProducts />} path="/create" />
             <Route element={<CategoryContainer />} path="/category">
-              <Route element={<CategoryForm />} path="add" />
+              <Route element={<CategoryForm />} path={
+                ids ? `$/edit/:id` : 'add'
+              } />
             </Route>
             {/* <Route element={<ItemWrapper />} path="/category/details" /> */}
             <Route element={<Categories />} path="/details" />

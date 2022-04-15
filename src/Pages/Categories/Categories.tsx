@@ -30,15 +30,6 @@ export default function Categories() {
     fetchData();
   }, []);
 
-  console.log('CategoryDetails=====>', categoryDetails);
-
-  const handleItem = (row?: string) => {
-    navigate('', {
-      state: { row }
-    });
-    setCategoryDetails(row);
-  };
-
   const columns = [
     { field: 'id', headerName: 'ID', width: 5 },
     {
@@ -55,7 +46,11 @@ export default function Categories() {
     }
   ];
 
-  // setCategoryDetails(tableData);
+  const [saveId, setSaveId] = React.useState<string>('');
+
+  React.useEffect(() => {
+    localStorage.setItem('CateID', saveId);
+  }, [saveId]);
 
   return (
     <Items>
@@ -73,8 +68,9 @@ export default function Categories() {
               (e: any) => {
                 handleOpen();
                 console.log('eros', e.row);
-
-                handleItem(e.row);
+                setCategoryDetails(e.row);
+                const { id } = e.row;
+                setSaveId(id);
               }
             }
             onRowDoubleClick={toggleHandle}

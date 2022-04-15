@@ -10,13 +10,13 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from '@ant-design/icons';
-
+import Search from '../../shared/Search';
 
 const Nav = styled(motion.nav).attrs({
-  initial: { opacity: 0, y: -100 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -100 },
-  transition: { duration: 0.4 }
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.2, ease: 'easeOut' }
 })`
   width: 100%;
 `;
@@ -65,46 +65,6 @@ const Icons = styled(motion.img).attrs({
 })`
   cursor: pointer;
 `;
-
-const Search = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  borderRadius: '6px',
-  padding: '5px',
-  backgroundColor: 'rgba(0, 0, 0, 0.05)',
-  marginRight: 'var(--spacing-5)',
-  marginLeft: '5px',
-  width: '100%'
-}));
-
-const SearchIconWrapper = styled.div`
-  cursor: pointer;
-  padding: 0 5px;
-  height: 100%;
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  justify-content: center;
-`;
-
-const SearchIcon = styled(BiSearchAlt).attrs({
-  size: '1.5em',
-  color: 'var(--color-primary-dark)'
-})``;
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: '5px, 5px, 5px 0',
-    // vertical padding + font size from searchIcon
-    paddingLeft: '5px',
-    // transition: theme.transitions.create('width'),
-    width: '100%'
-    // [theme.breakpoints.up('md')]: {
-    //   width: '20ch'
-    // }
-  }
-}));
 
 const StyledMenu = styled(Menu)`
   .MuiMenuItem-root {
@@ -176,16 +136,7 @@ const Header: React.FC<TNav> = ({ onCollapse, collapsed }) => {
                 </StyledMenuItem>
               </StyledMenu>
               <Icons alt="Quick" src={Icon.Recent} />
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                  <img alt="search" src={Icon.DrpDwn} />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  inputProps={{ 'aria-label': 'search' }}
-                  placeholder="Search…"
-                />
-              </Search>
+              <Search />
             </LeftIcons>
             <RightIcons>
               <Icons alt="Drop" src={Icon.DropDown} />

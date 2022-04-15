@@ -1,22 +1,31 @@
 import PageTips from 'Components/shared/PageTips';
 import { motion } from 'framer-motion';
-import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Icon as Icons, Title } from 'Themes/utilityThemes';
 
 import Icon from 'Assets/Icons/Icon';
 import { Link } from 'react-router-dom';
-import { Button } from '@mui/material';
-import usePost from 'Hooks/usePost';
-import { useLocation, useParams } from 'react-router';
-import { ICategories } from 'Interfaces/Interfaces';
-import { QuickCreate } from 'Components/main/Navbar/QuickCreate/Elements.QuickCreate';
+import React, { useEffect } from 'react';
+import { Button, notification, PageHeader, Spin } from 'antd';
+import { useNavigate } from 'react-router';
+import { Button as MuiButton } from '@mui/material';
+
+import axios from 'axios';
+import { useLocation } from 'react-router';
+import { ReactHookForm } from 'context/ReactHookForms';
+import { useParams } from 'react-router';
 import { CategoryContext } from 'context/CategoryContext';
-import usePut from 'Hooks/usePut';
-import CategoryForm from './CategoryForm';
+
 
 const Form = styled.form`
+position: relative;
+
   height: 100vh;
+  .spin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
 `;
 
 const Grid = styled(motion.div).attrs({})`
@@ -28,6 +37,8 @@ const Grid = styled(motion.div).attrs({})`
   grid-template-rows: 45px auto 55px;
   grid-template-columns: 100%;
   height: 100vh;
+  background-color: #fbfafa;
+
 `;
 
 const Header = styled(motion.div).attrs({})`
@@ -48,9 +59,13 @@ const Header = styled(motion.div).attrs({})`
 const Content = styled(motion.div).attrs({})`
   grid-area: content;
   min-height: 100%;
-  background-color: #fbfafa;
+  width: 70%;
+  padding: 15px 15px 70px 15px;
 `;
 
+const ContentWrapper = styled(motion.div).attrs({})`
+  overflow: scroll;
+`;
 const Hr = styled.hr`
   height: var(--spacing-18);
   color: rgba(0, 0, 0, 0.3);
@@ -69,93 +84,221 @@ const Footer = styled(motion.div).attrs({})`
 
 const AddCategories = ({ children }: any) => {
   const location = useLocation();
+
+  const { categoryDetails } = React.useContext(CategoryContext)
+  const { handleSubmit, reset, setFocus, formState: { isSubmitSuccessful }, watch } = React.useContext(ReactHookForm);
+  const [loading, setLoading] = React.useState(false);
+
+  console.log('watchhh', watch('salesTax'));
+
+  const ProID = localStorage.getItem('CateID');
+
+  // @ts-ignore
+  const pathName = location.state?.cate;
+
+  console.log('pathName===>', pathName);
+
+  const [product, setProduct] = React.useState<any>({});
+
   const { id } = useParams();
 
-  const { data, update } = React.useContext(CategoryContext);
 
-  const PData = {
-    name: data.name,
-    description: data.description,
-    multipleItems: data.multipleItems
+  const fetchData = async () => {
+    try {
+      setLoading(false);
+      if (id) {
+        const res = await axios.get(`http://localhost:9001/api/categories/${id}`);
+        console.log('res===>', res);
+        const initialValues = {
+          catName: res.data.name,
+          catDes: res.data.description,
+        }
+        reset(initialValues);
+      }
+      else {
+        reset();
+      }
+
+      setLoading(false);
+
+    } catch (e: any) {
+      console.log('error', e);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [reset]);
+
+
+  const navigate = useNavigate();
+
+
+  const close = () => {
+    // navigate('/products')
   };
 
-  console.log('datPData===>', PData);
+  const onNavigate = (res: any) => {
+    navigate('/details', { state: res })
+  }
 
-  // const { id } = update;
+  const openNotification = (res: any, error?: any) => {
+    console.log('productNae', res)
+    if (error) {
+      notification.error({
+        message: 'Error',
+        description: res,
+        placement: 'bottomRight',
+        duration: 2,
+      });
+    } else {
+      const key = `open${Date.now()}`;
+      const btn = (
+        <div style={{ display: "flex", alignItems: 'center', gap: '5px' }}>
+          <Button type="primary" size="small" onClick={onNavigate}>
+            View Details
+          </Button>
+          <Button type="primary" size="small">
+            Add More
+          </Button>
+        </div>
+      );
+      notification.open({
+        type: 'success',
+        message: res ? res.data.name + ' added successfully' : error,
+        description:
+          `If you wish to view details about ${res.data.name} , tap on 'View Details'`,
+        btn,
+        key,
+        duration: 5,
+        onClose: close,
+      });
+    }
+  }
 
-  // console.log('id', id);
 
-  const UData = {
-    name: update.name,
-    description: update.description,
-    multipleItems: update.multipleItems
-  };
+  console.log('uesParams', id);
 
-  const { handleSubmit } = usePost(
-    'http://localhost:9001/api/categories',
-    PData,
-    '/details'
-  );
-  const { handleSubmit: handlePut } = usePut(
-    `http://localhost:9001/api/categories/${id}`,
-    id ? UData : PData,
-    '/details'
-  );
+  const onSubmit = (data: any) => {
+    console.log('data===>', data.sellDescription);
+    const PData = {
+      name: data.catName,
+      description: data.catDes,
+    };
+    console.log('PData', PData);
 
-  // const id = update;
-  // console.log('update', update);
+
+    const postData = async () => {
+      try {
+        if (id) {
+          const res = await axios.put(`http://localhost:9001/api/categories/${ProID}`, PData);
+          console.log('updateRes', res);
+          if (res.status === 200) {
+            const productName = res.data.name
+            console.log('resdata', res.data.name);
+            openNotification(res);
+          }
+        } else {
+          const res = await axios.post(`http://localhost:9001/api/categories`, PData);
+          console.log('res', res);
+          if (res.status === 200) {
+            const productName = res.data.name
+            console.log('resdata', res.data.name);
+            openNotification(res);
+          }
+
+        }
+
+      } catch (error) {
+        console.log('error', error);
+        openNotification(null, error);
+      }
+    }
+
+    return postData();
+
+  }
 
   return (
-    <Form onSubmit={id ? handlePut : handleSubmit}>
-      <Grid>
-        <Header>
-          <Title>New Product Category</Title>
-          <div className="rightSection">
-            <PageTips />
-            <Hr />
-            <Link to="/category/details">
-              <Icons src={Icon.Close} />
-            </Link>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+
+      {
+        loading ? (
+          <div className='spin'>
+            <p>
+              <Spin />
+            </p>
           </div>
-        </Header>
-        <Content>{children}</Content>
-        <Footer>
-          <Button
-            color="primary"
-            // disabled={!postData.name}
-            size="small"
-            sx={{
-              boxShadow: 'none',
-              borderRadius: '6px',
-              backgroundColor: 'var(--color-secondary)',
-              '&:hover': {
-                boxShadow: 'none'
-              }
-            }}
-            type="submit"
-            variant="contained">
-            {id ? 'Update' : 'Save'}
-          </Button>
-          <Link to="/category/details">
-            <Button
-              color="primary"
-              size="small"
-              sx={{
-                boxShadow: 'none',
-                borderRadius: '6px',
-                background: '#f5f5f5',
-                border: '1px solid #e0e0e0',
-                color: 'var(--color-primary-dark)',
-                '&:hover': {
-                  boxShadow: 'none'
-                }
-              }}
-              variant="contained">
-              Cancel
-            </Button>
-          </Link>
-        </Footer>
-      </Grid>
+        ) : (
+          <Grid>
+            <Header>
+                <PageHeader
+                  className="site-page-header"
+                  onBack={
+                    () => {
+                      navigate('/details')
+                    }
+                  }
+                  title={pathName === '/details' ? 'Add Categories' : 'Update Category'}
+
+                  style={{
+                    padding: 0,
+                  }}
+                />
+              </Header>
+              <ContentWrapper>
+                <Content>
+                  {children}
+                  {/* <ProductsForm postData={postData} /> */}
+                </Content>
+              </ContentWrapper>
+              <Footer>
+                <MuiButton
+                  color="primary"
+                  // disabled={!postData.name}
+                  size="small"
+                  sx={{
+                    boxShadow: 'none',
+                    borderRadius: '6px',
+                    backgroundColor: 'var(--color-secondary)',
+                    '&:hover': {
+                      boxShadow: 'none'
+                    }
+                  }}
+                  type="submit"
+                  onClick={() => {
+                    localStorage.removeItem('CateID');
+                  }}
+                  variant="contained">
+                  {
+                    pathName === '/details' ? 'Add' : 'Update'
+                  }
+                </MuiButton>
+                <Link to="/details">
+                  <MuiButton
+                    color="primary"
+                    size="small"
+                    sx={{
+                      boxShadow: 'none',
+                      borderRadius: '6px',
+                      background: '#f5f5f5',
+                      border: '1px solid #e0e0e0',
+                      color: 'var(--color-primary-dark)',
+                      '&:hover': {
+                        boxShadow: 'none'
+                      }
+                    }}
+                    onClick={() => {
+                      localStorage.removeItem('CateID');
+                    }}
+                    variant="contained">
+                    Cancel
+                  </MuiButton>
+                </Link>
+              </Footer>
+            </Grid>
+        )
+      }
     </Form>
   );
 };

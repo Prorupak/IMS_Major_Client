@@ -21,6 +21,12 @@ const useDelete = (url: string, path?: any) => {
     setLoading(true);
     try {
       await axios.delete(url);
+      if (path === '/products') {
+        localStorage.removeItem('saveId');
+      }
+      if (path === '/details') {
+        localStorage.removeItem('CateID');
+      }
       navigate(path);
     } catch (err: any) {
       console.log('err===>', err.message);

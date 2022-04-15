@@ -98,9 +98,6 @@ const AddProducts = ({ children }: any) => {
   // @ts-ignore
   const pathName = location.state?.lol;
 
-  console.log('pathName===>', pathName);
-
-  const [product, setProduct] = React.useState<any>({});
 
   const fetchData = async () => {
     try {

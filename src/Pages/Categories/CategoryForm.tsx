@@ -1,13 +1,5 @@
-/* eslint-disable indent */
-/* eslint-disable react/jsx-curly-newline */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable prefer-object-spread */
-/* eslint-disable react/no-multi-comp */
-/* eslint-disable react/display-name */
-import React from 'react';
+
+import React, { useEffect } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { TiPlus } from 'react-icons/ti';
 import { Icon as Icons, SmallIcon, Text } from 'Themes/utilityThemes';
@@ -17,6 +9,7 @@ import {
   Autocomplete,
   Checkbox,
   Chip,
+  FormHelperText,
   TextareaAutosize,
   TextField
 } from '@mui/material';
@@ -25,6 +18,13 @@ import { useInput } from 'Hooks/useInput';
 import Icon from 'Assets/Icons/Icon';
 import { CategoryContext } from 'context/CategoryContext';
 import AddCategories from './AddCategories';
+import { Button, Input, notification } from 'antd';
+import { useNavigate } from 'react-router';
+import axios from 'axios';
+import { useLocation } from 'react-router';
+import { ErrorMessage } from '@hookform/error-message';
+import TextArea from 'antd/lib/input/TextArea';
+import { ReactHookForm } from 'context/ReactHookForms';
 
 const Grid = styled(motion.div).attrs({})`
   display: grid;
@@ -70,74 +70,63 @@ const Error = styled(motion.div)<{ error: any }>`
 `;
 
 const CategoryForm = () => {
-  const { postData } = React.useContext(CategoryContext);
-
-  const catRef = React.useRef({} as HTMLInputElement);
-  const desRef = React.useRef({} as HTMLInputElement);
-
-  const category = useInput('');
-  const [validCategory, setValidCategory] = React.useState(false);
-
-  const description = useInput('');
-
-  React.useEffect(() => {
-    catRef.current.focus();
-    desRef.current.focus();
-  }, []);
-
-  const [error, setError] = React.useState(false);
-
-  const Cdata = {
-    name: category.value,
-    description: description.value
-  };
-
-  React.useEffect(() => {
-    postData(Cdata);
-  }, [category.value, description.value]);
-
+  const { register, setMode, setValue, Controller, errors, control, reset, watch, test } = React.useContext(ReactHookForm);
   return (
     <>
       <Grid>
-        {error ? (
-          <Error error={error}>
-            <p>error</p>
-            <Icons
-              onClick={() => setError(!error)}
-              src={Icon.Close}
-              style={{ height: '10px', width: '10px' }}
-            />
-          </Error>
-        ) : null}
         <Top>
           <ItemWrapper>
-            <Text textColor="var(--color-required)" width="10%">
-              Category Name*
+            <Text textColor="var(--color-required)" width="20%">
+              Name*
             </Text>
-            <TextField
-              ref={catRef}
-              label={null}
-              {...category.inputAttrs}
-              size="small"
-              sx={{ width: '820px' }}
-              variant="standard"
-            />
+            <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+              <Controller
+                render={({ field }: any) => (
+                  <Input autoComplete='off' status={errors.catName ? "error" : ""} allowClear {...field} style={{ width: "600px" }} />
+
+                )}
+                name={"catName"}
+                control={control}
+                rules={{
+                  required: "This is required field.",
+                  pattern: {
+                    value: /^[a-zA-Z]*$/,
+                    message: "only letters"
+                  }
+                }}
+                defaultValue=""
+              />
+              <FormHelperText error={errors.catName ? true : false} style={{ marginLeft: "10px" }}>
+                <ErrorMessage errors={errors} name="catName" />
+              </FormHelperText>
+            </div>
           </ItemWrapper>
           <ItemWrapper>
-            <Text textColor="var(--color-primary-dark)" width="10%">
+            <Text textColor="var(--color-primary-dark)" width="20%">
               Description
             </Text>
-            <TextField
-              ref={desRef}
-              label={null}
-              {...description.inputAttrs}
-              aria-label="minimum height"
-              minRows={2}
-              style={{
-                width: '820px'
-              }}
-              variant="standard"
-            />
+            <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
+
+              <Controller
+                render={({ field }: any) => (
+                  <TextArea autoComplete='off' status={errors.catDes ? "error" : ""} allowClear {...field} style={{ width: "600px" }} />
+
+                )}
+                name="catDes"
+                control={control}
+                rules={{
+                  minLength: {
+                    value: 10,
+                    message: "minimum length must be 10"
+                  }
+                }}
+                defaultValue=""
+              />
+              <FormHelperText error={errors.catDes ? true : false} style={{ marginLeft: "10px" }}>
+                <ErrorMessage errors={errors} name="catDes" />
+              </FormHelperText>
+            </div>
           </ItemWrapper>
         </Top>
       </Grid>
