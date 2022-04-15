@@ -6,10 +6,7 @@ import React from 'react';
 
 
 
-export const ProductData = React.createContext<any>({
-  product: {},
-  setProduct: () => { },
-});
+export const ProductData = React.createContext<any>({});
 export const ProductContext = React.createContext<{
   data: IProductsDetails[];
   setData: (data: IProductsDetails[]) => void;
@@ -34,8 +31,9 @@ export const ProductProvider: React.FC<IProps> = ({ children }) => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:9001/api/products');
+      let res = await axios.get('http://localhost:9001/api/products');
       setData(res.data);
+      console.log('Context', data)
       setLoading(false);
     } catch (e: any) {
       setLoading(false);
@@ -50,19 +48,10 @@ export const ProductProvider: React.FC<IProps> = ({ children }) => {
   }, []);
 
   const [product, setProduct] = React.useState<any>({});
-  const [local, setLocal] = React.useState<any>({});
-
-  // store product in local storage
-
-  React.useEffect(() => {
-    localStorage.setItem('productman', JSON.stringify(product));
-  });
-  React.useMemo(() => {
-    const products = JSON.parse(localStorage.getItem('productman') || '{}');
-    setLocal(products);
-  }, []);
 
   const { toggleHandle, value, handleOpen } = useToggle('toggle', false);
+
+  console.log('Addsec', product);
 
 
   return (
@@ -73,7 +62,7 @@ export const ProductProvider: React.FC<IProps> = ({ children }) => {
             data,
             setData
           }}>
-          <ProductData.Provider value={{ product, setProduct, local }}>
+          <ProductData.Provider value={{ product, setProduct, loading }}>
             {children}
           </ProductData.Provider>
         </ProductContext.Provider>

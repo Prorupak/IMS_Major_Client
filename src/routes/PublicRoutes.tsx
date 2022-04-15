@@ -5,6 +5,8 @@ import Login from 'Pages/login/Login';
 import Register from 'Pages/register/Register';
 import React from 'react';
 import { Route, Routes, useLocation } from 'react-router';
+import Test from 'Test';
+import TestA from 'TestA';
 
 const PublicRoutes = () => {
   const location = useLocation();
@@ -16,6 +18,8 @@ const PublicRoutes = () => {
           <Route element={<LandingPage />} path="/">
             <Route element={<Register />} path="/" />
             <Route element={<Login />} path="/login" />
+            <Route element={<Test />} path="/test" />
+            <Route element={<TestA />} path="/testA" />
           </Route>
         </Routes>
       </AnimatePresence>

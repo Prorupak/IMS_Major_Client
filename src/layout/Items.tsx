@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { useLocation } from 'react-router';
+import {
+  MenuOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
+import { AutoComplete, Button, Descriptions, Divider, Dropdown, Menu, PageHeader } from 'antd';
+import { useLocation, useNavigate } from 'react-router';
 import Header from 'Components/shared/ItemsHeader';
 import ProductsData from 'Components/shared/ ProductsData';
 import { ToggleContext } from 'Hooks/useToggle';
+import PageTips from 'Components/shared/PageTips';
 
 const Grid = styled(motion.div)<{ toggle: boolean }>`
   display: grid;
@@ -53,13 +59,14 @@ const Product = styled(motion.div).attrs({
   grid-area: product;
 `;
 
-interface IProps {
+type IProps = {
   children: React.ReactNode;
 }
 
-const Items: React.FC = ({ children }: any) => {
+const Items: React.FC<IProps> = ({ children }) => {
   const { value, toggleHandle } = React.useContext(ToggleContext);
-  // const { value, toggleHandle } = useToggle('itemToggle', false);
+
+  const navigate = useNavigate();
 
   const location = useLocation();
   console.log('location===', location && location.state);
@@ -68,7 +75,54 @@ const Items: React.FC = ({ children }: any) => {
     <>
       <Grid toggle={value}>
         <Nav>
-          <Header toggleHandle={toggleHandle} value={value} />
+          <PageHeader
+            ghost={false}
+            onBack={() => window.history.back()}
+            title="Categories"
+            style={{
+              padding: '15px',
+            }}
+            extra={[
+              <Button
+                size='small'
+                type='primary'
+                onClick={() => navigate('/category/add')}
+                style={{
+                  borderRadius: '5px',
+                  marginLeft: '3px',
+                }}
+                key="3">
+                <PlusOutlined />
+                <span
+                  style={{
+                    marginLeft: '3px',
+                  }}>
+
+                  New
+                </span>
+              </Button>,
+              <Button
+                size='small'
+                style={{
+                  borderRadius: '5px',
+                  backgroundColor: '#f6f6f6',
+                }}
+
+                key="2">
+                <MenuOutlined />
+              </Button>, ,
+              <Divider
+                type="vertical"
+                style={{
+                  height: "20px",
+                  margin: "0px 5px",
+                  borderLeft: "2px solid rgba(0, 0, 0, 0.1)",
+                }}
+                key="4" />,
+              <PageTips key='5' />
+            ]}
+          >
+          </PageHeader>
         </Nav>
         <Main>
           {/* <Categories toggleHandle={toggleHandle} /> */}

@@ -36,6 +36,7 @@
     "antd": "^4.19.5",
     "axios": "^0.24.0",
     "chart.js": "^3.7.1",
+    "core-js": "^3.22.0",
     "framer-motion": "^4.1.17",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",

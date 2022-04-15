@@ -42,7 +42,6 @@ export interface IProductsDetails {
   id?: string;
   name?: string;
   brand?: string;
-  quantity?: number;
   length?: number;
   breadth?: number;
   height?: number;
@@ -52,7 +51,7 @@ export interface IProductsDetails {
   unit?: string;
   returnable?: boolean;
   sellingPrice?: string;
-  saleAccount?: string;
+  salesAccount?: string;
   sellDescription?: string;
   sellTax?: string;
   costPrice?: string;
@@ -65,10 +64,9 @@ export interface IProductsDetails {
   wUnit?: string;
   images?: Record<string, any>[];
   date?: Date;
-  isbn?: string;
   inventoryAccount?: string;
   openingStock?: number;
-  openingStockPerUnit?: number;
+  openingStockRate?: number;
   preferredVendor?: string;
   reorderPoint?: string
   salesInformation?: {

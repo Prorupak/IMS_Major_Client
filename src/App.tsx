@@ -26,6 +26,7 @@ const App = () => {
                   <PublicRoutes />
                   <Layout>
                     <ProtectedRoutes />
+
                   </Layout>
                 </ToggleProvider>
               </ProductProvider>

@@ -71,7 +71,7 @@ const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
                   </Link>
                 </Button>
               </Tooltip>
-              <Link to={`/product/add/${categoryDetails.id}`}>
+              <Link to={`/product/${categoryDetails.id}`}>
                 <Button style={{ background: 'var(--color-secondary)' }}>
                   <IconButton src={Icon.BPlus} />
                   <p>Add Item</p>

@@ -4,7 +4,6 @@ import React from 'react';
 import { Outlet } from 'react-router';
 import AddCategories from './AddCategories';
 import CategoryForm from './CategoryForm';
-import UpdateCategories from './UpdateCategories';
 
 const CategoryContainer = () => {
   return (

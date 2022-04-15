@@ -30,7 +30,7 @@ const columns = [
     width: 450,
     editable: false,
     valueGetter: (params: GridValueGetterParams) => {
-      return params.row.inventoryTracking.map((item: any) => item.openingStock)
+      return params.row?.inventoryTracking?.map((item: any) => item.openingStock)
     } 
   },
   {
@@ -39,15 +39,30 @@ const columns = [
     width: 450,
     editable: false,
     valueGetter: (params: GridValueGetterParams) => {
-      return params.row.inventoryTracking.map((item: any) => item.reorderPoint)
+      return params.row?.inventoryTracking?.map((item: any) => item.reorderPoint)
     } 
   }
 ];
 
 export default function Products() {
   const [productDetails, setProductDetails] = React.useState<any[]>([]);
+  const [productDetailss, setProductDetailss] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
+  const [saveId, setSaveId] = React.useState<string>('');
+  console.log('saveId', saveId);
+
+  const { data } = React.useContext(ProductContext);
+
+  console.log('data', data);
+
+  React.useEffect(() => {
+    localStorage.setItem('saveId', saveId);
+  }, [saveId]);
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
 
   const navigate = useNavigate();
   const { setProduct } = React.useContext(ProductData);
@@ -56,7 +71,11 @@ export default function Products() {
     setLoading(true);
     try {
       const res = await axios.get('http://localhost:9001/api/products');
-      setProductDetails(res.data);
+      console.log('res.data', res.data);
+      const resData = await res.data;
+      // setProductDetails([...productDetails, res.data]);
+      setProductDetailss([...productDetailss, { name: resData.name }]);
+      console.log('productDetailsss', productDetailss);
       setLoading(false);
       console.log('productDetails', productDetails);
     } catch (err: any) {
@@ -65,9 +84,7 @@ export default function Products() {
     }
   };
 
-  React.useEffect(() => {
-    fetchData();
-  }, []);
+
 
   const { handleOpen, toggleHandle } = React.useContext(ToggleContext);
 
@@ -75,15 +92,14 @@ export default function Products() {
   return (
     <Product>
       <div style={{ display: 'flex', height: '100vh', width: '100%' }}>
-        <div style={{ flexGrow: '1' }}>
+        <div style={{ flexGrow: 1 }}>
           {/* @ts-ignore */}
           <DataGrid
             columns={columns}
             error={!productDetails ? error : null}
-            getRowId={(row) => row.id}
             loading={productDetails ? false : true}
             style={{
-              fontWeight: '500',
+              fontWeight: 500,
             }}
             components={{
               Toolbar: CustomToolbar,
@@ -92,12 +108,13 @@ export default function Products() {
               (e: any) => {
                 handleOpen();
                 console.log('e.row=====>', e.row);
-                const { row } = e;
-                setProduct(row);
+                const { id } = e.row;
+                setSaveId(id);
+                setProduct(e.row);
               }
             }
             onRowDoubleClick={toggleHandle}
-            rows={productDetails}
+            rows={data}
             sx={{
               border: 'none'
             }}

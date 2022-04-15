@@ -6,20 +6,20 @@ const useFetch = (url: string) => {
   const [data, setData] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const result = await axios.get(url);
-      setData([result.data]);
-      // refreshPage();
-      setLoading(false);
-    } catch (err: any) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
 
   React.useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const result = await axios.get(url);
+        setData([result.data]);
+        // refreshPage();
+        setLoading(false);
+      } catch (err: any) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
     fetchData();
     // refreshPage();
   }, [url]);
@@ -31,19 +31,3 @@ const useFetch = (url: string) => {
 };
 
 export default useFetch;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

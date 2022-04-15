@@ -1,6 +1,3 @@
-/* eslint-disable operator-linebreak */
-/* eslint-disable guard-for-in */
-/* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
@@ -13,8 +10,8 @@ import {
   CategoryData,
   CategoryToggle
 } from 'context/CategoryContext';
+import { CustomToolbar } from 'Themes/MaterialUI';
 
-// eslint-disable-next-line react/no-multi-comp
 export default function Categories() {
   const navigate = useNavigate();
   const [tableData, setTableData] = React.useState<any[]>([]);
@@ -63,16 +60,16 @@ export default function Categories() {
   return (
     <Items>
       <div style={{ display: 'flex', height: '100vh', width: '100%' }}>
-        <div style={{ flexGrow: '1' }}>
-          {/* @ts-ignore */}
+        <div style={{ flexGrow: 1 }}>
           <DataGrid
             columns={columns}
             error={!tableData ? error : null}
-            // eslint-disable-next-line no-underscore-dangle
             getRowId={(row) => row.id}
             loading={tableData ? false : loading}
+            components={{
+              Toolbar: CustomToolbar,
+            }}
             onRowClick={
-              // eslint-disable-next-line operator-linebreak
               (e: any) => {
                 handleOpen();
                 console.log('eros', e.row);
@@ -87,6 +84,7 @@ export default function Categories() {
             }}
           />
         </div>
+
       </div>
     </Items>
   );

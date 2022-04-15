@@ -36,14 +36,9 @@ const SelectWrapper = styled(motion.div).attrs({})`
  right: 0.5px;
 `;
 
-let BrandIndex = {
-     brand: 'hello'
-};
-let ManuIndex = {
-     manufacturer: 'hi'
-};
-
 const { Option } = Select;
+
+let index = 0;
 
 const selectAfter = (
      <Select defaultValue="" style={{ width: 60 }}>
@@ -90,53 +85,52 @@ const MiddleSection: React.FC = () => {
      )
 
 
-     const filteredBrandName = data.filter((item: any) => {
-          return
-     })
+     // filter out the duplicate items and empty strings
+     const uniqueItems = [...new Set(data.map((item: any) => item.brand))].filter((item: any) => item);
+     const uniqueItemsManu = [...new Set(data.map((item: any) => item.manufacturer))].filter((item: any) => item);
 
-     console.log('brand', data.map((item: any) => item.brand))
+     console.log('uniqueItems', uniqueItems)
+     console.log('uniqueItemsManu', uniqueItemsManu)
 
-     const brandS = data.map((item: any) => item.brand)
+     const [cItems, setCItems] = useState(uniqueItems);
+     const [sItems, setSItems] = useState(uniqueItemsManu);
+     const [cTax, setCTax] = useState('');
+     const [sTax, setSTax] = useState('');
+     const addCTax = (e: any) => {
+          e.preventDefault();
+          setCItems([...cItems, cTax || `New item ${index++}`]);
+          setCTax('');
+     };
+     const addSTax = (e: any) => {
+          e.preventDefault();
+          setSItems([...sItems, sTax || `New item ${index++}`]);
+          setSTax('');
+     };
 
-     const Mans = data.map((item: any) => item.manufacturer)
-     console.log('brand', brandS)
-     console.log('mans', Mans)
+     const onNameCChange = (event: any) => {
+          setCTax(event.target.value);
+     };
+     const onNameChange = (event: any) => {
+          setSTax(event.target.value);
+     };
 
 
 
-     const [itemsBrand, setItemsBrand] = useState(brandS);
-     const [itemsManu, setItemsManu] = useState(Mans);
+
+     const [itemsBrand, setItemsBrand] = useState<any[]>(uniqueItems);
+     const [itemsManu, setItemsManu] = useState<any[]>([uniqueItemsManu]);
      console.log('mansnns', itemsManu);
      const [nameBrand, setNameBrand] = useState('');
      const [nameManu, setNameManu] = useState('');
-     const addItemBrand = (e: any) => {
-          e.preventDefault();
-          setItemsBrand([...itemsBrand, nameBrand || `New Item ${BrandIndex}`]);
-          setNameBrand('');
-     };
-     const addItemManu = (e: any) => {
-          e.preventDefault();
-          setItemsManu([...itemsManu, nameManu || `New item ${ManuIndex}`]);
-          setNameManu('');
-     };
 
-     const onNameBrandChange = (event: any) => {
-          setNameBrand(event.target.value);
-          console.log(nameBrand)
-     };
-     const onNameManuChange = (event: any) => {
-          setNameManu(event.target.value);
-     };
+
 
      console.log('product', product)
 
-     React.useEffect(() => {
-          reset({
-               brand: product.brand,
-               manufacturer: product.manufacturer,
-               // weight: product.weight[0].amount,
-          })
-     }, [product])
+     console.log('itemsBrand', data.map((item: any) => item.brand))
+
+
+
      return (
           <>
                <LeftSection>
@@ -228,6 +222,7 @@ const MiddleSection: React.FC = () => {
                               <Controller
                                    render={({ field }: any) => (
                                         <Select
+                                             showSearch
                                              style={{ width: 300 }}
                                              {...field}
                                              placeholder="Select Manufacturer"
@@ -236,19 +231,18 @@ const MiddleSection: React.FC = () => {
                                                        {menu}
                                                        <Divider style={{ margin: '8px 0' }} />
                                                        <Space align="center" style={{ padding: '0 8px 4px' }}>
-                                                            <Input placeholder="Please enter item" value={nameManu} onChange={onNameManuChange} />
-                                                            <Typography.Link onClick={addItemManu} style={{ whiteSpace: 'nowrap' }}>
+                                                            <Input placeholder="Please enter item" value={cTax} onChange={onNameCChange} />
+                                                            <Typography.Link onClick={addCTax} style={{ whiteSpace: 'nowrap' }}>
                                                                  <PlusOutlined /> Add item
                                                             </Typography.Link>
                                                        </Space>
                                                   </>
                                              )}
                                         >
-                                             {itemsManu.map((items: any, idx: number) => (
-                                                  <Option key={idx}>{items}</Option>
+                                             {cItems.map((item: any) => (
+                                                  <Option key={item}>{item}</Option>
                                              ))}
                                         </Select>
-
                                    )}
                                    name="manufacturer"
                                    control={control}
@@ -295,23 +289,25 @@ const MiddleSection: React.FC = () => {
                               <Controller
                                    render={({ field }: any) => (
                                         <Select
+                                             showSearch
                                              style={{ width: 300 }}
-                                             placeholder="Select a Brand"
+                                             {...field}
+                                             placeholder="select brand"
                                              dropdownRender={(menu: any) => (
                                                   <>
                                                        {menu}
                                                        <Divider style={{ margin: '8px 0' }} />
                                                        <Space align="center" style={{ padding: '0 8px 4px' }}>
-                                                            <Input  {...field} placeholder="Please enter item" value={nameBrand} onChange={onNameBrandChange} />
-                                                            <Typography.Link onClick={addItemBrand} style={{ whiteSpace: 'nowrap' }}>
+                                                            <Input placeholder="Please enter item" value={sTax} onChange={onNameChange} />
+                                                            <Typography.Link onClick={addSTax} style={{ whiteSpace: 'nowrap' }}>
                                                                  <PlusOutlined /> Add item
                                                             </Typography.Link>
                                                        </Space>
                                                   </>
                                              )}
                                         >
-                                             {itemsBrand.map((item: any, idx: number) => (
-                                                  <Option key={idx}>{item}</Option>
+                                             {sItems.map((item: any) => (
+                                                  <Option key={item}>{item}</Option>
                                              ))}
                                         </Select>
                                    )}

@@ -1,5 +1,5 @@
 import { FormHelperText, TextField } from '@mui/material';
-import { Select, Divider, Input, Typography, Space } from 'antd';
+import { Select, Divider, Input, Typography, Space, AutoComplete } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import React, { useState } from 'react'
@@ -8,6 +8,7 @@ import { CustomSelect, StyledOption, TooltipMui } from 'Themes/MaterialUI';
 import { Item, ItemWrapper, Text } from 'Themes/utilityThemes';
 import { ReactHookForm } from 'context/ReactHookForms';
 import { ErrorMessage } from '@hookform/error-message';
+import { renderItem, renderTitle } from 'utitls/Antd';
 
 
 const LeftSection = styled(motion.div).attrs({})`
@@ -66,6 +67,13 @@ const TrackSection: React.FC<IProps> = ({ track }) => {
      function onSearch(val: any) {
           console.log('search:', val);
      }
+
+     const inventoryOptions = [
+          {
+               label: renderTitle('Stocks'),
+               options: [renderItem('Inventory Assets')]
+          },
+     ];
      return (
           <>
                <LeftSection>
@@ -94,30 +102,25 @@ const TrackSection: React.FC<IProps> = ({ track }) => {
                          <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
                               <Controller
                                    control={control}
-                                   name={!track ? "" : "inventoryAccount"}
+                                   name="inventoryAccount"
                                    // if track is true, then we need to set rules
                                    rules={track && {
                                         required: "This is required field.",
                                    }}
                                    render={({ field }: any) => (
                                         <>
-                                             <Select
-                                                  disabled={!track}
-                                                  showSearch
-                                                  status={track === true && errors.inventoryAccount ? "error" : ""}
-                                                  placeholder="Select a unit"
-                                                  optionFilterProp="children"
-                                                  filterOption={(input, option) =>
-                                                       //@ts-ignore
-                                                       option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                                  }
-                                                  defaultValue=""
+                                             <AutoComplete
                                                   {...field}
+                                                  showArrow
+                                                  dropdownClassName="certain-category-search-dropdown"
+                                                  dropdownMatchSelectWidth={300}
                                                   style={{
-                                                       width: "300px",
-                                                  }}>
-                                                  <Option value="kg">Inventory Assets</Option>
-                                             </Select>
+                                                       width: '300px',
+                                                  }}
+                                                  options={inventoryOptions}
+                                             >
+                                                  <Input placeholder="Select Account" />
+                                             </AutoComplete>
                                         </>
                                    )}
                               />
@@ -162,7 +165,7 @@ const TrackSection: React.FC<IProps> = ({ track }) => {
 
 
                                    )}
-                                   name={!track ? "" : "openingStock"}
+                                   name={"openingStock"}
                                    control={control}
                                    rules={{
                                         pattern: {
@@ -213,7 +216,7 @@ const TrackSection: React.FC<IProps> = ({ track }) => {
 
 
                                    )}
-                                   name={!track ? "" : "reorderPoint"}
+                                   name={"reorderPoint"}
                                    control={control}
                                    rules={{
                                         pattern: {
@@ -270,7 +273,7 @@ const TrackSection: React.FC<IProps> = ({ track }) => {
 
 
                                    )}
-                                   name={!track ? "" : "openingStockRate"}
+                                   name={"openingStockRate"}
                                    control={control}
                                    rules={{
                                         pattern: {
@@ -309,7 +312,7 @@ const TrackSection: React.FC<IProps> = ({ track }) => {
                          <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
                               <Controller
                                    control={control}
-                                   name={!track ? "" : "preferredVendor"}
+                                   name={"preferredVendor"}
                                    rules={{
                                         required: "This field is required",
                                    }}

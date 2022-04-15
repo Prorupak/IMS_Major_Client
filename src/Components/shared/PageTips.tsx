@@ -16,8 +16,10 @@ const Tips = styled.div`
 const PageTips = () => {
   return (
     <Tips>
+
+      <Text gap='3px' textColor="var(--color-secondary)">
       <IconButton src={Icon.Tips} />
-      <Text textColor="var(--color-secondary)">Page Tips</Text>
+        Page Tips</Text>
     </Tips>
   );
 };

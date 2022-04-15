@@ -1,6 +1,6 @@
 import { Checkbox, FormHelperText, TextareaAutosize, TextField } from '@mui/material';
-import { Select, Divider, Input, Typography, Space } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Select, Divider, Input, Typography, Space, AutoComplete } from 'antd';
+import { PlusOutlined, UserOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import React, { useState } from 'react'
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import Icon from 'Assets/Icons/Icon';
 import { ErrorMessage } from '@hookform/error-message';
 import { ReactHookForm } from 'context/ReactHookForms';
 import TextArea from 'antd/lib/input/TextArea';
+import { renderItem, renderTitle } from 'utitls/Antd';
 
 const LeftSection = styled(motion.div).attrs({})`
  display: flex;
@@ -77,6 +78,27 @@ const BottomSection: React.FC = () => {
      const removeItem = (index?: string) => {
           resetField(index);
      }
+
+
+
+     const salesOptions = [
+          {
+               label: renderTitle('Income'),
+               options: [renderItem('Discount'), renderItem('General Income'), renderItem('Late Fee Income'), renderItem('Interest Income'), renderItem('Other Charges'), renderItem('Sales'), renderItem('Shipping Charges')],
+          },
+     ];
+
+     const purchaseOptions = [
+          {
+               label: renderTitle('Expense'),
+               options: [renderItem('Advertising'), renderItem('Automobile Expense'), renderItem('Bad Debt'), renderItem('Bank Fees and Charges'), renderItem('Consultant Expense'), renderItem('Credit Card Charges'), renderItem('Depreciation Expense'), renderItem('IT and Internet Expense'), renderItem('Janitorial Expense'), renderItem('Lodging'), renderItem('Meals and Entertainment'), renderItem('Office Supplies'), renderItem('Other Expenses'), renderItem('Postage'), renderItem('Printing and Stationary'), renderItem('Purchase Discount'), renderItem('Repairs and Maintenance'), renderItem('Rent Expense'), renderItem('Travel Expense'), renderItem('Uncategorized Expense')],
+          },
+          {
+               label: renderTitle('Cost of Goods'),
+               options: [renderItem('Cost of Goods Sold')],
+          }
+     ];
+
      return (
           <>
                <LeftSection>
@@ -136,7 +158,7 @@ const BottomSection: React.FC = () => {
 
 
                                         )}
-                                        name={!sales ? "" : "sellingPrice"}
+                                        name={"sellingPrice"}
                                         control={control}
                                         rules={sales ? {
                                              required: "This is required field.",
@@ -179,30 +201,23 @@ const BottomSection: React.FC = () => {
                               <Controller
                                    render={({ field }: any) => (
 
-                                        <Select
-                                             showSearch
-                                             disabled={!sales}
-                                             status={sales === true && errors.salesAccount ? "error" : ""}
+                                        <AutoComplete
                                              {...field}
-                                             style={{ width: "300px" }}
-                                             placeholder="Select a account"
-                                             optionFilterProp="children"
-                                             filterOption={(input, option) =>
-                                                  //@ts-ignore
-                                                  option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                             }
-                                             defaultValue=""
-                                             size='middle'
+                                             disabled={!sales}
+                                             showArrow
+                                             defaultValue="Sales"
+                                             dropdownClassName="certain-category-search-dropdown"
+                                             dropdownMatchSelectWidth={300}
+                                             style={{
+                                                  width: '300px',
+                                             }}
+                                             options={salesOptions}
                                         >
-                                             <Option value="kg">kg</Option>
-                                             <Option value="dozen">dozen</Option>
-                                             <Option value="piece">piece</Option>
-                                             <Option value="litre">litre</Option>
-                                             <Option value="bottle">bottle</Option>
-                                        </Select>
+                                             <Input placeholder="Select Account" />
+                                        </AutoComplete>
 
                                    )}
-                                   name={!sales ? "" : "salesAccount"}
+                                   name="sellAccount"
                                    control={control}
                                    rules={sales ? {
                                         required: "This is required field.",
@@ -223,13 +238,11 @@ const BottomSection: React.FC = () => {
                               Description
                          </Text>
                          <div style={{ display: 'flex', alignItems: 'flex-start', flexFlow: 'column' }}>
-
                               <Controller
                                    render={({ field }: any) => (
-                                        <TextArea disabled={!sales} autoComplete='off' status={sales === true && errors.salesDescription ? "error" : ""} allowClear {...field} style={{ width: "300px" }} />
-
+                                        <TextArea disabled={!purchase} autoComplete='off' status={sales === true && errors.sellDescription ? "error" : ""} allowClear {...field} style={{ width: "300px" }} />
                                    )}
-                                   name={!sales ? "" : "salesDescription"}
+                                   name="sellDescription"
                                    control={control}
                                    rules={{
                                         minLength: {
@@ -241,8 +254,8 @@ const BottomSection: React.FC = () => {
                               />
                               {
                                    sales === true && (
-                                        <FormHelperText error={errors.salesDescription ? true : false} style={{ marginLeft: "10px" }}>
-                                             <ErrorMessage errors={errors} name="salesDescription" />
+                                        <FormHelperText error={errors.sellDescription ? true : false} style={{ marginLeft: "10px" }}>
+                                             <ErrorMessage errors={errors} name="sellDescription" />
                                         </FormHelperText>
                                    )
                               }
@@ -286,7 +299,7 @@ const BottomSection: React.FC = () => {
                                         ))}
                                    </Select>
                               )}
-                              name={!sales ? "" : "sellTax"}
+                              name="sellTax"
                               control={control}
                               defaultValue=""
                          />
@@ -341,7 +354,7 @@ const BottomSection: React.FC = () => {
                                              <Input autoComplete='off' disabled={!purchase} status={purchase === true && errors.costPrice ? "error" : ""} allowClear {...field} defaultValue="" style={{ width: "300px" }} />
 
                                         )}
-                                        name={!purchase ? "" : "costPrice"}
+                                        name={"costPrice"}
                                         control={control}
                                         rules={purchase ? {
                                              required: "This is required field.",
@@ -383,29 +396,21 @@ const BottomSection: React.FC = () => {
 
                               <Controller
                                    render={({ field }: any) => (
-                                        <Select
-                                             showSearch
-                                             disabled={!purchase}
-                                             status={purchase === true && errors.costAccount ? "error" : ""}
+                                        <AutoComplete
                                              {...field}
-                                             style={{ width: "300px" }}
-                                             placeholder="Select a account"
-                                             optionFilterProp="children"
-                                             filterOption={(input, option) =>
-                                                  //@ts-ignore
-                                                  option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                             }
+                                             showArrow
                                              defaultValue=""
-                                             size='middle'
+                                             dropdownClassName="certain-category-search-dropdown"
+                                             dropdownMatchSelectWidth={300}
+                                             style={{
+                                                  width: '300px',
+                                             }}
+                                             options={purchaseOptions}
                                         >
-                                             <Option value="kg">kg</Option>
-                                             <Option value="dozen">dozen</Option>
-                                             <Option value="piece">piece</Option>
-                                             <Option value="litre">litre</Option>
-                                             <Option value="bottle">bottle</Option>
-                                        </Select>
+                                             <Input placeholder="Select Account" {...field} />
+                                        </AutoComplete>
                                    )}
-                                   name={!purchase ? "" : "costAccount"}
+                                   name="costAccount"
                                    control={control}
                                    rules={purchase ? {
                                         required: "This is required field.",
@@ -432,7 +437,7 @@ const BottomSection: React.FC = () => {
                                         <TextArea disabled={!purchase} autoComplete='off' status={purchase === true && errors.costDescription ? "error" : ""} allowClear {...field} style={{ width: "300px" }} />
 
                                    )}
-                                   name={!purchase ? "" : "costDescription"}
+                                   name="costDescription"
                                    control={control}
                                    rules={{
                                         minLength: {
@@ -490,7 +495,7 @@ const BottomSection: React.FC = () => {
                                         ))}
                                    </Select>
                               )}
-                              name={!purchase ? "" : "costTax"}
+                              name={"costTax"}
                               control={control}
                               defaultValue=""
                          />

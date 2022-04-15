@@ -169,7 +169,7 @@ export function CustomSelect(props: SelectUnstyledProps<number>) {
   const components: SelectUnstyledProps<number>['components'] = {
     Root: StyledButton,
     Listbox: StyledListbox,
-    Popper: StyledPopper,
+    // Popper: StyledPopper,
     ...props.components
   };
 

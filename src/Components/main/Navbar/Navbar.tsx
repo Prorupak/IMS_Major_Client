@@ -4,12 +4,13 @@ import React from 'react';
 import styled from 'styled-components';
 import Icon from 'Assets/Icons/Icon';
 import Image from 'Assets/Image/Image';
-import { alpha, InputBase, Menu, MenuItem, Tooltip } from '@mui/material';
-import { Icon as IconNav } from 'Themes/utilityThemes';
+import { InputBase, Menu, MenuItem, Tooltip } from '@mui/material';
 import QuickCreate from './QuickCreate/QuickCreate';
-// import QuickCreate from './QuickCreate/QuickCreate';
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from '@ant-design/icons';
 
-/* eslint-disable indent */
 
 const Nav = styled(motion.nav).attrs({
   initial: { opacity: 0, y: -100 },
@@ -28,16 +29,15 @@ const NavWrapper = styled.div`
   display: flex;
 `;
 
-const Navbar = styled.div<{ toggle: any }>`
+const Navbar = styled.div<{ collapsed: any }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: ${(props) => {
     return props.theme.color.white;
-  }};
-  /* width: ${({ toggle }) => (toggle ? '86.65%' : '95%')}; */
+}};
   width: 100%;
-  margin: 0 var(--spacing-15);
+  padding: 0 var(--spacing-15);
 `;
 
 const RightIcons = styled.div`
@@ -75,10 +75,6 @@ const Search = styled('div')(({ theme }) => ({
   marginRight: 'var(--spacing-5)',
   marginLeft: '5px',
   width: '100%'
-  // [theme.breakpoints.up('sm')]: {
-  //   marginLeft: theme.spacing(3),
-  //   width: 'auto'
-  // }
 }));
 
 const SearchIconWrapper = styled.div`
@@ -127,7 +123,12 @@ const StyledMenuItem = styled(MenuItem)`
   }
 `;
 
-const Header = (value: any) => {
+type TNav = {
+  collapsed: boolean;
+  onCollapse: (collapsed: any) => void;
+}
+
+const Header: React.FC<TNav> = ({ onCollapse, collapsed }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<any>) => {
@@ -137,14 +138,20 @@ const Header = (value: any) => {
     setAnchorEl(null);
   };
 
-  const { toggle } = value;
-  console.log('nav', toggle);
+  console.log('nav', collapsed);
   return (
     <>
       <Nav>
         <NavWrapper>
-          <Navbar toggle={toggle}>
+          <Navbar collapsed={collapsed}>
             <LeftIcons>
+              {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                className: 'trigger',
+                onClick: onCollapse,
+                style: {
+                  fontSize: '1.2em',
+                },
+              })}
               <Tooltip arrow title="Quick Create">
                 <Icons
                   alt="Quick"

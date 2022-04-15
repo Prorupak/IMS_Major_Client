@@ -40,7 +40,7 @@ export const ContentWrapper = styled.div`
 export const Icon = styled.img``;
 
 export const Content = styled(NavLink).attrs({
-  activeClassName: 'active'
+
 })`
   color: ${(props) => {
     return props.theme.color.textSecondary;

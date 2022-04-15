@@ -12,11 +12,18 @@ import { IProductsDetails } from 'Interfaces/Interfaces';
 
 import { ReactHookForm } from 'context/ReactHookForms';
 import { useSnackbar } from 'notistack';
-import { Button, notification } from 'antd';
+import { Button, notification, PageHeader, Spin } from 'antd';
 import { ProductData } from 'context/ProductContext';
+import useFetch from 'Hooks/useFetch';
 
 const Form = styled.form`
+position: relative;
   height: 100vh;
+  .spin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
 `;
 
 const Grid = styled(motion.div).attrs({})`
@@ -80,20 +87,76 @@ const Footer = styled(motion.div).attrs({})`
 
 const AddProducts = ({ children }: any) => {
   const { id } = useParams();
+  const [loading, setLoading] = React.useState(false);
   const location = useLocation();
-  const { handleSubmit, reset, setFocus, formState: { isSubmitSuccessful } } = React.useContext(ReactHookForm);
+  const { handleSubmit, reset, setFocus, formState: { isSubmitSuccessful }, watch } = React.useContext(ReactHookForm);
 
-  // const {} = formState;
+  console.log('watchhh', watch('salesTax'));
 
-  const { setProduct } = React.useContext(ProductData)
+  const ProID = localStorage.getItem('saveId');
+
   // @ts-ignore
-  const updateData = location?.state?.info;
+  const pathName = location.state?.lol;
 
-  React.useEffect(() => {
-    if (updateData) {
-      setProduct(updateData)
+  console.log('pathName===>', pathName);
+
+  const [product, setProduct] = React.useState<any>({});
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(`http://localhost:9001/api/products/` + ProID);
+
+      console.log("salesAccount==>", res.data.PurchaseInformation);
+
+      if (pathName === '/products') {
+        const initialValues = {
+          name: res.data.name,
+          description: res.data.description,
+          sku: res.data.sku,
+          unit: res.data.unit,
+          returnable: res.data.returnable,
+          length: res.data.dimensions[0].length,
+          breadth: res.data.dimensions[0]?.breadth,
+          height: res.data.dimensions[0]?.height,
+          dUnit: res.data.dimensions[0]?.dUnit,
+          weight: res.data.weight[0]?.amount,
+          wUnit: res.data.weight[0]?.wUnit,
+          manufacturer: res.data.manufacturer,
+          brand: res.data.brand,
+          sellingPrice: res.data.SalesInformation[0]?.sellingPrice,
+          sellAccount: res.data.SalesInformation[0]?.account,
+          sellDescription: res.data.SalesInformation[0]?.description,
+          sellTax: res.data.SalesInformation[0]?.tax,
+          costPrice: res.data.PurchaseInformation[0]?.costPrice,
+          costAccount: res.data.PurchaseInformation[0]?.account,
+          costDescription: res.data.PurchaseInformation[0]?.description,
+          costTax: res.data.PurchaseInformation[0]?.tax,
+          inventoryAccount: res.data.inventoryTracking[0]?.inventoryAccount,
+          openingStock: res.data.inventoryTracking[0]?.openingStock,
+          reorderPoint: res.data.inventoryTracking[0]?.reorderPoint,
+          openingStockRate: res.data.inventoryTracking[0]?.openingStockRate,
+          preferredVendor: res.data.inventoryTracking[0]?.preferredVendor,
+
+        }
+        reset(initialValues);
+      }
+      else {
+        reset();
+      }
+
+      setLoading(false);
+
+    } catch (e: any) {
+      console.log('error', e);
     }
-  }, [updateData]);
+  }
+
+  React.useEffect(() => { }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [reset]);
 
 
   const navigate = useNavigate();
@@ -106,36 +169,6 @@ const AddProducts = ({ children }: any) => {
   const onNavigate = (res: any) => {
     navigate('/products', { state: res })
   }
-
-
-  // React.useEffect(() => {
-  //   if (isSubmitSuccessful) {
-  //     reset({
-  //       name: '',
-  //       description: '',
-  //       sku: '',
-  //       unit: '',
-  //       dimensions: '',
-  //       weight: '',
-  //       manufacturer: '',
-  //       brand: '',
-  //       sellingPrice: '',
-  //       costPrice: '',
-  //       salesAccount: '',
-  //       costAccount: '',
-  //       costDescription: '',
-  //       salesDescription: '',
-  //       salesTax: '',
-  //       costTax: '',
-  //       inventoryAccount: '',
-  //       openingStock: '',
-  //       openingStockRate: '',
-  //       reorderPoint: '',
-  //       preferredVendor: '',
-  //     })
-  //     setFocus('name', { shouldSelect: true })
-  //   }
-  // }, [setFocus]);
 
   const openNotification = (res: any, error?: any) => {
     console.log('productNae', res)
@@ -177,8 +210,8 @@ const AddProducts = ({ children }: any) => {
   const [error, setError] = React.useState<string>('');
 
 
-  const onSubmit = (data: IProductsDetails) => {
-    console.log('data', data);
+  const onSubmit = (data: any) => {
+    console.log('data===>', data.sellDescription);
     const PData = {
       name: data.name,
       sku: data.sku,
@@ -201,7 +234,7 @@ const AddProducts = ({ children }: any) => {
       SalesInformation: [
         {
           sellingPrice: data.sellingPrice,
-          account: data.saleAccount,
+          account: data.sellAccount,
           description: data.sellDescription,
           tax: data.sellTax
         }
@@ -212,13 +245,14 @@ const AddProducts = ({ children }: any) => {
           account: data.costAccount,
           description: data.costDescription,
           tax: data.costTax
+
         }
       ],
       inventoryTracking: [{
         inventoryAccount: data.inventoryAccount,
         openingStock: data.openingStock,
         reorderPoint: data.reorderPoint,
-        openingStockRate: data.openingStockPerUnit,
+        openingStockRate: data.openingStockRate,
         preferredVendor: data.preferredVendor
       }]
     };
@@ -227,14 +261,25 @@ const AddProducts = ({ children }: any) => {
 
     const postData = async () => {
       try {
-        const res = await axios.post(`http://localhost:9001/api/categories/${id}/products`, PData);
-        console.log('res', res);
+        if (pathName === '/products') {
+          const res = await axios.put(`http://localhost:9001/api/products/${id}`, PData);
+          console.log('updateRes', res);
+          if (res.status === 200) {
+            const productName = res.data.name
+            console.log('resdata', res.data.name);
+            openNotification(res);
+          }
+        } else {
+          const res = await axios.post(`http://localhost:9001/api/categories/${id}/products`, PData);
+          console.log('res', res);
+          if (res.status === 200) {
+            const productName = res.data.name
+            console.log('resdata', res.data.name);
+            openNotification(res);
+          }
 
-        if (res.status === 200) {
-          const productName = res.data.name
-          console.log('resdata', res.data.name);
-          openNotification(res);
         }
+
       } catch (error) {
         console.log('error', error);
         openNotification(null, error);
@@ -248,67 +293,84 @@ const AddProducts = ({ children }: any) => {
 
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <Grid>
-        <Header>
-          <Title>
-            {updateData ? 'Update Product' : 'Add Product'}
-          </Title>
-          <div className="rightSection">
-            <PageTips />
-            <Hr />
-            <Link to="/category/details">
-              <Icons src={Icon.Close} />
-            </Link>
-          </div>
-        </Header>
-        <ContentWrapper>
-          <Content>
-            {children}
-            {/* <ProductsForm postData={postData} /> */}
-          </Content>
-        </ContentWrapper>
-        <Footer>
-          <MuiButton
-            color="primary"
-            // disabled={!postData.name}
-            size="small"
-            sx={{
-              boxShadow: 'none',
-              borderRadius: '6px',
-              backgroundColor: 'var(--color-secondary)',
-              '&:hover': {
-                boxShadow: 'none'
-              }
-            }}
-            type="submit"
+    <>
+      <Form onSubmit={handleSubmit(onSubmit)}>
 
-            variant="contained">
-            {
-              'Add'
-            }
-          </MuiButton>
-          <Link to="/products">
-            <MuiButton
-              color="primary"
-            size="small"
-            sx={{
-              boxShadow: 'none',
-              borderRadius: '6px',
-              background: '#f5f5f5',
-              border: '1px solid #e0e0e0',
-              color: 'var(--color-primary-dark)',
-              '&:hover': {
-                boxShadow: 'none'
-              }
-            }}
-            variant="contained">
-            Cancel
-            </MuiButton>
-          </Link>
-        </Footer>
-      </Grid>
-    </Form>
+        {
+          loading ? (
+            <div className='spin'>
+              <p>
+                <Spin />
+              </p>
+            </div>
+          ) : (
+              <Grid>
+                <Header>
+                  <PageHeader
+                    className="site-page-header"
+                    onBack={
+                      () => {
+                        navigate('/products')
+                      }
+                    }
+                    title={pathName === '/products' ? 'Edit Product' : 'Add Product'}
+
+                    style={{
+                      padding: 0,
+                    }}
+                  />
+                </Header>
+                <ContentWrapper>
+                  <Content>
+                    {children}
+                    {/* <ProductsForm postData={postData} /> */}
+                  </Content>
+                </ContentWrapper>
+                <Footer>
+                  <MuiButton
+                    color="primary"
+                    // disabled={!postData.name}
+                    size="small"
+                    sx={{
+                      boxShadow: 'none',
+                      borderRadius: '6px',
+                      backgroundColor: 'var(--color-secondary)',
+                      '&:hover': {
+                        boxShadow: 'none'
+                      }
+                    }}
+                    type="submit"
+
+                    variant="contained">
+                    {
+                      pathName === '/products' ? 'Update' : 'Add'
+                    }
+                  </MuiButton>
+                  <Link to="/products">
+                    <MuiButton
+                      color="primary"
+                      size="small"
+                      sx={{
+                        boxShadow: 'none',
+                        borderRadius: '6px',
+                        background: '#f5f5f5',
+                        border: '1px solid #e0e0e0',
+                        color: 'var(--color-primary-dark)',
+                        '&:hover': {
+                          boxShadow: 'none'
+                        }
+                      }}
+                      variant="contained">
+                      Cancel
+                    </MuiButton>
+                  </Link>
+                </Footer>
+              </Grid>
+          )
+        }
+      </Form>
+    </>
+
   );
 };
 

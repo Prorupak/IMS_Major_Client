@@ -14,7 +14,6 @@ import { QuickCreate } from 'Components/main/Navbar/QuickCreate/Elements.QuickCr
 import { CategoryContext } from 'context/CategoryContext';
 import usePut from 'Hooks/usePut';
 import CategoryForm from './CategoryForm';
-import UpdateCategories from './UpdateCategories';
 
 const Form = styled.form`
   height: 100vh;

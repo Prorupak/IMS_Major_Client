@@ -2,8 +2,19 @@
 /* eslint-disable import/prefer-default-export */
 import styled, { createGlobalStyle } from 'styled-components';
 import 'antd/dist/antd.css';
-import { motion } from 'framer-motion/dist/framer-motion';
+import { motion } from 'framer-motion';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
+
+type Theme = {
+    ReactPortal: {
+        key?: string;
+        children?: React.ReactNode;
+        type?: string;
+        props?: {
+            [key: string]: any;
+        };
+    };
+}
 
 export default createGlobalStyle`
 *{

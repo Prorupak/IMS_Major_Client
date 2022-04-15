@@ -172,7 +172,8 @@ export const Loader = styled(motion.div).attrs({})`
 export const CheckBoxWrapper = styled.div`
 display: flex;
 align-items: center;
-margin: 0 235px;
+margin: -15px 100px;
+
 .terms-content {
  font-size: var(--fSize-8);
  color: var(--color-placeholder);

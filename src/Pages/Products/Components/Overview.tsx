@@ -7,10 +7,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { TooltipMui } from 'Themes/MaterialUI';
 import { Button, Item, Icon as Icons } from 'Themes/utilityThemes';
-import { Chart } from './productDetails/Chart';
 
 const LeftDetails = styled(motion.div).attrs({})`
-  grid-area: left;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -20,15 +18,12 @@ const LeftDetails = styled(motion.div).attrs({})`
 `;
 
 const RightDetails = styled(motion.div).attrs({})`
-  grid-area: right;
-
+  position: relative;
+  left: 50px;
   display: flex;
   flex-direction: column;
-  /* width: 100%; */
+  width: 100%;
   max-width: 500px;
-
-  /* align-items: flex-start; */
-  min-height: fit-content;
   padding: 130px var(--spacing-15);
 `;
 
@@ -91,9 +86,11 @@ const SmallImageContainer = styled.div`
 `;
 
 const StockSummary = styled(motion.div).attrs({})`
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  /* gap: 50px; */
   padding: var(--spacing-5) var(--spacing-15);
   margin: var(--spacing-40) 0 0 0;
   background-color: #f5f5f5;
@@ -108,7 +105,7 @@ const Content = styled(motion.div).attrs({})<{ gap?: string }>`
 const StkGroup = styled(motion.div).attrs({})`
   display: flex;
   align-items: center;
-  width: 60%;
+  width:115%;
   padding: var(--spacing-15) 0 0 0;
 `;
 
@@ -140,7 +137,7 @@ const Wrapper = styled(motion.div).attrs({})`
 `;
 
 const Overview = ({ row }: any) => {
-  console.log('row', row?.name);
+  console.log('row====>', row);
   return (
     <>
       <LeftDetails>
