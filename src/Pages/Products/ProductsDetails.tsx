@@ -8,7 +8,7 @@ import Overview from './Components/Overview';
 import History from './Components/History';
 import Transactions from './Components/Transactions';
 import { ProductData } from 'context/ProductContext';
-import { Button, Menu as MenuAntd, PageHeader } from 'antd';
+import { Button, Descriptions, Menu as MenuAntd, PageHeader } from 'antd';
 
 import { Drawer, Skeleton, Space, Spin } from 'antd';
 
@@ -114,8 +114,9 @@ const ProductsDetails = () => {
                 onBack={() => window.history.back()}
                 style={{
                   padding: '10px',
+                  textTransform: "capitalize"
                 }}
-                title="Title"
+                  title={product.name}
                 avatar={{
                   src: 'https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png',
                   alt: 'avatar',
@@ -162,6 +163,9 @@ const ProductsDetails = () => {
                     </StyledMenuAntd>
                 }
                 >
+                  <Descriptions.Item label="Created">{product.sku}</Descriptions.Item>
+                  <Descriptions.Item label="Created">{"-"}</Descriptions.Item>
+                  <Descriptions.Item label="Created">{product.name}</Descriptions.Item>
                 </PageHeader>
       </Header>
       <Body>

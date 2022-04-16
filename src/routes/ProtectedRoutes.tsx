@@ -16,6 +16,7 @@ import RequireAuth from './RequireAuth';
 import ProductsForm from 'Pages/Products/ProductsForm';
 import ProductContainer from 'Pages/Products/ProductContainer';
 import { ProductData } from 'context/ProductContext';
+import UpdateCategories from 'Pages/Categories/UpdateCategories';
 
 const PublicRoutes = () => {
   const { product } = React.useContext(ProductData)
@@ -47,9 +48,8 @@ const PublicRoutes = () => {
             </Route>
             <Route element={<CreateProducts />} path="/create" />
             <Route element={<CategoryContainer />} path="/category">
-              <Route element={<CategoryForm />} path={
-                ids ? `$/edit/:id` : 'add'
-              } />
+              <Route element={<CategoryForm />} path="add" />
+              <Route element={<UpdateCategories />} path="edit/:id" />
             </Route>
             {/* <Route element={<ItemWrapper />} path="/category/details" /> */}
             <Route element={<Categories />} path="/details" />

@@ -14,6 +14,7 @@ import useDelete from 'Hooks/useDelete';
 import { Link } from 'react-router-dom';
 import { CategoryData } from 'context/CategoryContext';
 import Icon from '../../Assets/Icons/Icon';
+import { useParams } from 'react-router';
 
 const Nav = styled.nav``;
 
@@ -54,12 +55,18 @@ const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
     setAnchorEl(null);
   };
 
+  const { id } = useParams()
+
+  console.log('id====>', id);
+
+  console.log('cid', categoryDetails.id)
+
   const ProID = localStorage.getItem('CateID');
 
   console.log('ProID', ProID);
 
   const { handleDelete } = useDelete(
-    `http://localhost:9001/api/categories/${ProID}`,
+    `http://localhost:9001/api/categories/${id}`,
   );
 
   return (
@@ -70,13 +77,14 @@ const ItemDetailsHeader: React.FC<Props> = ({ toggle }) => {
             <ButtonWrapper>
               <Tooltip title="Edit Category">
                 <Button>
-                  <Link to={`/category/add/${ProID}`}>
+                  <Link to={`/category/edit/${categoryDetails.id}`}>
                     <IconButton src={Icon.Edit} />
                   </Link>
                 </Button>
               </Tooltip>
-              <Link to={`/product/${ProID}`}>
-                <Button style={{ background: 'var(--color-secondary)' }}>
+              <Link to='/category/add'>
+                <Button
+                  style={{ background: 'var(--color-secondary)' }}>
                   <IconButton src={Icon.BPlus} />
                   <p>Add Item</p>
                 </Button>

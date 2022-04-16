@@ -96,12 +96,64 @@ const AddCategories = ({ children }: any) => {
   // @ts-ignore
   const pathName = location.state?.cate;
 
-  console.log('pathName===>', pathName);
-
-  const [product, setProduct] = React.useState<any>({});
 
   const { id } = useParams();
 
+  const resetFields = React.useCallback(() => {
+    console.log('reset');
+    reset();
+    setFocus();
+  }, []);
+
+
+
+
+  const navigate = useNavigate();
+
+
+  const close = () => {
+    // navigate('/products')
+  };
+
+  const onNavigate = (res: any) => {
+    navigate('/details', { state: res })
+  }
+
+  const openNotification = (res: any, error?: any, description?: string) => {
+    console.log('productNae', res)
+    if (error) {
+      notification.error({
+        message: 'Error',
+        description: res,
+        placement: 'bottomRight',
+        duration: 2,
+      });
+    } else {
+      const key = `open${Date.now()}`;
+      const btn = (
+        <div style={{ display: "flex", alignItems: 'center', gap: '5px' }}>
+          <Button type="primary" size="small" onClick={onNavigate}>
+            View Details
+          </Button>
+          <Button type="primary" size="small"
+            onClick={resetFields}
+          >
+            Add More
+          </Button>
+        </div>
+      );
+      notification.open({
+        type: 'success',
+        message: res ? res.data.map((item: any) => item.name) + ' added successfully' : error,
+        description: id ? '' : description,
+          // `${ !id "If you wish to view details about" res.data.map((item: any) => item.name) ", tap on 'View Details'"},
+        btn,
+        key,
+        duration: 5,
+        onClose: close,
+      });
+    }
+  }
 
   const fetchData = async () => {
     try {
@@ -131,52 +183,6 @@ const AddCategories = ({ children }: any) => {
   }, [reset]);
 
 
-  const navigate = useNavigate();
-
-
-  const close = () => {
-    // navigate('/products')
-  };
-
-  const onNavigate = (res: any) => {
-    navigate('/details', { state: res })
-  }
-
-  const openNotification = (res: any, error?: any) => {
-    console.log('productNae', res)
-    if (error) {
-      notification.error({
-        message: 'Error',
-        description: res,
-        placement: 'bottomRight',
-        duration: 2,
-      });
-    } else {
-      const key = `open${Date.now()}`;
-      const btn = (
-        <div style={{ display: "flex", alignItems: 'center', gap: '5px' }}>
-          <Button type="primary" size="small" onClick={onNavigate}>
-            View Details
-          </Button>
-          <Button type="primary" size="small">
-            Add More
-          </Button>
-        </div>
-      );
-      notification.open({
-        type: 'success',
-        message: res ? res.data.name + ' added successfully' : error,
-        description:
-          `If you wish to view details about ${res.data.name} , tap on 'View Details'`,
-        btn,
-        key,
-        duration: 5,
-        onClose: close,
-      });
-    }
-  }
-
-
   console.log('uesParams', id);
 
   const onSubmit = (data: any) => {
@@ -190,27 +196,26 @@ const AddCategories = ({ children }: any) => {
 
     const postData = async () => {
       try {
+        setLoading(true);
         if (id) {
-          const res = await axios.put(`http://localhost:9001/api/categories/${ProID}`, PData);
-          console.log('updateRes', res);
-          if (res.status === 200) {
-            const productName = res.data.name
-            console.log('resdata', res.data.name);
-            openNotification(res);
-          }
-        } else {
-          const res = await axios.post(`http://localhost:9001/api/categories`, PData);
+          const res = await axios.put(`http://localhost:9001/api/categories/${id}`, PData);
           console.log('res', res);
-          if (res.status === 200) {
-            const productName = res.data.name
-            console.log('resdata', res.data.name);
-            openNotification(res);
-          }
-
+          openNotification(res, null, 'if you wish to view details about' + res.data.map((item: any) => item.name) + ', tap on "View Details"');
         }
+        else {
+          console.log('postData', PData);
+          const res = await axios.post('http://localhost:9001/api/categories', PData);
+          console.log('resdata', res);
+          setLoading(false);
+          if (res.status === 200 || res.status === 201 || res.status === 202) {
+            const productName = res.data.name
 
+            openNotification(res, null);
+          }
+        }
       } catch (error) {
         console.log('error', error);
+        setLoading(false);
         openNotification(null, error);
       }
     }
@@ -271,6 +276,9 @@ const AddCategories = ({ children }: any) => {
                   }}
                   variant="contained">
                   {
+                    loading ? (
+                      <Spin size='small' />
+                    ) : 
                     pathName === '/details' ? 'Add' : 'Update'
                   }
                 </MuiButton>
@@ -295,10 +303,14 @@ const AddCategories = ({ children }: any) => {
                     Cancel
                   </MuiButton>
                 </Link>
+                <Button onClick={() => {
+                  reset();
+                }}>reset</Button>
               </Footer>
             </Grid>
         )
       }
+
     </Form>
   );
 };

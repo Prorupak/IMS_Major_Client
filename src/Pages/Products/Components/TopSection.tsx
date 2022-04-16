@@ -185,14 +185,14 @@ const TopSection: React.FC = () => {
                     <Controller
                          name={"returnable"}
                          control={control}
-                         render={({ field: { onChange, onBlur, value } }: any) => {
+                         render={({ field }: any) => {
                               return (
                                    <>
                                         <Checkbox
+                                             checked={true}
                                              aria-describedby="cNote"
-                                             onChange={onChange}
                                              size="small"
-                                             value={value}
+                                             {...field}
                                         />
                                         <p className="terms-content">Returnable Item</p>
                                    </>
