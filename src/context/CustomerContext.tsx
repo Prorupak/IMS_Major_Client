@@ -1,0 +1,73 @@
+import axios from 'axios';
+import useToggle from 'Hooks/useToggle';
+import { useLocalStorage } from 'usehooks-ts';
+import { ICategories, IProductsDetails } from 'Interfaces/Interfaces';
+import React from 'react';
+
+
+
+export const CustomerData = React.createContext<any>({});
+export const CustomerContext = React.createContext<{
+     data: IProductsDetails[];
+     setData: (data: IProductsDetails[]) => void;
+}>({
+     data: [],
+     setData: () => { }
+});
+export const CustomerToggle = React.createContext<any>({});
+
+type IProps = {
+     children: React.ReactNode;
+};
+
+export const ProductProvider: React.FC<IProps> = ({ children }) => {
+     const [data, setData] = React.useState<IProductsDetails[]>(
+          []
+     );
+
+     const [loading, setLoading] = React.useState<boolean>(false);
+     const [error, setError] = React.useState<string>('');
+
+     const fetchData = async () => {
+          try {
+               setLoading(true);
+               let res = await axios.get('http://localhost:9001/api/products');
+               setData(res.data);
+               console.log('Context', data)
+               setLoading(false);
+          } catch (e: any) {
+               setLoading(false);
+               setError(e);
+               console.log('product error', e);
+          }
+
+     }
+
+     React.useEffect(() => {
+          fetchData();
+     }, []);
+
+     const [product, setProduct] = React.useState<any>({});
+
+     const { toggleHandle, value, handleOpen } = useToggle('toggle', false);
+
+     console.log('Addsec', product);
+
+
+     return (
+          <>
+               <CustomerToggle.Provider value={{ toggleHandle, value, handleOpen }}>
+                    <CustomerContext.Provider
+                         value={{
+                              data,
+                              setData
+                         }}>
+                         <CustomerData.Provider value={{ product, setProduct, loading }}>
+                              {children}
+                         </CustomerData.Provider>
+                    </CustomerContext.Provider>
+               </CustomerToggle.Provider>
+          </>
+     );
+};
+

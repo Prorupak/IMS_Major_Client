@@ -17,6 +17,8 @@ import ProductsForm from 'Pages/Products/ProductsForm';
 import ProductContainer from 'Pages/Products/ProductContainer';
 import { ProductData } from 'context/ProductContext';
 import UpdateCategories from 'Pages/Categories/UpdateCategories';
+import CustomerContainer from 'layout/CustomerContainer';
+import AddCustomer from 'Pages/customer/AddCustomer';
 
 const PublicRoutes = () => {
   const { product } = React.useContext(ProductData)
@@ -40,9 +42,6 @@ const PublicRoutes = () => {
       <AnimatePresence exitBeforeEnter initial>
         <Routes key={location.pathname} location={location}>
           <Route element={<RequireAuth />}>
-            {/* <Route element={<CategoryContainer />} path="/category">
-              <Route element={<Categories />} path="details" />
-            </Route> */}
             <Route element={<ProductContainer />} path="/product">
               <Route element={<ProductsForm />} path=":id" />
             </Route>
@@ -51,9 +50,11 @@ const PublicRoutes = () => {
               <Route element={<CategoryForm />} path="add" />
               <Route element={<UpdateCategories />} path="edit/:id" />
             </Route>
-            {/* <Route element={<ItemWrapper />} path="/category/details" /> */}
             <Route element={<Categories />} path="/details" />
             <Route element={<Products />} path="/products" />
+            <Route element={<CustomerContainer />} path="/customer" >
+              <Route element={<AddCustomer />} path="add" />
+            </Route>
           </Route>
         </Routes>
       </AnimatePresence>

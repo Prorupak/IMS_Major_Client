@@ -237,13 +237,3 @@ const UpdateCategories = () => {
 };
 
 export default UpdateCategories;
-
-
-
-
-
-
-
-
-
-
