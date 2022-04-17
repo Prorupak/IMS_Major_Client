@@ -25,6 +25,12 @@ import Tooltip from "@mui/material/Tooltip";
 import { ToggleContext } from "Hooks/useToggle";
 import CustomerHeader from "layout/customer/components/CustomerHeader";
 import CustomerSidebar from "./components/CustomerSidebar";
+import CustomerDetails from "Pages/customer/components/CustomerDetails";
+import Overview from "./components/Overview";
+import Comments from "./components/Comments";
+import Transactions from "./components/Transactions";
+import Mail from "./components/Mail";
+import Statements from "./components/Statements";
 
 const { Sider, Content, Header } = Layout;
 
@@ -38,24 +44,38 @@ const StyledSubLayout = styled(Layout)`
  background-color: #fff;
 `;
 
+
+const StyledContent = styled(Content)`
+ background-color: #f6f6f6;
+`;
+
 const StyledHeader = styled(Header)`
  background-color: #fff;
  padding: 0px;
  height: 0px;
 `;
 
+const StyledSider = styled(Sider)`
+ background-color: #fff;
+ position: relative;
+ top: 58px;
+`;
+
 type TCustomer = {
      children: React.ReactNode;
 };
 
-
-
-
-
-
 const Customer: React.FC<TCustomer> = ({ children }) => {
      const { Customer: customer, loading } = React.useContext(CustomerData);
+     const { value: collapsed, toggleHandle } = React.useContext(ToggleContext);
 
+
+     const [current, setCurrent] = React.useState('overview');
+
+     const handleClicked = (event: any) => {
+          console.log('click', event);
+          setCurrent(event.key);
+     };
 
      console.log("customer", customer);
      const navigate = useNavigate();
@@ -74,7 +94,12 @@ const Customer: React.FC<TCustomer> = ({ children }) => {
                                         <CustomerHeader />
                                    </StyledHeader>
                                    <StyledSubLayout>
-
+                                                  <StyledContent>
+                                                       {children}
+                                                  </StyledContent>
+                                                  <StyledSider width={collapsed ? "1100px" : "0px"}>
+                                                       <CustomerSidebar handleClicked={handleClicked} current={current} />
+                                                  </StyledSider>
                                    </StyledSubLayout>
                               </>
                          )}

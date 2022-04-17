@@ -6,13 +6,18 @@ import {
      LinkOutlined,
      CaretDownOutlined,
 } from "@ant-design/icons";
-import { Button, Divider, Dropdown, Menu, PageHeader } from 'antd'
+import { Button, Divider, Dropdown, Layout, Menu, PageHeader } from 'antd'
 import { useNavigate } from 'react-router'
 import React from 'react'
 import { Tooltip } from '@mui/material';
 import { ICustomer } from 'Interfaces/Interfaces';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Overview from './Overview';
+import Comments from './Comments';
+import Transactions from './Transactions';
+import Mail from './Mail';
+import Statements from './Statements';
 
 const StyledMenuAntd = styled(Menu)`
  && {
@@ -25,6 +30,10 @@ const StyledMenuAntd = styled(Menu)`
  position: relative;
  left: -10px;
  bottom: -3px;
+`;
+
+const StyledLayout = styled(Layout) <{ collapsed?: boolean }>`
+     background-color: #fff;
 `;
 
 const StyledAntdItemGroup = styled(Menu.ItemGroup)`
@@ -63,6 +72,23 @@ type TCus = {
      current: string
 }
 
+const tabs = ({ currents }: any) => {
+     switch (currents) {
+          case 'overview':
+               return <Overview />;
+          case 'comments':
+               return <Comments />;
+          case 'transactions':
+               return <Transactions />;
+          case 'mails':
+               return <Mail />;
+          case 'statement':
+               return <Statements />;
+          default:
+               return <Overview />;
+     }
+};
+
 const CustomerSidebar: React.FC<TCus> = ({ handleClicked, current }) => {
      const { value: collapsed, toggleHandle } = React.useContext(ToggleContext);
      const { Customer: customer, loading } = React.useContext(CustomerData);
@@ -71,7 +97,7 @@ const CustomerSidebar: React.FC<TCus> = ({ handleClicked, current }) => {
 
 
      return (
-          <>
+          <StyledLayout>
                <PageHeader
                     className="site-page-header-responsive"
                     onBack={toggleHandle}
@@ -184,7 +210,17 @@ const CustomerSidebar: React.FC<TCus> = ({ handleClicked, current }) => {
                          </StyledMenuAntd>
                     }
                ></PageHeader>
-          </>
+               <StyledLayout>
+                    {
+                         (current === 'overview' ||
+                              current === 'comments' ||
+                              current === 'transactions' ||
+                              current === 'mails' ||
+                              current === 'statement'
+
+                         ) && <>{tabs({ currents: current })}</>}
+               </StyledLayout>
+          </StyledLayout>
      )
 }
 
