@@ -58,7 +58,12 @@ const newTrans = (
      </Menu>
 );
 
-const CustomerSidebar = () => {
+type TCus = {
+     handleClicked: (event?: any) => void;
+     current: string
+}
+
+const CustomerSidebar: React.FC<TCus> = ({ handleClicked, current }) => {
      const { value: collapsed, toggleHandle } = React.useContext(ToggleContext);
      const { Customer: customer, loading } = React.useContext(CustomerData);
      const navigate = useNavigate();
@@ -131,7 +136,7 @@ const CustomerSidebar = () => {
                                    </span>
                               </Button>
                          </Dropdown>,
-                         <Dropdown overlay={newTrans} trigger={["click"]}>
+                         <Dropdown overlay={menu} trigger={["click"]}>
                               <Button
                                    size="small"
                                    style={{
@@ -154,6 +159,8 @@ const CustomerSidebar = () => {
                     footer={
                          <StyledMenuAntd
                               mode="horizontal"
+                              onClick={handleClicked}
+                              selectedKeys={[current]}
                               style={{
                                    fontSize: "13px",
                                    lineHeight: "20px",

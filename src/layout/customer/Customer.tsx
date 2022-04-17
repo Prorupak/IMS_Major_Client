@@ -38,16 +38,6 @@ const StyledSubLayout = styled(Layout)`
  background-color: #fff;
 `;
 
-const StyledSider = styled(Sider)`
- background-color: #fff;
- position: relative;
- top: 58px;
-`;
-
-const StyledContent = styled(Content)`
- background-color: #f6f6f6;
-`;
-
 const StyledHeader = styled(Header)`
  background-color: #fff;
  padding: 0px;
@@ -66,7 +56,6 @@ type TCustomer = {
 const Customer: React.FC<TCustomer> = ({ children }) => {
      const { Customer: customer, loading } = React.useContext(CustomerData);
 
-     const { value: collapsed, toggleHandle } = React.useContext(ToggleContext);
 
      console.log("customer", customer);
      const navigate = useNavigate();
@@ -85,10 +74,7 @@ const Customer: React.FC<TCustomer> = ({ children }) => {
                                         <CustomerHeader />
                                    </StyledHeader>
                                    <StyledSubLayout>
-                                        <StyledContent>{children}</StyledContent>
-                                        <StyledSider width={collapsed ? "1100px" : "0px"}>
-                                             <CustomerSidebar />
-                                        </StyledSider>
+
                                    </StyledSubLayout>
                               </>
                          )}
