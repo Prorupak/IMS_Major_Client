@@ -137,3 +137,49 @@ export interface TLoading {
   isLoadingAddCategories: boolean;
   isLoadingGetCategories: boolean;
 }
+
+export interface ICustomer {
+  _id?: string;
+  id?: string;
+  customerType?: string;
+  primaryName?: {
+    firstName?: string;
+    lastName?: string;
+    salutation?: string;
+  };
+  customerDisplayName?: string;
+  email?: string;
+  phone?: number;
+  website?: string;
+  otherDetails: {
+    currency: string;
+    TaxRate?: number;
+    paymentTerms?: string;
+    twitter?: string;
+    facebook?: string;
+  },
+  address?: [
+    billingAddress: {
+      attention?: string;
+      addressLine1?: string;
+      addressLine2?: string;
+      city?: string;
+      state?: string;
+      country?: string;
+      zipCode?: number;
+      phone: number;
+    },
+    shippingAddress: {
+      attention?: string;
+      addressLine1?: string;
+      addressLine2?: string;
+      city?: string;
+      state?: string;
+      country?: string;
+      zipCode?: number;
+      phone: number;
+    },
+  ],
+  date?: Date;
+  remarks?: string;
+}

@@ -13,6 +13,7 @@ import { Alert, Spin } from 'antd';
 import { Loader } from 'Themes/utilityThemes';
 import MatxProgressBar from './Components/shared/ProgressBar';
 import { ReactFormProvider } from 'context/ReactHookForms';
+import { CustomerProvider } from 'context/CustomerContext';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <ReactFormProvider>
             <CategoryProvider>
               <ProductProvider>
+                <CustomerProvider>
                 <ToggleProvider>
                   <PublicRoutes />
                   <Layout>
@@ -29,6 +31,7 @@ const App = () => {
 
                   </Layout>
                 </ToggleProvider>
+                </CustomerProvider>
               </ProductProvider>
             </CategoryProvider>
           </ReactFormProvider>
@@ -38,19 +41,3 @@ const App = () => {
   );
 };
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

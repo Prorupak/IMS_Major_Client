@@ -1,15 +1,14 @@
 import axios from 'axios';
 import useToggle from 'Hooks/useToggle';
-import { useLocalStorage } from 'usehooks-ts';
-import { ICategories, IProductsDetails } from 'Interfaces/Interfaces';
+import { ICustomer } from 'Interfaces/Interfaces';
 import React from 'react';
 
 
 
 export const CustomerData = React.createContext<any>({});
 export const CustomerContext = React.createContext<{
-     data: IProductsDetails[];
-     setData: (data: IProductsDetails[]) => void;
+     data: ICustomer[];
+     setData: (data: ICustomer[]) => void;
 }>({
      data: [],
      setData: () => { }
@@ -20,8 +19,8 @@ type IProps = {
      children: React.ReactNode;
 };
 
-export const ProductProvider: React.FC<IProps> = ({ children }) => {
-     const [data, setData] = React.useState<IProductsDetails[]>(
+export const CustomerProvider: React.FC<IProps> = ({ children }) => {
+     const [data, setData] = React.useState<ICustomer[]>(
           []
      );
 
@@ -31,7 +30,7 @@ export const ProductProvider: React.FC<IProps> = ({ children }) => {
      const fetchData = async () => {
           try {
                setLoading(true);
-               let res = await axios.get('http://localhost:9001/api/products');
+               let res = await axios.get('http://localhost:9001/api/customer');
                setData(res.data);
                console.log('Context', data)
                setLoading(false);
@@ -47,11 +46,11 @@ export const ProductProvider: React.FC<IProps> = ({ children }) => {
           fetchData();
      }, []);
 
-     const [product, setProduct] = React.useState<any>({});
+     const [Customer, setCustomer] = React.useState<any>({});
 
      const { toggleHandle, value, handleOpen } = useToggle('toggle', false);
 
-     console.log('Addsec', product);
+     console.log('Addsec', Customer);
 
 
      return (
@@ -62,7 +61,7 @@ export const ProductProvider: React.FC<IProps> = ({ children }) => {
                               data,
                               setData
                          }}>
-                         <CustomerData.Provider value={{ product, setProduct, loading }}>
+                         <CustomerData.Provider value={{ Customer, setCustomer, loading }}>
                               {children}
                          </CustomerData.Provider>
                     </CustomerContext.Provider>
