@@ -34,6 +34,8 @@ const StyledMenuAntd = styled(Menu)`
 
 const StyledLayout = styled(Layout) <{ collapsed?: boolean }>`
      background-color: #fff;
+ border-left: 1px solid #eee;
+
 `;
 
 const StyledAntdItemGroup = styled(Menu.ItemGroup)`
@@ -103,7 +105,7 @@ const CustomerSidebar: React.FC<TCus> = ({ handleClicked, current }) => {
                     onBack={toggleHandle}
 
                     style={{
-                         padding: "10px",
+                         padding: "10px 10px 0px 10px",
                          textTransform: "capitalize",
                     }}
                     title={customer.customerDisplayName}

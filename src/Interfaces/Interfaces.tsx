@@ -157,6 +157,7 @@ export interface ICustomer {
     paymentTerms?: string;
     twitter?: string;
     facebook?: string;
+    phone?: number;
   },
   address?: [
     billingAddress: {

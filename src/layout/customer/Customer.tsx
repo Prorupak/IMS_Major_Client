@@ -46,7 +46,7 @@ const StyledSubLayout = styled(Layout)`
 
 
 const StyledContent = styled(Content)`
- background-color: #f6f6f6;
+ background-color: #fff;
 `;
 
 const StyledHeader = styled(Header)`
@@ -57,7 +57,7 @@ const StyledHeader = styled(Header)`
 
 const StyledSider = styled(Sider)`
  background-color: #fff;
- position: relative;
+  position: relative;
  top: 58px;
 `;
 
