@@ -9,9 +9,12 @@ export const CustomerData = React.createContext<any>({});
 export const CustomerContext = React.createContext<{
      data: ICustomer[];
      setData: (data: ICustomer[]) => void;
+     loading: boolean
+
 }>({
      data: [],
-     setData: () => { }
+     setData: () => { },
+     loading: true,
 });
 export const CustomerToggle = React.createContext<any>({});
 
@@ -59,7 +62,8 @@ export const CustomerProvider: React.FC<IProps> = ({ children }) => {
                     <CustomerContext.Provider
                          value={{
                               data,
-                              setData
+                              setData,
+                              loading
                          }}>
                          <CustomerData.Provider value={{ Customer, setCustomer, loading }}>
                               {children}

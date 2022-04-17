@@ -19,6 +19,7 @@ import { ProductData } from 'context/ProductContext';
 import UpdateCategories from 'Pages/Categories/UpdateCategories';
 import CustomerContainer from 'layout/CustomerContainer';
 import AddCustomer from 'Pages/customer/AddCustomer';
+import Customers from 'Pages/customer/Customers';
 
 const PublicRoutes = () => {
   const { product } = React.useContext(ProductData)
@@ -52,6 +53,8 @@ const PublicRoutes = () => {
             </Route>
             <Route element={<Categories />} path="/details" />
             <Route element={<Products />} path="/products" />
+            <Route element={<Customers />} path="/customers" />
+
             <Route element={<CustomerContainer />} path="/customer" >
               <Route element={<AddCustomer />} path="add" />
             </Route>
