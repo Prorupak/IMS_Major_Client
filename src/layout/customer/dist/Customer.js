@@ -15,9 +15,9 @@ var CustomerSidebar_1 = require("./components/CustomerSidebar");
 var Sider = antd_1.Layout.Sider, Content = antd_1.Layout.Content, Header = antd_1.Layout.Header;
 var StyledLayout = styled_components_1["default"](antd_1.Layout)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n background-color: #f6f6f6;\n height: 100%;\n \n"], ["\n background-color: #f6f6f6;\n height: 100%;\n \n"])));
 var StyledSubLayout = styled_components_1["default"](antd_1.Layout)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n background-color: #fff;\n"], ["\n background-color: #fff;\n"])));
-var StyledContent = styled_components_1["default"](Content)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n background-color: #fff;\n"], ["\n background-color: #fff;\n"])));
+var StyledContent = styled_components_1["default"](Content)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n background-color: #fff;\n overflow: scroll;\n\n"], ["\n background-color: #fff;\n overflow: scroll;\n\n"])));
 var StyledHeader = styled_components_1["default"](Header)(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n background-color: #fff;\n padding: 0px;\n height: 0px;\n"], ["\n background-color: #fff;\n padding: 0px;\n height: 0px;\n"])));
-var StyledSider = styled_components_1["default"](Sider)(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n background-color: #fff;\n  position: relative;\n top: 58px;\n"], ["\n background-color: #fff;\n  position: relative;\n top: 58px;\n"])));
+var StyledSider = styled_components_1["default"](Sider)(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n background-color: #fff;\n  position: relative;\n top: 58px;\n overflow-y: scroll;\n\n"], ["\n background-color: #fff;\n  position: relative;\n top: 58px;\n overflow-y: scroll;\n\n"])));
 var Customer = function (_a) {
     var children = _a.children;
     var _b = react_1["default"].useContext(CustomerContext_1.CustomerData), customer = _b.Customer, loading = _b.loading;

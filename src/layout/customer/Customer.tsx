@@ -47,6 +47,8 @@ const StyledSubLayout = styled(Layout)`
 
 const StyledContent = styled(Content)`
  background-color: #fff;
+ overflow: scroll;
+
 `;
 
 const StyledHeader = styled(Header)`
@@ -59,6 +61,8 @@ const StyledSider = styled(Sider)`
  background-color: #fff;
   position: relative;
  top: 58px;
+ overflow-y: scroll;
+
 `;
 
 type TCustomer = {

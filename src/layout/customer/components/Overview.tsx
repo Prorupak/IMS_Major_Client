@@ -35,6 +35,19 @@ background-color: #f6f6f6;
 
 }
 `
+const StyledList = styled(List)`
+border-bottom: none;
+padding: 0px;
+
+.ant-list-split .ant-list-header {
+     border-bottom: none;
+}
+.ant-list-header {
+     padding: 0px;
+     border-bottom: none;
+}
+`
+
 const StyledItem = styled(Item)`
 display: flex;
 align-items: center;
@@ -47,16 +60,27 @@ const Overview = () => {
      console.log("customerOver", customer.address?.map((item: any) => item.billingAddress[0]))
      const billing = customer.address?.map((item: any) => item.billingAddress[0])
      const shipping = customer.address?.map((item: any) => item.shippingAddress[0])
-     console.log("billing", billing?.address1)
+     const other = customer.otherDetails?.map((item: any) => item[0])
+     console.log("billing", billing?.map((item: any) => item.country))
 
+     const [data, setData] = React.useState<any[]>([])
+     React.useEffect(() => {
+          for (let i in billing) {
+               const data = [
+                    billing[i].country,
+                    billing[i].city,
+                    billing[i].state,
+                    billing[i].addressLine1,
+                    billing[i].addressLine2,
+                    billing[i].zip,
+                    billing[i].phone,
+               ]
+               setData(data);
 
-     const data = [
-          billing,
-          'Japanese princess to wed commoner.',
-          'Australian walks 100km after outback crash.',
-          'Man charged over missing wedding girl.',
-          'Los Angeles battles huge wildfires.',
-     ];
+          }
+     }, [customer])
+     console.log('billingADD', billing)
+     console.log('billingADDDD', data)
 
      return (
           <Layout
@@ -126,15 +150,61 @@ const Overview = () => {
                          </Skeleton>
                     </StyledCard>
                     <StyledCard size="small" title="Address" style={{ width: "100%" }}>
-                         <List
-                              header={<div>Billing Address</div>}
-                              dataSource={data}
-                              renderItem={item => (
-                                   <List.Item>
-                                        <Typography.Text mark>[ITEM]</Typography.Text> {item}
-                                   </List.Item>
-                              )}
-                         />
+                         <Skeleton loading={loading} active>
+                              <StyledItem fontSize="13px" fontWeight='500'>Billing Address</StyledItem>
+                              {
+                                   billing?.length > 0 ?
+                                        billing?.map((item: any, idx: number) => (
+                                             <Layout.Content key={idx}>
+                                                  <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                       {item.addressLine1}
+                                                  </StyledItem>
+                                                  <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                       {item.addressLine2}
+                                                  </StyledItem>
+                                                  <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                       {item.state}, {item.city}, {item.zip}
+                                                  </StyledItem>
+                                                  <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                       Phone: {item.phone}
+                                                  </StyledItem>
+                                             </Layout.Content>
+                                        )) : (
+                                             <p>Loading</p>
+                                        )
+                              }
+
+                         </Skeleton>
+                         <Skeleton loading={loading} active>
+                              <StyledItem fontSize="13px" fontWeight='500'>Selling Address</StyledItem>
+                              {
+                                   shipping?.length > 0 ?
+                                        shipping?.map((item: any, idx: number) => (
+                                             <Layout.Content key={idx}>
+                                                  <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                       {item.addressLine1}
+                                                  </StyledItem>
+                                                  <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                       {item.addressLine2}
+                                                  </StyledItem>
+                                                  <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                       {item.state}, {item.city}, {item.zip}
+                                                  </StyledItem>
+                                                  <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                       Phone: {item.phone}
+                                                  </StyledItem>
+                                             </Layout.Content>
+                                        )) : (
+                                             <p>Loading</p>
+                                        )
+                              }
+
+                         </Skeleton>
+                    </StyledCard>
+                    <StyledCard size="small" title="Other Details" style={{ width: "100%" }}>
+                         <Skeleton loading={loading} active>
+                              <p>hello</p>
+                         </Skeleton>
                     </StyledCard>
                </Layout.Content>
                <Layout.Content
