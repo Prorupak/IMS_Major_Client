@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router'
-import Customer from './Customer'
+import Customer from 'layout/customer/Customer'
 
 const CustomerContainer = () => {
      return (

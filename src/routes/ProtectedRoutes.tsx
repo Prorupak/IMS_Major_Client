@@ -1,14 +1,8 @@
 import { AnimatePresence } from 'framer-motion';
 import Categories from 'Pages/Categories/Categories';
-import AddCategories from 'Pages/Categories/AddCategories';
-import Dashboard from 'Pages/Dashboard/Dashboard';
 import React from 'react';
 import { Route, Routes, useLocation } from 'react-router';
-import Layout from 'layout/Layout';
 import CategoryContainer from 'Pages/Categories/CategoryContainer';
-import Items from 'layout/Items';
-import QuickCreate from 'Components/main/Navbar/QuickCreate/QuickCreate';
-import AddProducts from 'Pages/Products/AddProducts';
 import CreateProducts from 'Pages/Products/CreateProducts';
 import Products from 'Pages/Products/Components/productDetails/Products';
 import CategoryForm from 'Pages/Categories/CategoryForm';
@@ -17,7 +11,7 @@ import ProductsForm from 'Pages/Products/ProductsForm';
 import ProductContainer from 'Pages/Products/ProductContainer';
 import { ProductData } from 'context/ProductContext';
 import UpdateCategories from 'Pages/Categories/UpdateCategories';
-import CustomerContainer from 'layout/CustomerContainer';
+import CustomerContainer from 'container/CustomerContainer';
 import AddCustomer from 'Pages/customer/AddCustomer';
 import Customers from 'Pages/customer/Customers';
 

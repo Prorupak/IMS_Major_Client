@@ -5,7 +5,7 @@ import { ToggleContext } from 'Hooks/useToggle';
 import { useNavigate } from 'react-router';
 import { ProductContext, ProductData } from 'context/ProductContext';
 import { CustomToolbar } from 'Themes/MaterialUI';
-import Customer from 'layout/Customer';
+import Customer from 'layout/customer/Customer';
 import { CustomerContext, CustomerData } from 'context/CustomerContext';
 
 const columns = [
