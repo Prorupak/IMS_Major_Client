@@ -159,12 +159,16 @@ const Customer: React.FC<TCustomer> = ({ children }) => {
                                                   }}>
                                                        {children}
                                                   </StyledContent>
-                                                  <StyledSider width={collapsed ? "1100px" : "0px"}>     
-                                                       <div style={{
-                                                            display: "initial",
-                                                            position: "sticky",
-                                                            top: 0,
-                                                       }}>
+                                                  <StyledSider width={collapsed ? "1100px" : "0px"}
+                                                       style={{
+
+                                                            // position: "sticky",
+                                                            // top: 0,
+                                                            // zIndex: 999,
+
+                                                       }}
+                                                  >
+                                                       <div className="" style={{ position: "sticky", top: 0 }}>
                                                             <PageHeader
                                                                  className="site-page-header-responsive"
                                                                  onBack={toggleHandle}
@@ -173,7 +177,7 @@ const Customer: React.FC<TCustomer> = ({ children }) => {
                                                                       padding: "10px 10px 0px 10px",
                                                                       textTransform: "capitalize",
                                                                       position: "sticky",
-                                                                      top: 0
+                                                                      top: 0,
                                                                  }}
                                                                  title={customer.customerDisplayName}
                                                                  avatar={{

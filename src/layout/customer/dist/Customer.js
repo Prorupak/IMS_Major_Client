@@ -64,12 +64,12 @@ var Customer = function (_a) {
                     position: "sticky",
                     top: 0
                 } }, children),
-            react_1["default"].createElement(StyledSider, { width: collapsed ? "1100px" : "0px" },
-                react_1["default"].createElement("div", { style: {
-                        display: "initial",
-                        position: "sticky",
-                        top: 0
-                    } },
+            react_1["default"].createElement(StyledSider, { width: collapsed ? "1100px" : "0px", style: {
+                // position: "sticky",
+                // top: 0,
+                // zIndex: 999,
+                } },
+                react_1["default"].createElement("div", { className: "", style: { position: "sticky", top: 0 } },
                     react_1["default"].createElement(antd_1.PageHeader, { className: "site-page-header-responsive", onBack: toggleHandle, style: {
                             padding: "10px 10px 0px 10px",
                             textTransform: "capitalize",
