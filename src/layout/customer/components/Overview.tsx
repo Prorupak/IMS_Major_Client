@@ -98,9 +98,13 @@ const Overview = () => {
      console.log('billingADDDD', data)
 
      return (
-          <div>
+          <Layout
+               style={{
+                    display: "flex"
+               }}
+          >
                <Layout.Content style={{
-                    // flex: '0 0 400',
+                    flex: '0 0 400',
                     width: '400px',
                     minWidth: '400px',
                     maxWidth: '400px',
@@ -271,15 +275,38 @@ const Overview = () => {
                          </Skeleton>
                     </StyledCard>
                </Layout.Content>
-               <Layout.Content
-                    style={{
-                         backgroundColor: "#fff",
-                         paddingTop: "-5px"
-                    }}
-               >
-                    <h1>Sidebar</h1>
-               </Layout.Content>
-          </div>
+               <Layout>
+                    boold
+                    <Layout.Header>
+                         <Layout.Content>
+                              <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                   Customer Notes
+                              </StyledItem>
+                              <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                   NPR 0.00
+                              </StyledItem>
+                         </Layout.Content>
+                         <Layout.Content>
+                              <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                   <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                        Received Amount
+                                   </StyledItem>
+                                   <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                        NPR 0.00
+                                   </StyledItem>
+                              </StyledItem>
+                              <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                   <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                        Payment due period
+                                   </StyledItem>
+                                   <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                        {customer.paymentTerms}
+                                   </StyledItem>
+                              </StyledItem>
+                         </Layout.Content>
+                    </Layout.Header>
+               </Layout>
+          </Layout>
      )
 }
 

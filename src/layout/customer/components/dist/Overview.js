@@ -40,9 +40,11 @@ var Overview = function () {
     }, [customer]);
     console.log('billingADD', billing);
     console.log('billingADDDD', data);
-    return (react_1["default"].createElement("div", null,
+    return (react_1["default"].createElement(antd_1.Layout, { style: {
+            display: "flex"
+        } },
         react_1["default"].createElement(antd_1.Layout.Content, { style: {
-                // flex: '0 0 400',
+                flex: '0 0 400',
                 width: '400px',
                 minWidth: '400px',
                 maxWidth: '400px',
@@ -125,11 +127,19 @@ var Overview = function () {
                                     } },
                                     react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' }, "Payment Terms"),
                                     react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '400', color: '#777777', margin: '3px' }, customer.paymentTerms))))) })))),
-        react_1["default"].createElement(antd_1.Layout.Content, { style: {
-                backgroundColor: "#fff",
-                paddingTop: "-5px"
-            } },
-            react_1["default"].createElement("h1", null, "Sidebar"))));
+        react_1["default"].createElement(antd_1.Layout, null,
+            "boold",
+            react_1["default"].createElement(antd_1.Layout.Header, null,
+                react_1["default"].createElement(antd_1.Layout.Content, null,
+                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' }, "Customer Notes"),
+                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' }, "NPR 0.00")),
+                react_1["default"].createElement(antd_1.Layout.Content, null,
+                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' },
+                        react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' }, "Received Amount"),
+                        react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' }, "NPR 0.00")),
+                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' },
+                        react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' }, "Payment due period"),
+                        react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' }, customer.paymentTerms)))))));
 };
 exports["default"] = Overview;
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
