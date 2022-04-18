@@ -13,8 +13,6 @@ import styled from 'styled-components';
 import { Header } from 'antd/lib/layout/layout';
 
 const StyledHeader = styled(Header)`
-position: fixed;
-z-index: 1;
  background-color: #fff;
  padding: 0px;
  height: 0px;

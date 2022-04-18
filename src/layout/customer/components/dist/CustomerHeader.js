@@ -12,7 +12,7 @@ var PageTips_1 = require("Components/shared/PageTips");
 var CustomerContext_1 = require("context/CustomerContext");
 var styled_components_1 = require("styled-components");
 var layout_1 = require("antd/lib/layout/layout");
-var StyledHeader = styled_components_1["default"](layout_1.Header)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\nposition: fixed;\nz-index: 1;\n background-color: #fff;\n padding: 0px;\n height: 0px;\n"], ["\nposition: fixed;\nz-index: 1;\n background-color: #fff;\n padding: 0px;\n height: 0px;\n"])));
+var StyledHeader = styled_components_1["default"](layout_1.Header)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n background-color: #fff;\n padding: 0px;\n height: 0px;\n"], ["\n background-color: #fff;\n padding: 0px;\n height: 0px;\n"])));
 var CustomerHeader = function () {
     var _a = react_1["default"].useContext(CustomerContext_1.CustomerData), customer = _a.Customer, loading = _a.loading;
     var navigate = react_router_1.useNavigate();

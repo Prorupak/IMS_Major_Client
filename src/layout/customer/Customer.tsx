@@ -51,9 +51,9 @@ const StyledContent = styled(Content)`
 
 `;
 
-const StyledHeader = styled.div`
-position: fixed;
-z-index: 999;
+const StyledHeader = styled(Header)`
+position: relative;
+z-index: 1;
  background-color: #fff;
  padding: 0px;
  height: 0px;
@@ -63,8 +63,6 @@ const StyledSider = styled(Sider)`
  background-color: #fff;
   position: relative;
  top: 58px;
- /* overflow: scroll; */
- /* overflow-x: hidden; */
 `;
 
 type TCustomer = {
@@ -98,7 +96,9 @@ const Customer: React.FC<TCustomer> = ({ children }) => {
                               <>
                                              <StyledHeader
                                                   style={{
-                                                       position: "sticky"
+                                                       position: "sticky",
+                                                       top: 0,
+                                                       zIndex: 999,
                                                   }}
                                              >
                                         <CustomerHeader />
@@ -107,15 +107,10 @@ const Customer: React.FC<TCustomer> = ({ children }) => {
                                                   <StyledContent>
                                                        {children}
                                                   </StyledContent>
-                                                  <div className=""
-                                                       style={{
-                                                            overflow: "scroll"
-                                                       }}
-                                                  >
-                                                  <StyledSider width={collapsed ? "1100px" : "0px"}>
+                                                  <StyledSider width={collapsed ? "1100px" : "0px"}>      
+
                                                        <CustomerSidebar handleClicked={handleClicked} current={current} />
                                                   </StyledSider>
-                                                  </div>
                                    </StyledSubLayout>
                               </>
                          )}

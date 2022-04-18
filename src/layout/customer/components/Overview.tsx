@@ -36,7 +36,7 @@ background-color: #f6f6f6;
 }
 
 .ant-card-meta-avatar {
-     padding: 20px 20px 0 0
+     padding: 18px 20px 0 0
 }
 
 .ant-avatar {
@@ -107,6 +107,7 @@ const Overview = () => {
                     borderRight: "1px solid rgba(0, 0, 0, 0.1) ",
                     padding: "15px 15px 20px 15px",
                     background: "#F7F7F7",
+                    height: "100vh",
 
 
                }} >
