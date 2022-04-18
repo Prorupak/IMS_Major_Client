@@ -75,8 +75,14 @@ const Layout = ({ children, ...rest }: any) => {
 
 
   return (
-    <Container style={{ minHeight: '100vh' }}>
+    <Container style={{
+      minHeight: '100vh',
+    }}>
       <Sider collapsible collapsed={collapsed} trigger={null}
+        style={{
+          overflow: 'hidden',
+          position: 'sticky'
+        }}
       >
         <Logo >Logo</Logo>
         <Menu theme="dark" mode="inline" onClick={handleClick}  >

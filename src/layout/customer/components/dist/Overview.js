@@ -11,9 +11,10 @@ var react_1 = require("react");
 var icons_1 = require("@ant-design/icons");
 var utilityThemes_1 = require("Themes/utilityThemes");
 var styled_components_1 = require("styled-components");
-var StyledCard = styled_components_1["default"](antd_1.Card)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\nwidth: 300px;\nmargin-top: 16px;\nborder: none;\nbackground-color: #f6f6f6;\n.ant-card-body {\n     padding: 0px;\n}\n\n.ant-card-actions {\n     background-color: #f6f6f6;\n     margin: 10px 0px;\n}\n\n.ant-card-head-title{\n     padding: 0px;\n}\n.ant-card-head {\n     min-height: 10px;\n     margin-bottom: 15px;\n     border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n     padding: 0px;\n\n}\n"], ["\nwidth: 300px;\nmargin-top: 16px;\nborder: none;\nbackground-color: #f6f6f6;\n.ant-card-body {\n     padding: 0px;\n}\n\n.ant-card-actions {\n     background-color: #f6f6f6;\n     margin: 10px 0px;\n}\n\n.ant-card-head-title{\n     padding: 0px;\n}\n.ant-card-head {\n     min-height: 10px;\n     margin-bottom: 15px;\n     border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n     padding: 0px;\n\n}\n"])));
+var StyledCard = styled_components_1["default"](antd_1.Card)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\nwidth: 300px;\nmargin-top: 16px;\nborder: none;\nbackground-color: #f6f6f6;\n.ant-card-body {\n     padding: 0px;\n}\n\n.ant-card-actions {\n     background-color: #f6f6f6;\n     margin: 10px 0px;\n}\n\n.ant-card-head-title{\n     padding: 0px;\n}\n.ant-card-head {\n     min-height: 10px;\n     margin-bottom: 15px;\n     border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n     padding: 0px;\n\n}\n\n.ant-card-meta-avatar {\n     padding: 20px 20px 0 0\n}\n\n.ant-avatar {\n     width: 42px;\n     height: 42px;\n}\n"], ["\nwidth: 300px;\nmargin-top: 16px;\nborder: none;\nbackground-color: #f6f6f6;\n.ant-card-body {\n     padding: 0px;\n}\n\n.ant-card-actions {\n     background-color: #f6f6f6;\n     margin: 10px 0px;\n}\n\n.ant-card-head-title{\n     padding: 0px;\n}\n.ant-card-head {\n     min-height: 10px;\n     margin-bottom: 15px;\n     border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n     padding: 0px;\n\n}\n\n.ant-card-meta-avatar {\n     padding: 20px 20px 0 0\n}\n\n.ant-avatar {\n     width: 42px;\n     height: 42px;\n}\n"])));
 var StyledList = styled_components_1["default"](antd_1.List)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\nborder-bottom: none;\npadding: 0px;\n\n.ant-list-split .ant-list-header {\n     border-bottom: none;\n}\n.ant-list-header {\n     padding: 0px;\n     border-bottom: none;\n}\n"], ["\nborder-bottom: none;\npadding: 0px;\n\n.ant-list-split .ant-list-header {\n     border-bottom: none;\n}\n.ant-list-header {\n     padding: 0px;\n     border-bottom: none;\n}\n"])));
 var StyledItem = styled_components_1["default"](utilityThemes_1.Item)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\ndisplay: flex;\nalign-items: center;\ngap: 5px;\n"], ["\ndisplay: flex;\nalign-items: center;\ngap: 5px;\n"])));
+var StyledDescriptions = styled_components_1["default"](antd_1.Descriptions.Item)(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\ndisplay: flex;\nalign-items: center;\ngap: 1rem;\n"], ["\ndisplay: flex;\nalign-items: center;\ngap: 1rem;\n"])));
 var Overview = function () {
     var _a, _b, _c, _d, _e;
     var _f = react_1["default"].useContext(CustomerContext_1.CustomerData), customer = _f.Customer, loading = _f.loading;
@@ -39,18 +40,14 @@ var Overview = function () {
     }, [customer]);
     console.log('billingADD', billing);
     console.log('billingADDDD', data);
-    return (react_1["default"].createElement(antd_1.Layout, { style: {
-            display: 'flex',
-            flexFlow: "row",
-            height: "100vh"
-        } },
+    return (react_1["default"].createElement("div", null,
         react_1["default"].createElement(antd_1.Layout.Content, { style: {
                 // flex: '0 0 400',
                 width: '400px',
                 minWidth: '400px',
                 maxWidth: '400px',
                 borderRight: "1px solid rgba(0, 0, 0, 0.1) ",
-                padding: "var(--spacing-15)",
+                padding: "15px 15px 20px 15px",
                 background: "#F7F7F7"
             } },
             react_1["default"].createElement(StyledCard, { title: customer.customerDisplayName, actions: [
@@ -102,7 +99,31 @@ var Overview = function () {
                             item.phone))); }) : (react_1["default"].createElement("p", null, "Loading")))),
             react_1["default"].createElement(StyledCard, { size: "small", title: "Other Details", style: { width: "100%" } },
                 react_1["default"].createElement(antd_1.Skeleton, { loading: loading, active: true },
-                    react_1["default"].createElement("p", null, "hello")))),
+                    react_1["default"].createElement(Meta_1["default"], { description: (react_1["default"].createElement(react_1["default"].Fragment, null,
+                            react_1["default"].createElement(antd_1.Layout.Content, { style: {
+                                    display: "flex",
+                                    flexFlow: "column"
+                                } },
+                                react_1["default"].createElement(StyledItem, { style: {
+                                        display: "flex"
+                                    } },
+                                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' }, "Customer ID"),
+                                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '400', color: '#777777', margin: '3px' }, customer.id)),
+                                react_1["default"].createElement(StyledItem, { style: {
+                                        display: "flex"
+                                    } },
+                                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' }, "Customer Type"),
+                                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '400', color: '#777777', margin: '3px' }, customer.customerType)),
+                                react_1["default"].createElement(StyledItem, { style: {
+                                        display: "flex"
+                                    } },
+                                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' }, "Currency Code"),
+                                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '400', color: '#777777', margin: '3px' }, "NPR")),
+                                react_1["default"].createElement(StyledItem, { style: {
+                                        display: "flex"
+                                    } },
+                                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '500', color: 'var(--color-primary-dark)', margin: '3px' }, "Payment Terms"),
+                                    react_1["default"].createElement(StyledItem, { fontSize: '12px', fontWeight: '400', color: '#777777', margin: '3px' }, customer.paymentTerms))))) })))),
         react_1["default"].createElement(antd_1.Layout.Content, { style: {
                 backgroundColor: "#fff",
                 paddingTop: "-5px"
@@ -110,4 +131,4 @@ var Overview = function () {
             react_1["default"].createElement("h1", null, "Sidebar"))));
 };
 exports["default"] = Overview;
-var templateObject_1, templateObject_2, templateObject_3;
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4;

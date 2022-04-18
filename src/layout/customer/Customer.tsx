@@ -47,11 +47,13 @@ const StyledSubLayout = styled(Layout)`
 
 const StyledContent = styled(Content)`
  background-color: #fff;
- overflow: scroll;
+ position: sticky;
 
 `;
 
-const StyledHeader = styled(Header)`
+const StyledHeader = styled.div`
+position: fixed;
+z-index: 999;
  background-color: #fff;
  padding: 0px;
  height: 0px;
@@ -61,8 +63,8 @@ const StyledSider = styled(Sider)`
  background-color: #fff;
   position: relative;
  top: 58px;
- overflow-y: scroll;
-
+ /* overflow: scroll; */
+ /* overflow-x: hidden; */
 `;
 
 type TCustomer = {
@@ -94,16 +96,26 @@ const Customer: React.FC<TCustomer> = ({ children }) => {
                               <div>Loading...</div>
                          ) : (
                               <>
-                                   <StyledHeader>
+                                             <StyledHeader
+                                                  style={{
+                                                       position: "sticky"
+                                                  }}
+                                             >
                                         <CustomerHeader />
                                    </StyledHeader>
-                                   <StyledSubLayout>
+                                             <StyledSubLayout>
                                                   <StyledContent>
                                                        {children}
                                                   </StyledContent>
+                                                  <div className=""
+                                                       style={{
+                                                            overflow: "scroll"
+                                                       }}
+                                                  >
                                                   <StyledSider width={collapsed ? "1100px" : "0px"}>
                                                        <CustomerSidebar handleClicked={handleClicked} current={current} />
                                                   </StyledSider>
+                                                  </div>
                                    </StyledSubLayout>
                               </>
                          )}

@@ -9,12 +9,22 @@ import {
 import { useNavigate } from 'react-router'
 import PageTips from 'Components/shared/PageTips';
 import { CustomerData } from 'context/CustomerContext';
+import styled from 'styled-components';
+import { Header } from 'antd/lib/layout/layout';
+
+const StyledHeader = styled(Header)`
+position: fixed;
+z-index: 1;
+ background-color: #fff;
+ padding: 0px;
+ height: 0px;
+`;
 
 const CustomerHeader = () => {
      const { Customer: customer, loading } = React.useContext(CustomerData);
      const navigate = useNavigate();
      return (
-          <>
+          <StyledHeader>
                <PageHeader
                     ghost={false}
                     onBack={() => window.history.back()}
@@ -65,7 +75,7 @@ const CustomerHeader = () => {
                          <PageTips key="5" />,
                     ]}
                ></PageHeader>
-          </>
+          </StyledHeader>
      )
 }
 

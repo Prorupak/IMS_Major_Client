@@ -34,6 +34,15 @@ background-color: #f6f6f6;
      padding: 0px;
 
 }
+
+.ant-card-meta-avatar {
+     padding: 20px 20px 0 0
+}
+
+.ant-avatar {
+     width: 42px;
+     height: 42px;
+}
 `
 const StyledList = styled(List)`
 border-bottom: none;
@@ -52,6 +61,12 @@ const StyledItem = styled(Item)`
 display: flex;
 align-items: center;
 gap: 5px;
+`
+
+const StyledDescriptions = styled(Descriptions.Item)`
+display: flex;
+align-items: center;
+gap: 1rem;
 `
 
 const Overview = () => {
@@ -83,20 +98,14 @@ const Overview = () => {
      console.log('billingADDDD', data)
 
      return (
-          <Layout
-               style={{
-                    display: 'flex',
-                    flexFlow: "row",
-                    height: "100vh",
-               }}
-          >
+          <div>
                <Layout.Content style={{
                     // flex: '0 0 400',
                     width: '400px',
                     minWidth: '400px',
                     maxWidth: '400px',
                     borderRight: "1px solid rgba(0, 0, 0, 0.1) ",
-                    padding: "var(--spacing-15)",
+                    padding: "15px 15px 20px 15px",
                     background: "#F7F7F7",
 
 
@@ -203,7 +212,61 @@ const Overview = () => {
                     </StyledCard>
                     <StyledCard size="small" title="Other Details" style={{ width: "100%" }}>
                          <Skeleton loading={loading} active>
-                              <p>hello</p>
+                              <Meta
+                                   description={(
+                                        <>
+                                             <Layout.Content
+                                                  style={{
+                                                       display: "flex",
+                                                       flexFlow: "column",
+                                                  }}
+                                             >
+                                                  <StyledItem style={{
+                                                       display: "flex"
+                                                  }}>
+                                                       <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                                            Customer ID
+                                                       </StyledItem>
+                                                       <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                            {customer.id}
+                                                       </StyledItem>
+                                                  </StyledItem>
+                                                  <StyledItem style={{
+                                                       display: "flex"
+                                                  }}>
+                                                       <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                                            Customer Type
+                                                       </StyledItem>
+                                                       <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                            {customer.customerType}
+                                                       </StyledItem>
+                                                  </StyledItem>
+                                                  <StyledItem style={{
+                                                       display: "flex"
+                                                  }}>
+                                                       <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                                            Currency Code
+                                                       </StyledItem>
+                                                       <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                            {"NPR"}
+                                                       </StyledItem>
+                                                  </StyledItem>
+                                                  <StyledItem style={{
+                                                       display: "flex"
+                                                  }}>
+                                                       <StyledItem fontSize='12px' fontWeight='500' color='var(--color-primary-dark)' margin='3px'>
+                                                            Payment Terms
+                                                       </StyledItem>
+                                                       <StyledItem fontSize='12px' fontWeight='400' color='#777777' margin='3px'>
+                                                            {customer.paymentTerms}
+                                                       </StyledItem>
+                                                  </StyledItem>
+
+                                             </Layout.Content>
+                                        </>
+                                   )}
+
+                              />
                          </Skeleton>
                     </StyledCard>
                </Layout.Content>
@@ -215,7 +278,7 @@ const Overview = () => {
                >
                     <h1>Sidebar</h1>
                </Layout.Content>
-          </Layout>
+          </div>
      )
 }
 

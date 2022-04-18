@@ -20,7 +20,7 @@ var useToggle = function (key, initValue) {
 };
 exports.ToggleProvider = function (props) {
     var children = props.children;
-    var _a = useToggle('toggle', false), value = _a.value, toggleHandle = _a.toggleHandle, handleOpen = _a.handleOpen;
+    var _a = useToggle('toggle', true), value = _a.value, toggleHandle = _a.toggleHandle, handleOpen = _a.handleOpen;
     console.log('value===>', value);
     return (react_1["default"].createElement(exports.ToggleContext.Provider, { value: { value: value, toggleHandle: toggleHandle, handleOpen: handleOpen } }, children));
 };
