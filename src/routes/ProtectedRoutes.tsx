@@ -14,6 +14,7 @@ import UpdateCategories from 'Pages/Categories/UpdateCategories';
 import CustomerContainer from 'container/CustomerContainer';
 import AddCustomer from 'Pages/customer/AddCustomer';
 import Customers from 'Pages/customer/Customers';
+import CustomerForm from 'Pages/customer/CustomerForm';
 
 const PublicRoutes = () => {
   const { product } = React.useContext(ProductData)
@@ -50,7 +51,7 @@ const PublicRoutes = () => {
             <Route element={<Customers />} path="/customers" />
 
             <Route element={<CustomerContainer />} path="/customer" >
-              <Route element={<AddCustomer />} path="add" />
+              <Route element={<CustomerForm />} path="add" />
             </Route>
           </Route>
         </Routes>

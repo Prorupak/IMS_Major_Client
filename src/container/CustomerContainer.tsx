@@ -4,9 +4,9 @@ import Customer from 'layout/customer/Customer'
 
 const CustomerContainer = () => {
      return (
-          <Customer>
+          <>
                <Outlet />
-          </Customer>
+          </>
      )
 }
 
