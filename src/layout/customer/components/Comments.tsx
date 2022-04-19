@@ -26,7 +26,7 @@ const Comments = () => {
           if (Customer) {
                setData(Customer.comments)
           }
-     }, [])
+     }, [Customer])
 
      const momentYYMMDD = (date?: any) => moment().format('YYYY-MM-DD')
      const momentYYMMDDHHMM = (date?: any) => moment().format('HH:mm')
@@ -47,26 +47,7 @@ const Comments = () => {
                     {
                          data?.length > 0 ? (
                               <Timeline>
-                                   {
-                                        data?.length === 0 ? (
-                                             <>
-                                                  <div style={{ display: "flex", flexFlow: "column", gap: "5px" }}>
-                                                       <div>
-                                                            <Controller
-                                                                 control={control}
-                                                                 name="comment"
-                                                                 rules={{ required: true }}
-                                                                 render={({ field }: any) => (
-                                                                      <TextArea status={errors.comment ? "error" : ""} showCount maxLength={100} {...field} />
-                                                                 )}
-                                                            />
-                                                            <FormHelperText>(For internal use only)</FormHelperText>
-                                                       </div>
-                                                       <Button type="submit" variant='contained' size="small" sx={{ width: '20%' }}>Submit</Button>
-                                                  </div>
-                                             </>
-                                        ) : (
-                                             <>
+
                                                        <Timeline.Item>
                                                             <Card>
                                                                  <div style={{ display: "flex", flexFlow: "column", gap: "5px" }}>
@@ -97,14 +78,26 @@ const Comments = () => {
                                                                       </Item>
                                                                  </Timeline.Item>
                                                             ))
-                                                       }
-                                             </>
-                                        )
                                    }
                               </Timeline>
                          )
                               : (
-                                   <Spin />
+                                   <>
+                                        <div style={{ display: "flex", flexFlow: "column", gap: "5px" }}>
+                                             <div>
+                                                  <Controller
+                                                       control={control}
+                                                       name="comment"
+                                                       rules={{ required: true }}
+                                                       render={({ field }: any) => (
+                                                            <TextArea status={errors.comment ? "error" : ""} showCount maxLength={100} {...field} />
+                                                       )}
+                                                  />
+                                                  <FormHelperText>(For internal use only)</FormHelperText>
+                                             </div>
+                                             <Button type="submit" variant='contained' size="small" sx={{ width: '20%' }}>Submit</Button>
+                                        </div>
+                                   </>
                               )
                     }
                </form>

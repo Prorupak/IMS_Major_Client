@@ -32,7 +32,7 @@ var Comments = function () {
         if (Customer) {
             setData(Customer.comments);
         }
-    }, []);
+    }, [Customer]);
     var momentYYMMDD = function (date) { return moment_1["default"]().format('YYYY-MM-DD'); };
     var momentYYMMDDHHMM = function (date) { return moment_1["default"]().format('HH:mm'); };
     var momentAMPM = function (date) { return moment_1["default"]().format('a'); };
@@ -43,15 +43,7 @@ var Comments = function () {
                 position: "relative",
                 top: 50,
                 left: 100
-            } }, (data === null || data === void 0 ? void 0 : data.length) > 0 ? (react_1["default"].createElement(antd_1.Timeline, null, (data === null || data === void 0 ? void 0 : data.length) === 0 ? (react_1["default"].createElement(react_1["default"].Fragment, null,
-            react_1["default"].createElement("div", { style: { display: "flex", flexFlow: "column", gap: "5px" } },
-                react_1["default"].createElement("div", null,
-                    react_1["default"].createElement(Controller, { control: control, name: "comment", rules: { required: true }, render: function (_a) {
-                            var field = _a.field;
-                            return (react_1["default"].createElement(TextArea_1["default"], __assign({ status: errors.comment ? "error" : "", showCount: true, maxLength: 100 }, field)));
-                        } }),
-                    react_1["default"].createElement(material_1.FormHelperText, null, "(For internal use only)")),
-                react_1["default"].createElement(material_1.Button, { type: "submit", variant: 'contained', size: "small", sx: { width: '20%' } }, "Submit")))) : (react_1["default"].createElement(react_1["default"].Fragment, null,
+            } }, (data === null || data === void 0 ? void 0 : data.length) > 0 ? (react_1["default"].createElement(antd_1.Timeline, null,
             react_1["default"].createElement(antd_1.Timeline.Item, null,
                 react_1["default"].createElement(antd_1.Card, null,
                     react_1["default"].createElement("div", { style: { display: "flex", flexFlow: "column", gap: "5px" } },
@@ -67,7 +59,15 @@ var Comments = function () {
                 react_1["default"].createElement(utilityThemes_1.Item, { fontWeight: '400' },
                     item.createdAt,
                     ' by ',
-                    react_1["default"].createElement(utilityThemes_1.Item, { fontWeight: '500' }, item.createdBy)))); })))))
-            : (react_1["default"].createElement(antd_1.Spin, null)))));
+                    react_1["default"].createElement(utilityThemes_1.Item, { fontWeight: '500' }, item.createdBy)))); })))
+            : (react_1["default"].createElement(react_1["default"].Fragment, null,
+                react_1["default"].createElement("div", { style: { display: "flex", flexFlow: "column", gap: "5px" } },
+                    react_1["default"].createElement("div", null,
+                        react_1["default"].createElement(Controller, { control: control, name: "comment", rules: { required: true }, render: function (_a) {
+                                var field = _a.field;
+                                return (react_1["default"].createElement(TextArea_1["default"], __assign({ status: errors.comment ? "error" : "", showCount: true, maxLength: 100 }, field)));
+                            } }),
+                        react_1["default"].createElement(material_1.FormHelperText, null, "(For internal use only)")),
+                    react_1["default"].createElement(material_1.Button, { type: "submit", variant: 'contained', size: "small", sx: { width: '20%' } }, "Submit")))))));
 };
 exports["default"] = Comments;
