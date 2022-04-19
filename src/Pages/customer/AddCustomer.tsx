@@ -214,7 +214,7 @@ const AddCustomer = ({ children }: any) => {
 
      return (
        <>
-            <Form onSubmit={handleSubmit(onSubmit)}>
+               <Form onSubmit={handleSubmit((e: any) => console.log(e))}>
 
                  {
                       loading ? (
