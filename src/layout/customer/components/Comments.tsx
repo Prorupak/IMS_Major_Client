@@ -1,4 +1,4 @@
-import { Card, Spin, Timeline } from 'antd'
+import { Card, notification, Spin, Timeline } from 'antd'
 import moment from 'moment'
 import { ReactHookForm } from 'context/ReactHookForms'
 import React from 'react'
@@ -8,6 +8,8 @@ import { Button, FormHelperText } from '@mui/material'
 import { Item } from 'Themes/utilityThemes'
 import { watch } from 'fs'
 import { CustomerContext, CustomerData } from 'context/CustomerContext'
+import usePost from 'Hooks/usePost'
+import axios from 'axios'
 
 const Comments = () => {
      const [data, setData] = React.useState<any[]>([]);
@@ -15,17 +17,74 @@ const Comments = () => {
 
      const { register, handleSubmit, reset, control, Controller, watch, errors } = React.useContext(ReactHookForm)
 
-     console.log('Comment', Customer.comments)
-     console.log('Comments', data)
+     console.log('Comment', Customer.id)
+     // console.log('Comments', data?.map((d: any) => d.map((dn: any) => dn.comments.map((dn: any) => dn.comment))))
 
-     const onSubmit = (e: any) => {
-          console.log('data', e)
+     const close = () => {
+          // navigate('/products')
+     };
+
+     const openNotification = (res: any, error?: any) => {
+          console.log('productNae', res)
+          if (error) {
+               notification.error({
+                    message: 'Error',
+                    description: res,
+                    placement: 'bottomRight',
+                    duration: 2,
+               });
+          } else {
+               const key = `open${Date.now()}`;
+               notification.open({
+                    type: 'success',
+                    message: "Comment added successfully",
+                    key,
+                    duration: 5,
+                    onClose: close,
+               });
+          }
+     }
+
+     const onSubmit = (data: any) => {
+          console.log('data===>', data.sellDescription);
+          const PData = {
+               comments: [{
+                    comment: data.comment
+               }]
+          };
+          console.log('PData', PData);
+
+
+          const postData = async () => {
+               try {
+                    const res = await axios.post(`http://localhost:9001/api/customer/${Customer.id}/comments`, PData);
+                    console.log('res', res);
+                    if (res.status === 200) {
+                         openNotification(res);
+                    }
+               } catch (error) {
+                    console.log('error', error);
+                    openNotification(null, error);
+               }
+          }
+
+          return postData();
+
+     }
+
+     const fetchData = async () => {
+          try {
+               const res = await axios.get(`http://localhost:9001/api/customer/${Customer.id}/comments`);
+               console.log('res', res.data.comments.map((d: any) => d.comments.map((dn: any) => dn.comment)));
+               setData(res.data.comments.map((d: any) => d.comments));
+          } catch (error) {
+               console.log('error', error);
+               openNotification(null, error);
+          }
      }
 
      React.useEffect(() => {
-          if (Customer) {
-               setData(Customer.comments)
-          }
+          fetchData();
      }, [Customer])
 
      const momentYYMMDD = (date?: any) => moment().format('YYYY-MM-DD')
@@ -54,7 +113,7 @@ const Comments = () => {
                                                                       <div>
                                                                            <Controller
                                                                                 control={control}
-                                                                                name="name"
+                                                            name="comment"
                                                                                 rules={{ required: true }}
                                                                                 render={({ field }: any) => (
                                                                                      <TextArea showCount maxLength={100} {...field} />
@@ -100,6 +159,13 @@ const Comments = () => {
                                    </>
                               )
                     }
+                    {data?.map((item: any, index: number) => (
+                         <>
+                              <p>{item.comment}</p>
+
+                         </>
+                    ))}
+
                </form>
           </>
      )
