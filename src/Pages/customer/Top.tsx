@@ -40,7 +40,7 @@ const Top = () => {
           <>
                <StyledForm>
                     <Form.Item
-                         style={{ marginBottom: "-33px" }}
+                         style={{ marginBottom: "-28px" }}
                          label={
                               <TooltipMui title="The name you enter here will be for your primary contact.">
                                    <Item
@@ -190,11 +190,170 @@ const Top = () => {
                               name={"customerDisplayName"}
                               control={control}
                               rules={{
+                                   required: "This Field is required.",
                                    pattern: {
                                         value: /^[a-zA-Z]*$/,
                                         message: "only letters"
                                    }
                               }}
+                              defaultValue=""
+                         />
+
+                    </Form.Item>
+                    <Form.Item
+                         validateStatus={errors.Email ? "error" : "success"}
+                         label={
+                              <Item
+                                   fontSize="14px"
+                                   fontWeight="medium"
+                                   height="115%"
+                                   width="90%"
+                                   color="var(--color-primary-dark)"
+                                   margin="0px 0px"
+                                   style={{
+                                        textAlign: "left",
+                                        textDecoration: ""
+                                   }}
+                              >
+                                   Email
+                              </Item>
+                         }
+                         colon={false}
+                         help={<ErrorMessage errors={errors} name="Email" />}
+                    >
+                         <Controller
+                              render={({ field }: any) => (
+                                   <Input autoComplete='off' placeholder='' id={errors.Email ? "error" : "success"} status={errors.Email ? "error" : ""} allowClear {...field} type="email" style={{ width: "320px" }} />
+
+                              )}
+                              name={"Email"}
+                              control={control}
+                              rules={{
+                                   pattern: {
+                                        value: /^[0-9]/,
+                                        message: "only Numbers are allowed."
+                                   }
+                              }}
+                              defaultValue=""
+                         />
+
+                    </Form.Item>
+                    <Form.Item
+                         validateStatus={errors.phone ? "error" : "success"}
+                         label={
+                              <Item
+                                   fontSize="14px"
+                                   fontWeight="medium"
+                                   height="115%"
+                                   width="90%"
+                                   color="var(--color-primary-dark)"
+                                   margin="0px 0px"
+                                   style={{
+                                        textAlign: "left",
+                                        textDecoration: ""
+                                   }}
+                              >
+                                   Phone Number
+                              </Item>
+                         }
+                         colon={false}
+                         help={<ErrorMessage errors={errors} name="phone" />}
+                    >
+                         <Controller
+                              render={({ field }: any) => (
+                                   <Input autoComplete='off' placeholder='' id={errors.phone ? "error" : "success"} status={errors.phone ? "error" : ""} allowClear {...field} style={{ width: "320px" }} />
+
+                              )}
+                              name={"phone"}
+                              control={control}
+                              rules={{
+                                   pattern: {
+                                        value: /^[0-9]/,
+                                        message: "only Numbers are allowed."
+                                   }
+                              }}
+                              defaultValue=""
+                         />
+
+                    </Form.Item>
+                    <Form.Item
+                         validateStatus={errors.website ? "error" : "success"}
+                         label={
+                              <Item
+                                   fontSize="14px"
+                                   fontWeight="medium"
+                                   height="115%"
+                                   width="90%"
+                                   color="var(--color-primary-dark)"
+                                   margin="0px 0px"
+                                   style={{
+                                        textAlign: "left",
+                                        textDecoration: ""
+                                   }}
+                              >
+                                   website
+                              </Item>
+                         }
+                         colon={false}
+                         help={<ErrorMessage errors={errors} name="website" />}
+                    >
+                         <Controller
+                              render={({ field }: any) => (
+                                   <Input autoComplete='off' placeholder='' id={errors.website ? "error" : "success"} status={errors.website ? "error" : ""} allowClear {...field} style={{ width: "320px" }} />
+
+                              )}
+                              name={"website"}
+                              control={control}
+                              rules={{
+                                   pattern: {
+                                        value: /^[0-9]/,
+                                        message: "Please Enter the valid website"
+                                   }
+                              }}
+                              defaultValue=""
+                         />
+
+                    </Form.Item>
+                    <Form.Item
+                         validateStatus={errors.paymentTerms ? "error" : "success"}
+                         label={
+                              <Item
+                                   fontSize="14px"
+                                   fontWeight="medium"
+                                   height="115%"
+                                   width="90%"
+                                   color="var(--color-primary-dark)"
+                                   margin="0px 0px"
+                                   style={{
+                                        textAlign: "left",
+                                        textDecoration: ""
+                                   }}
+                              >
+                                   Payment Terms
+                              </Item>
+                         }
+                         colon={false}
+                         help={<ErrorMessage errors={errors} name="paymentTerms" />}
+                    >
+                         <Controller
+                              render={({ field }: any) => (
+                                   <Select
+                                        placeholder="Payment Terms"
+                                        {...field}
+                                        style={{ width: "320px" }}
+                                        id={errors.paymentTerms ? "error" : "success"}
+                                        allowClear
+                                   >
+                                        <Option value="Mr.">Mr.</Option>
+                                        <Option value="Mrs.">Mrs.</Option>
+                                        <Option value="Miss.">Miss.</Option>
+                                        <Option value="Ms">Ms.</Option>
+                                        <Option value="Dr.">Dr.</Option>
+                                   </Select>
+
+                              )}
+                              name={"paymentTerms"}
+                              control={control}
                               defaultValue=""
                          />
 

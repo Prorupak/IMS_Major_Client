@@ -29,7 +29,7 @@ var Top = function () {
     var _a = react_1["default"].useContext(ReactHookForms_1.ReactHookForm), errors = _a.errors, Controller = _a.Controller, control = _a.control;
     return (react_1["default"].createElement(react_1["default"].Fragment, null,
         react_1["default"].createElement(StyledForm, null,
-            react_1["default"].createElement(antd_1.Form.Item, { style: { marginBottom: "-33px" }, label: react_1["default"].createElement(MaterialUI_1.TooltipMui, { title: "The name you enter here will be for your primary contact." },
+            react_1["default"].createElement(antd_1.Form.Item, { style: { marginBottom: "-28px" }, label: react_1["default"].createElement(MaterialUI_1.TooltipMui, { title: "The name you enter here will be for your primary contact." },
                     react_1["default"].createElement(utilityThemes_1.Item, { color: "var(--color-primary-dark)", fontSize: "14px", fontWeight: "medium", height: "65%", width: "72%", margin: "0px 0px", style: {
                             borderBottom: "1px dashed #969696"
                         } }, "Primary Name")), colon: false },
@@ -88,11 +88,64 @@ var Top = function () {
                         var field = _a.field;
                         return (react_1["default"].createElement(antd_1.Input, __assign({ autoComplete: 'off', placeholder: '', id: errors.customerDisplayName ? "error" : "success", status: errors.customerDisplayName ? "error" : "", allowClear: true }, field, { style: { width: "320px" } })));
                     }, name: "customerDisplayName", control: control, rules: {
+                        required: "This Field is required.",
                         pattern: {
                             value: /^[a-zA-Z]*$/,
                             message: "only letters"
                         }
-                    }, defaultValue: "" })))));
+                    }, defaultValue: "" })),
+            react_1["default"].createElement(antd_1.Form.Item, { validateStatus: errors.Email ? "error" : "success", label: react_1["default"].createElement(utilityThemes_1.Item, { fontSize: "14px", fontWeight: "medium", height: "115%", width: "90%", color: "var(--color-primary-dark)", margin: "0px 0px", style: {
+                        textAlign: "left",
+                        textDecoration: ""
+                    } }, "Email"), colon: false, help: react_1["default"].createElement(error_message_1.ErrorMessage, { errors: errors, name: "Email" }) },
+                react_1["default"].createElement(Controller, { render: function (_a) {
+                        var field = _a.field;
+                        return (react_1["default"].createElement(antd_1.Input, __assign({ autoComplete: 'off', placeholder: '', id: errors.Email ? "error" : "success", status: errors.Email ? "error" : "", allowClear: true }, field, { type: "email", style: { width: "320px" } })));
+                    }, name: "Email", control: control, rules: {
+                        pattern: {
+                            value: /^[0-9]/,
+                            message: "only Numbers are allowed."
+                        }
+                    }, defaultValue: "" })),
+            react_1["default"].createElement(antd_1.Form.Item, { validateStatus: errors.phone ? "error" : "success", label: react_1["default"].createElement(utilityThemes_1.Item, { fontSize: "14px", fontWeight: "medium", height: "115%", width: "90%", color: "var(--color-primary-dark)", margin: "0px 0px", style: {
+                        textAlign: "left",
+                        textDecoration: ""
+                    } }, "Phone Number"), colon: false, help: react_1["default"].createElement(error_message_1.ErrorMessage, { errors: errors, name: "phone" }) },
+                react_1["default"].createElement(Controller, { render: function (_a) {
+                        var field = _a.field;
+                        return (react_1["default"].createElement(antd_1.Input, __assign({ autoComplete: 'off', placeholder: '', id: errors.phone ? "error" : "success", status: errors.phone ? "error" : "", allowClear: true }, field, { style: { width: "320px" } })));
+                    }, name: "phone", control: control, rules: {
+                        pattern: {
+                            value: /^[0-9]/,
+                            message: "only Numbers are allowed."
+                        }
+                    }, defaultValue: "" })),
+            react_1["default"].createElement(antd_1.Form.Item, { validateStatus: errors.website ? "error" : "success", label: react_1["default"].createElement(utilityThemes_1.Item, { fontSize: "14px", fontWeight: "medium", height: "115%", width: "90%", color: "var(--color-primary-dark)", margin: "0px 0px", style: {
+                        textAlign: "left",
+                        textDecoration: ""
+                    } }, "website"), colon: false, help: react_1["default"].createElement(error_message_1.ErrorMessage, { errors: errors, name: "website" }) },
+                react_1["default"].createElement(Controller, { render: function (_a) {
+                        var field = _a.field;
+                        return (react_1["default"].createElement(antd_1.Input, __assign({ autoComplete: 'off', placeholder: '', id: errors.website ? "error" : "success", status: errors.website ? "error" : "", allowClear: true }, field, { style: { width: "320px" } })));
+                    }, name: "website", control: control, rules: {
+                        pattern: {
+                            value: /^[0-9]/,
+                            message: "Please Enter the valid website"
+                        }
+                    }, defaultValue: "" })),
+            react_1["default"].createElement(antd_1.Form.Item, { validateStatus: errors.paymentTerms ? "error" : "success", label: react_1["default"].createElement(utilityThemes_1.Item, { fontSize: "14px", fontWeight: "medium", height: "115%", width: "90%", color: "var(--color-primary-dark)", margin: "0px 0px", style: {
+                        textAlign: "left",
+                        textDecoration: ""
+                    } }, "Payment Terms"), colon: false, help: react_1["default"].createElement(error_message_1.ErrorMessage, { errors: errors, name: "paymentTerms" }) },
+                react_1["default"].createElement(Controller, { render: function (_a) {
+                        var field = _a.field;
+                        return (react_1["default"].createElement(antd_1.Select, __assign({ placeholder: "Payment Terms" }, field, { style: { width: "320px" }, id: errors.paymentTerms ? "error" : "success", allowClear: true }),
+                            react_1["default"].createElement(mentions_1.Option, { value: "Mr." }, "Mr."),
+                            react_1["default"].createElement(mentions_1.Option, { value: "Mrs." }, "Mrs."),
+                            react_1["default"].createElement(mentions_1.Option, { value: "Miss." }, "Miss."),
+                            react_1["default"].createElement(mentions_1.Option, { value: "Ms" }, "Ms."),
+                            react_1["default"].createElement(mentions_1.Option, { value: "Dr." }, "Dr.")));
+                    }, name: "paymentTerms", control: control, defaultValue: "" })))));
 };
 exports["default"] = Top;
 var templateObject_1, templateObject_2;
