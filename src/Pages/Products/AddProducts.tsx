@@ -259,6 +259,17 @@ const AddProducts = ({ children }: any) => {
     const postData = async () => {
       try {
 
+        if (pathName === '/products') {
+          const res = await axios.put(`http://localhost:9001/api/products/` + ProID, PData);
+          console.log('res', res);
+          openNotification(res, false);
+          if (res.status === 200 || res.status === 201) {
+            const productName = res.data.name
+            console.log('resdata', res.data.name);
+            openNotification(res);
+          }
+
+        } else {
           const res = await axios.post(`http://localhost:9001/api/categories/${id}/products`, PData);
           console.log('res', res);
           if (res.status === 200) {
@@ -266,6 +277,8 @@ const AddProducts = ({ children }: any) => {
             console.log('resdata', res.data.name);
             openNotification(res);
           }
+        }
+
 
 
 
