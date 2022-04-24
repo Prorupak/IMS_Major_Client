@@ -253,7 +253,7 @@ const Top = () => {
                                         textDecoration: ""
                                    }}
                               >
-                                   Phone Number
+                                   Customer Phone
                               </Item>
                          }
                          colon={false}

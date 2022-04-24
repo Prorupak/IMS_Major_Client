@@ -110,7 +110,7 @@ var Top = function () {
             react_1["default"].createElement(antd_1.Form.Item, { validateStatus: errors.phone ? "error" : "success", label: react_1["default"].createElement(utilityThemes_1.Item, { fontSize: "14px", fontWeight: "medium", height: "115%", width: "90%", color: "var(--color-primary-dark)", margin: "0px 0px", style: {
                         textAlign: "left",
                         textDecoration: ""
-                    } }, "Phone Number"), colon: false, help: react_1["default"].createElement(error_message_1.ErrorMessage, { errors: errors, name: "phone" }) },
+                    } }, "Customer Phone"), colon: false, help: react_1["default"].createElement(error_message_1.ErrorMessage, { errors: errors, name: "phone" }) },
                 react_1["default"].createElement(Controller, { render: function (_a) {
                         var field = _a.field;
                         return (react_1["default"].createElement(antd_1.Input, __assign({ autoComplete: 'off', placeholder: '', id: errors.phone ? "error" : "success", status: errors.phone ? "error" : "", allowClear: true }, field, { style: { width: "320px" } })));
